@@ -44,7 +44,26 @@ func TestBitVectorGetOperationWrongValue(t *testing.T) {
 		if _, err := bitVectors.get(v); err == nil {
 			t.Errorf("Expected an Out of Range error")
 		} else {
-			t.Logf("%d: %v", i, err.Error())
+			t.Logf("%d-Get: %v", i, err.Error())
+		}
+	}
+}
+
+func TestBitVectorSetOperationWrongValue(t *testing.T) {
+	testValue := []int{-200, -2, 50000}
+	bitVectors, _ := newBitVector(5000)
+
+	for i, v := range testValue {
+		if err := bitVectors.set(v); err == nil {
+			t.Errorf("Expected an Out of Range error")
+		} else {
+			t.Logf("%d-Set: %v", i, err.Error())
+		}
+
+		if err := bitVectors.clear(v); err == nil {
+			t.Errorf("Expected an Out of Range error")
+		} else {
+			t.Logf("%d-Clear: %v", i, err.Error())
 		}
 	}
 }

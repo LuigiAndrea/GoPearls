@@ -35,12 +35,24 @@ func (bit bitVector) get(index int) (byte, error) {
 	return 0, nil
 }
 
-func (bit bitVector) set(index int) {
+func (bit bitVector) set(index int) error {
+
+	if err := bit.validateInput(index); err != nil {
+		return err
+	}
+
 	bit[index/bitsPerWord] |= 1 << uint(index%bitsPerWord)
+
+	return nil
 }
 
-func (bit bitVector) clear(index int) {
+func (bit bitVector) clear(index int) error {
+	if err := bit.validateInput(index); err != nil {
+		return err
+	}
+
 	bit[index/bitsPerWord] &= ^(1 << uint(index%bitsPerWord))
+	return nil
 }
 
 func (bit bitVector) validateInput(index int) error {
