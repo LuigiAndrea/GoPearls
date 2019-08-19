@@ -1,7 +1,6 @@
 package column1
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -12,7 +11,7 @@ var size = 0
 
 func newBitVector(n int) (bv *bitVector, err error) {
 	if n < 0 {
-		return bv, errors.New("Negative n argument in newBitVector")
+		return bv, fmt.Errorf("Negative n '%d' argument in newBitVector", n)
 	}
 
 	size = (n / bitsPerWord) + 1
@@ -57,7 +56,7 @@ func (bit bitVector) clear(index int) error {
 
 func (bit bitVector) validateInput(index int) error {
 	if index < 0 || index >= size*bitsPerWord {
-		return fmt.Errorf("Out of Range index argument")
+		return fmt.Errorf("Index '%d' is Out of Range", index)
 	}
 	return nil
 }

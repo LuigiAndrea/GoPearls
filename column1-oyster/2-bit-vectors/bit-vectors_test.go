@@ -75,6 +75,8 @@ func TestBitVectorLength(t *testing.T) {
 
 	if _, err := newBitVector(-20); err == nil {
 		t.Errorf("\nExpected an expection: negative n argument in newBitVector")
+	} else {
+		t.Logf(err.Error())
 	}
 
 	for i := 0; i < len(testValues); i++ {

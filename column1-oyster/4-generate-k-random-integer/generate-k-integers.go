@@ -2,7 +2,6 @@ package column1
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 	"math/rand"
 	"os"
@@ -18,7 +17,7 @@ func swap(x, y int) {
 
 func createFileWithRandomIntegers(nMin int, nMax int) error {
 	if nMax <= nMin || nMax < 0 || nMin < 0 {
-		return errors.New("Out of Range parameters")
+		return fmt.Errorf("Out of Range parameters (nMin:%d, nMax:%d)", nMin, nMax)
 	}
 
 	k := nMax - nMin
@@ -33,7 +32,7 @@ func createFileWithRandomIntegers(nMin int, nMax int) error {
 	rand.Shuffle(k, swap)
 
 	for _, v := range integers {
-		bufferIntegers.WriteString(fmt.Sprintf("%v ", v))
+		bufferIntegers.WriteString(fmt.Sprintf("%d ", v))
 	}
 
 	file, err := os.Create("./kIntegers.data")
