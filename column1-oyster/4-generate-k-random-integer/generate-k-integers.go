@@ -9,24 +9,35 @@ import (
 
 var integers []int
 
+const filename = "./kIntegers.data"
+
 func swap(x, y int) {
 	temp := integers[x]
 	integers[x] = integers[y]
 	integers[y] = temp
 }
 
-func createFileWithRandomIntegers(nMin int, nMax int) error {
-	if nMax <= nMin || nMax < 0 || nMin < 0 {
-		return fmt.Errorf("Out of Range parameters (nMin:%d, nMax:%d)", nMin, nMax)
-	}
+type minmaxInterval struct {
+	min int
+	max int
+}
 
-	k := nMax - nMin
-	integers = make([]int, k)
+func createFileWithRandomIntegers(mmi ...minmaxInterval) error {
 	var bufferIntegers bytes.Buffer
+	var k int
 
-	for i, value := 0, nMin; value < nMax; i++ {
-		integers[i] = value
-		value++
+	for _, v := range mmi {
+		if v.max <= v.min || v.max < 0 || v.min < 0 {
+			return fmt.Errorf("Out of Range parameters (nMin:%d, nMax:%d)", v.min, v.max)
+		}
+
+		for i, value := k, v.min; value < v.max; i++ {
+			integers = append(integers, value)
+			value++
+		}
+
+		k += v.max - v.min
+
 	}
 
 	rand.Shuffle(k, swap)
@@ -35,7 +46,7 @@ func createFileWithRandomIntegers(nMin int, nMax int) error {
 		bufferIntegers.WriteString(fmt.Sprintf("%d ", v))
 	}
 
-	file, err := os.Create("./kIntegers.data")
+	file, err := os.Create(filename)
 	if err != nil {
 		fmt.Println("Unable to create file:", err)
 		return err
