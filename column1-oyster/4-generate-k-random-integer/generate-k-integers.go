@@ -48,9 +48,9 @@ func createFileWithRandomIntegers(mmi ...minmaxInterval) error {
 
 	file, err := os.Create(filename)
 	if err != nil {
-		fmt.Println("Unable to create file:", err)
-		return err
+		return fmt.Errorf("Unable to create file '%s': %s", filename, err)
 	}
+
 	defer file.Close()
 	bufferIntegers.WriteTo(file)
 
