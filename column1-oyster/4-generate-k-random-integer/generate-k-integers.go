@@ -1,7 +1,7 @@
 package column1
 
 import (
-	"bytes"
+	"bufio"
 	"fmt"
 	"math/rand"
 	"os"
@@ -23,7 +23,6 @@ type minmaxInterval struct {
 }
 
 func createFileWithRandomIntegers(mmi ...minmaxInterval) error {
-	var bufferIntegers bytes.Buffer
 	var k int
 
 	for _, v := range mmi {
@@ -37,22 +36,23 @@ func createFileWithRandomIntegers(mmi ...minmaxInterval) error {
 		}
 
 		k += v.max - v.min
-
 	}
 
 	rand.Shuffle(k, swap)
-
-	for _, v := range integers {
-		bufferIntegers.WriteString(fmt.Sprintf("%d ", v))
-	}
 
 	file, err := os.Create(filename)
 	if err != nil {
 		return fmt.Errorf("Unable to create file '%s': %s", filename, err)
 	}
 
+	writer := bufio.NewWriter(file)
+
 	defer file.Close()
-	bufferIntegers.WriteTo(file)
+
+	for _, v := range integers {
+		writer.WriteString(fmt.Sprintf("%d ", v))
+	}
+	writer.Flush()
 
 	return nil
 }
