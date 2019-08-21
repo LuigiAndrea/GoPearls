@@ -1,6 +1,6 @@
 // +build all column1 kintegers
 
-package column1
+package kintegers
 
 import (
 	"bufio"
@@ -10,18 +10,18 @@ import (
 )
 
 func TestCreateFileWithKIntegers(t *testing.T) {
-	if err := createFileWithRandomIntegers(
-		minmaxInterval{min: 1000000, max: 1000010},
-		minmaxInterval{min: 1000050, max: 1000054},
-		minmaxInterval{min: 1000500, max: 2000000}); err != nil {
+	if err := CreateFileWithRandomIntegers(
+		MinMaxInterval{Min: 1000000, Max: 1000010},
+		MinMaxInterval{Min: 1000050, Max: 1000054},
+		MinMaxInterval{Min: 1000500, Max: 2000000}); err != nil {
 		t.Errorf("\nError during creation of the file %v", err)
 	} else {
-		t.Logf("File '%s' succesfully created", filename)
+		t.Logf("File '%s' succesfully created", Filename)
 	}
 
-	file, err := os.Open(filename)
+	file, err := os.Open(Filename)
 	if err != nil {
-		t.Errorf("Unable to open file %s: %s", filename, err)
+		t.Errorf("Unable to open file %s: %s", Filename, err)
 		return
 	}
 	defer file.Close()
@@ -33,7 +33,7 @@ func TestCreateFileWithKIntegers(t *testing.T) {
 			if err == io.EOF {
 				break
 			} else {
-				t.Errorf("Error reading %s: %s", filename, err)
+				t.Errorf("Error reading %s: %s", Filename, err)
 			}
 		}
 	}
@@ -42,17 +42,17 @@ func TestCreateFileWithKIntegers(t *testing.T) {
 		t.Errorf("\nExpected value %d - Actual value %d", expectedValue, numbersInFile)
 	}
 
-	if err := os.Remove(filename); err != nil {
+	if err := os.Remove(Filename); err != nil {
 		t.Logf("Error deleting the file")
 	}
 }
 
 func TestCreateFileWithKIntegersWrongValues(t *testing.T) {
 
-	valuesTest := []minmaxInterval{{min: -3, max: 4}, {min: 2, max: -8}, {min: 100, max: 99}}
+	valuesTest := []MinMaxInterval{{Min: -3, Max: 4}, {Min: 2, Max: -8}, {Min: 100, Max: 99}}
 
 	for i, v := range valuesTest {
-		if err := createFileWithRandomIntegers(minmaxInterval{v.min, v.max}); err == nil {
+		if err := CreateFileWithRandomIntegers(MinMaxInterval{v.Min, v.Max}); err == nil {
 			t.Error("Expected an parameter error")
 		} else {
 			t.Logf("%d: %s", i, err)

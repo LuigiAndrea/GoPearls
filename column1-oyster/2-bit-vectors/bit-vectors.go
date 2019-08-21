@@ -1,25 +1,27 @@
-package column1
+package bitvector
 
 import (
 	"fmt"
 )
 
-type bitVector []int
+//BitVector Type BitVector
+type BitVector []int
 
 var bitsPerWord = 32
 var size = 0
 
-func newBitVector(n int) (bv *bitVector, err error) {
+//NewBitVector create a new BitVector
+func NewBitVector(n int) (bv *BitVector, err error) {
 	if n < 0 {
-		return bv, fmt.Errorf("Negative n '%d' argument in newBitVector", n)
+		return bv, fmt.Errorf("Negative n '%d' argument in NewBitVector", n)
 	}
 
 	size = (n / bitsPerWord) + 1
-	bitVector := make(bitVector, size)
+	bitVector := make(BitVector, size)
 	return &bitVector, err
 }
 
-func (bit bitVector) get(index int) (byte, error) {
+func (bit BitVector) Get(index int) (byte, error) {
 
 	if err := bit.validateInput(index); err != nil {
 		return 0, err
@@ -34,7 +36,7 @@ func (bit bitVector) get(index int) (byte, error) {
 	return 0, nil
 }
 
-func (bit bitVector) set(index int) error {
+func (bit BitVector) Set(index int) error {
 
 	if err := bit.validateInput(index); err != nil {
 		return err
@@ -45,7 +47,7 @@ func (bit bitVector) set(index int) error {
 	return nil
 }
 
-func (bit bitVector) clear(index int) error {
+func (bit BitVector) Clear(index int) error {
 	if err := bit.validateInput(index); err != nil {
 		return err
 	}
@@ -54,7 +56,7 @@ func (bit bitVector) clear(index int) error {
 	return nil
 }
 
-func (bit bitVector) validateInput(index int) error {
+func (bit BitVector) validateInput(index int) error {
 	if index < 0 || index >= size*bitsPerWord {
 		return fmt.Errorf("Index '%d' is Out of Range", index)
 	}
