@@ -2,7 +2,6 @@ package column1
 
 import (
 	bv "GoPearls/column1-oyster/2-bit-vectors"
-	kintegers "GoPearls/column1-oyster/4-generate-k-random-integer"
 	"bufio"
 	"fmt"
 	"io"
@@ -15,32 +14,27 @@ import (
 const bitVectorSize = 20000
 const filenameResult = "./kIntegersSorted.data"
 
-func sortFile() {
-	if err := kintegers.CreateFileWithRandomIntegers(
-		kintegers.MinMaxInterval{Min: 200, Max: 300},
-		kintegers.MinMaxInterval{Min: 500, Max: 1200}); err != nil {
-		log.Fatal(err)
-	}
+func sortFile(path string) {
 
-	file, err := os.Open(kintegers.Filename)
+	fileRandomIntegers, err := os.Open(path)
 	if err != nil {
-		log.Fatalf("Unable to open file %s: %s", kintegers.Filename, err)
+		log.Fatalf("Unable to open file %s: %s", path, err)
 		return
 	}
-	defer file.Close()
+	defer fileRandomIntegers.Close()
 
 	bitVector, err := bv.NewBitVector(bitVectorSize)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	reader := bufio.NewReader(file)
+	reader := bufio.NewReader(fileRandomIntegers)
 	for {
 		if value, err := reader.ReadString(' '); err != nil {
 			if err == io.EOF {
 				break
 			} else {
-				log.Fatalf("Error reading %s: %s", kintegers.Filename, err)
+				log.Fatalf("Error reading %s: %s", path, err)
 			}
 		} else {
 			if intValue, err := strconv.Atoi(strings.TrimSpace(value)); err != nil {
@@ -51,14 +45,14 @@ func sortFile() {
 		}
 	}
 
-	file, err = os.Create(filenameResult)
+	fileSorted, err := os.Create(filenameResult)
 	if err != nil {
 		log.Fatalf("Unable to create file '%s': %s", filenameResult, err)
 	}
 
-	writer := bufio.NewWriter(file)
+	writer := bufio.NewWriter(fileSorted)
 
-	defer file.Close()
+	defer fileSorted.Close()
 
 	for i := 0; i < bitVectorSize; i++ {
 		if r, err := bitVector.Get(i); err != nil {
