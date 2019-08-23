@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"time"
 )
 
 var integers []int
@@ -40,7 +41,7 @@ func CreateFileWithRandomIntegers(mmi ...MinMaxInterval) error {
 
 		k += v.Max - v.Min
 	}
-
+	rand.Seed(time.Now().Unix())
 	rand.Shuffle(k, swap)
 
 	file, err := os.Create(Filename)
