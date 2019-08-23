@@ -21,6 +21,7 @@ func NewBitVector(n int) (bv *BitVector, err error) {
 	return &bitVector, err
 }
 
+//Get return 1 if the number is in the bitVector, 0 otherwise
 func (bit BitVector) Get(index int) (byte, error) {
 
 	if err := bit.validateInput(index); err != nil {
@@ -36,6 +37,7 @@ func (bit BitVector) Get(index int) (byte, error) {
 	return 0, nil
 }
 
+//Set the bit at position index
 func (bit BitVector) Set(index int) error {
 
 	if err := bit.validateInput(index); err != nil {
@@ -47,6 +49,7 @@ func (bit BitVector) Set(index int) error {
 	return nil
 }
 
+//Clear the bit at position index
 func (bit BitVector) Clear(index int) error {
 	if err := bit.validateInput(index); err != nil {
 		return err

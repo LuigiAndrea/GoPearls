@@ -1,6 +1,6 @@
 // +build all column1 sortFile
 
-package column1
+package sortfile
 
 import (
 	kintegers "GoPearls/column1-oyster/4-generate-k-random-integer"
@@ -13,25 +13,25 @@ import (
 )
 
 func TestSortFile(t *testing.T) {
-
 	if err := kintegers.CreateFileWithRandomIntegers(
 		kintegers.MinMaxInterval{Min: 200, Max: 300},
 		kintegers.MinMaxInterval{Min: 500, Max: 1200}); err != nil {
 		log.Fatal(err)
 	}
 
-	sortFile(kintegers.Filename)
+	if err := sortFile(kintegers.Filename); err != nil {
+		log.Fatal(err)
+	}
 
 	file, err := os.Open(filenameResult)
 	if err != nil {
-		log.Fatalf("Unable to open file %s: %s", filenameResult, err)
+		log.Fatalf("Unable to open file '%s': %s", filenameResult, err)
 		return
 	}
 	defer file.Close()
 
 	var expectedEOFIndex = 800
 	reader := bufio.NewReader(file)
-
 	for i := 0; ; i++ {
 		if v, err := reader.ReadString(' '); err != nil {
 			if err == io.EOF {
@@ -68,7 +68,6 @@ func TestSortFile(t *testing.T) {
 				if expectedValue != strings.TrimSpace(v) {
 					t.Errorf("Expected value %s - Actual value %s", expectedValue, v)
 				}
-
 			}
 		}
 	}
