@@ -3,7 +3,7 @@
 package sortfile
 
 import (
-	kintegers "GoPearls/column1-oyster/4-generate-k-random-integer"
+	kintegers "GoPearls/column1-oyster/generate-k-random-integer"
 	"bufio"
 	"io"
 	"log"

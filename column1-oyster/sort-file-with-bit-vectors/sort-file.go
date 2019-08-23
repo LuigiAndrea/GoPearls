@@ -1,7 +1,7 @@
 package sortfile
 
 import (
-	bv "GoPearls/column1-oyster/2-bit-vectors"
+	bv "GoPearls/column1-oyster/bit-vectors"
 	"bufio"
 	"errors"
 	"fmt"
