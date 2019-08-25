@@ -71,4 +71,21 @@ func TestSortFile(t *testing.T) {
 			}
 		}
 	}
+	cleanWorkSpace(t)
+}
+
+func TestWrongFilename(t *testing.T) {
+	if err := sortFile("NotExistingFilename"); err == nil {
+		t.Errorf("Expected an error: Not Existing Filename")
+	}
+}
+
+func cleanWorkSpace(t *testing.T) {
+	if err := os.Remove(kintegers.Filename); err != nil {
+		t.Logf("Error deleting the file '%s'", kintegers.Filename)
+	}
+
+	if err := os.Remove(filenameResult); err != nil {
+		t.Logf("Error deleting the file '%s'", filenameResult)
+	}
 }
