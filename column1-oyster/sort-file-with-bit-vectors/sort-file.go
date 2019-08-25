@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -15,17 +14,19 @@ import (
 const bitVectorSize = 20000
 const filenameResult = "./kIntegersSorted.data"
 
-func sortFile(path string) error {
+//SortFile Sort a file with integers, return the sorted File
+func SortFile(path string) (*os.File, error) {
 	bitVector, err := createBitVectorFromFile(path)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	if err := createSortedFile(bitVector); err != nil {
-		return err
+	err = createSortedFile(bitVector)
+	if err != nil {
+		return nil, err
 	}
 
-	return nil
+	return os.Open(filenameResult)
 }
 
 func createBitVectorFromFile(path string) (bv.BitVector, error) {
@@ -71,12 +72,13 @@ func createSortedFile(bitVector bv.BitVector) error {
 
 	for i := 0; i < bitVectorSize; i++ {
 		if r, err := bitVector.Get(i); err != nil {
-			log.Fatal(err)
+			return errors.New(err.Error())
 		} else if r == 1 {
 			writer.WriteString(fmt.Sprintf("%d ", i))
 		}
 	}
 
 	writer.Flush()
+
 	return nil
 }

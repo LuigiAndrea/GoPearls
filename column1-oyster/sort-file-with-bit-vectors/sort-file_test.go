@@ -19,15 +19,11 @@ func TestSortFile(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	if err := sortFile(kintegers.Filename); err != nil {
+	file, err := SortFile(kintegers.Filename)
+	if err != nil {
 		log.Fatal(err)
 	}
 
-	file, err := os.Open(filenameResult)
-	if err != nil {
-		log.Fatalf("Unable to open file '%s': %s", filenameResult, err)
-		return
-	}
 	defer file.Close()
 
 	var expectedEOFIndex = 800
@@ -71,21 +67,41 @@ func TestSortFile(t *testing.T) {
 			}
 		}
 	}
-	cleanWorkSpace(t)
+	cleanWorkSpace(t, kintegers.Filename)
+	cleanWorkSpace(t, filenameResult)
 }
 
 func TestWrongFilename(t *testing.T) {
-	if err := sortFile("NotExistingFilename"); err == nil {
+	if _, err := SortFile("NotExistingFilename"); err == nil {
 		t.Errorf("Expected an error: Not Existing Filename")
+	} else {
+		t.Log(err)
 	}
 }
 
-func cleanWorkSpace(t *testing.T) {
-	if err := os.Remove(kintegers.Filename); err != nil {
-		t.Logf("Error deleting the file '%s'", kintegers.Filename)
+func TestWrongDataInFile(t *testing.T) {
+	wrongDataFile := "./wrongDataFile"
+	file, err := os.Create(wrongDataFile)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	if err := os.Remove(filenameResult); err != nil {
-		t.Logf("Error deleting the file '%s'", filenameResult)
+	writer := bufio.NewWriter(file)
+	writer.WriteString("Wrong data")
+	writer.Flush()
+	file.Close()
+
+	if _, err := SortFile(wrongDataFile); err == nil {
+		t.Errorf("Expected an error: Wrong Data in file")
+	} else {
+		t.Log(err)
+	}
+
+	cleanWorkSpace(t, wrongDataFile)
+}
+
+func cleanWorkSpace(t *testing.T, path string) {
+	if err := os.Remove(path); err != nil {
+		t.Logf("Error deleting the file '%s'", path)
 	}
 }
