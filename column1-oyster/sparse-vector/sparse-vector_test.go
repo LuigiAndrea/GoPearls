@@ -35,3 +35,23 @@ func TestSparseVector(t *testing.T) {
 		t.Logf("%d elements have been initialized", numberOfInitializedElement)
 	}
 }
+
+func TestSparseVectorNegativeIndex(t *testing.T) {
+	sparseVector, _ := NewSparseVector(3)
+	err := sparseVector.add(10, 3)
+	checkError(t, err)
+	err = sparseVector.add(-4, 30)
+	checkError(t, err)
+	_, err = sparseVector.get(12)
+	checkError(t, err)
+	_, err = sparseVector.get(-6)
+	checkError(t, err)
+}
+
+func checkError(t *testing.T, err error) {
+	if err == nil {
+		t.Errorf("Expected an index out of range")
+	} else {
+		t.Log(err.Error())
+	}
+}

@@ -1,6 +1,8 @@
 package sparsevector
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type sparseVectorInfo struct {
 	from, to, data []int
@@ -30,7 +32,11 @@ func NewSparseVector(sparseLength int) (sv *SparseVector, err error) {
 	return &SparseVector{length: len(sparseInfo.data)}, err
 }
 
-func (sparse SparseVector) get(index int) (int, error) {
+func (s *SparseVector) get(index int) (int, error) {
+	if err := s.validateIndex(index); err != nil {
+		return 0, err
+	}
+
 	if sparseInfo.from[index] < sparseInfo.top &&
 		index == sparseInfo.to[sparseInfo.from[index]] {
 		return sparseInfo.data[index], nil
@@ -38,8 +44,12 @@ func (sparse SparseVector) get(index int) (int, error) {
 	return 0, fmt.Errorf("The element at index '%d' has not been initialized", index)
 }
 
-func (sparse SparseVector) add(index int, value int) {
-	if _, err := sparse.get(index); err == nil {
+func (s *SparseVector) add(index int, value int) error {
+	if err := s.validateIndex(index); err != nil {
+		return err
+	}
+
+	if _, err := s.get(index); err == nil {
 		sparseInfo.data[index] = value
 	} else {
 		sparseInfo.data[index] = value
@@ -47,4 +57,14 @@ func (sparse SparseVector) add(index int, value int) {
 		sparseInfo.to[sparseInfo.top] = index
 		sparseInfo.top++
 	}
+
+	return nil
+}
+
+func (s *SparseVector) validateIndex(index int) error {
+	if index < 0 || index > s.length {
+		return fmt.Errorf("index %d is Out of Range", index)
+	}
+
+	return nil
 }
