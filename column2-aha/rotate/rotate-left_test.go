@@ -8,15 +8,23 @@ import (
 )
 
 func TestRotateLeftSlice(t *testing.T) {
-	expectedValues := []string{"c", "d", "e", "a", "b"}
-	str := []string{"a", "b", "c", "d", "e"}
-	rotateLeftSlice(str, 2)
-	utls.CheckArraySameValues(t, utls.StringArrays{Expected: expectedValues, Actual: str})
+	str := [][]string{{"a", "b", "c", "d", "e"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"CC", "AA", "BB"}}
+	expectedValues := [][]string{{"c", "d", "e", "a", "b"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"BB", "CC", "AA"}}
+	shiftLength := []int{2, 1, 0, 0, 3, 0, 2}
+
+	for i, v := range str {
+		rotateLeftSlice(v, shiftLength[i])
+		utls.CheckArraySameValues(t, utls.StringArrays{Expected: expectedValues[i], Actual: v})
+	}
 }
 
 func TestRotateLeftReverse(t *testing.T) {
-	expectedValues := []string{"c", "d", "e", "a", "b"}
-	str := []string{"a", "b", "c", "d", "e"}
-	rotateLeftReverse(str, 2)
-	utls.CheckArraySameValues(t, utls.StringArrays{Expected: expectedValues, Actual: str})
+	str := [][]string{{"a", "b", "c", "d", "e"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"CC", "AA", "BB"}}
+	expectedValues := [][]string{{"c", "d", "e", "a", "b"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"BB", "CC", "AA"}}
+	shiftLength := []int{2, 1, 0, 0, 3, 0, 2}
+
+	for i, v := range str {
+		rotateLeftReverse(v, shiftLength[i])
+		utls.CheckArraySameValues(t, utls.StringArrays{Expected: expectedValues[i], Actual: v})
+	}
 }
