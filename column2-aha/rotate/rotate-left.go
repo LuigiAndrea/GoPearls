@@ -1,20 +1,32 @@
 package rotate
 
+import "fmt"
+
 //using temp slices
-func rotateLeftSlice(str []string, shiftLeft int) {
+func rotateLeftSlice(str []string, shiftLeft int) error {
+	if err := validateShiftLeft(str, shiftLeft); err != nil {
+		return err
+	}
+
 	tempStr := make([]string, shiftLeft)
 	diff := len(str) - shiftLeft
 	copy(tempStr, str[:shiftLeft])
 	copy(str[:diff], str[shiftLeft:])
 	copy(str[diff:], tempStr)
+	return nil
 }
 
 //without uaing temp slice
-func rotateLeftReverse(str []string, shiftLeft int) {
+func rotateLeftReverse(str []string, shiftLeft int) error {
+	if err := validateShiftLeft(str, shiftLeft); err != nil {
+		return err
+	}
+
 	lastElement := len(str) - 1
 	reverse(str, 0, shiftLeft-1)
 	reverse(str, shiftLeft, lastElement)
 	reverse(str, 0, lastElement)
+	return nil
 }
 
 func reverse(str []string, i, j int) {
@@ -28,4 +40,18 @@ func swap(str []string, x, y int) {
 	temp := str[x]
 	str[x] = str[y]
 	str[y] = temp
+}
+
+//ShiftLeftOutOfRange fires when the user provide a wrong shifteft value as parameter for rotate functions
+type ShiftLeftOutOfRange int
+
+func (s ShiftLeftOutOfRange) Error() string {
+	return fmt.Sprintf("ShiftLength %d is Out of Range", s)
+}
+
+func validateShiftLeft(strSlice []string, value int) error {
+	if value < 0 || value > len(strSlice) {
+		return ShiftLeftOutOfRange(value)
+	}
+	return nil
 }
