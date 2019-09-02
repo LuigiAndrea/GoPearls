@@ -41,6 +41,8 @@ func TestShiftLeftOutOfRange(t *testing.T) {
 			_, ok := err.(ShiftLeftOutOfRange)
 			if !ok {
 				t.Errorf("Expected an exception %T for value '%s' and shiftLeft '%d'", err, v, shiftLength[i])
+			} else {
+				t.Logf("%d - %v", i, err)
 			}
 		}
 	}

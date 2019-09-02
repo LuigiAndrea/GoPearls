@@ -37,14 +37,19 @@ func TestBitVectorOperations(t *testing.T) {
 }
 
 func TestBitVectorGetOperationWrongValue(t *testing.T) {
-	testValue := []int{-200, -2, 50000}
+	testValue := []int{-200, -2, 5024}
 	bitVectors, _ := NewBitVector(5000)
 
 	for i, v := range testValue {
 		if _, err := bitVectors.Get(v); err == nil {
-			t.Errorf("Expected an Out of Range error")
+			t.Errorf("Expected an Index Out of Range exception")
 		} else {
-			t.Logf("%d-Get: %v", i, err.Error())
+			switch err.(type) {
+			case IndexBitVectorOutOfRange:
+				t.Logf("%d-Get: %v", i, err)
+			default:
+				t.Errorf("Expected an exception %T for value '%d'", err, v)
+			}
 		}
 	}
 }
@@ -55,29 +60,51 @@ func TestBitVectorSetOperationWrongValue(t *testing.T) {
 
 	for i, v := range testValue {
 		if err := bitVectors.Set(v); err == nil {
-			t.Errorf("Expected an Out of Range error")
+			t.Errorf("Expected an Index Out of Range exception")
 		} else {
-			t.Logf("%d-Set: %v", i, err.Error())
+			switch err.(type) {
+			case IndexBitVectorOutOfRange:
+				t.Logf("%d-Set: %v", i, err)
+			default:
+				t.Errorf("Expected an exception %T for value '%d'", err, v)
+			}
 		}
+	}
+}
 
+func TestBitVectorClearOperationWrongValue(t *testing.T) {
+	testValue := []int{-200, -2, 50000}
+	bitVectors, _ := NewBitVector(5000)
+
+	for i, v := range testValue {
 		if err := bitVectors.Clear(v); err == nil {
-			t.Errorf("Expected an Out of Range error")
+			t.Errorf("Expected an Index Out of Range exception")
 		} else {
-			t.Logf("%d-Clear: %v", i, err.Error())
+			switch err.(type) {
+			case IndexBitVectorOutOfRange:
+				t.Logf("%d-Clear: %v", i, err)
+			default:
+				t.Errorf("Expected an exception %T for value '%d'", err, v)
+			}
 		}
 	}
 }
 
 func TestBitVectorLength(t *testing.T) {
+	testValue := -20
+	if _, err := NewBitVector(testValue); err == nil {
+		t.Errorf("\nExpected a bitvector.NegativeBitVectorSize exception")
+	} else {
+		switch err.(type) {
+		case NegativeBitVectorSize:
+			t.Log(err)
+		default:
+			t.Errorf("Expected an exception %T for value '%d'", err, testValue)
+		}
+	}
 
 	testValues := []int{500000, 31, 0, 32, 2000000, 2000031}
 	expectedValues := []int{15626, 1, 1, 2, 62501, 62501}
-
-	if _, err := NewBitVector(-20); err == nil {
-		t.Errorf("\nExpected an expection: negative n argument in NewBitVector")
-	} else {
-		t.Logf(err.Error())
-	}
 
 	for i := 0; i < len(testValues); i++ {
 		bitVector, _ := NewBitVector(testValues[i])

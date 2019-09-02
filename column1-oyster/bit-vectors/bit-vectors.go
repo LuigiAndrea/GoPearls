@@ -1,8 +1,6 @@
 package bitvector
 
-import (
-	"fmt"
-)
+import "fmt"
 
 //BitVector Type BitVector
 type BitVector []int
@@ -13,7 +11,7 @@ var size = 0
 //NewBitVector create a new BitVector
 func NewBitVector(n int) (bv *BitVector, err error) {
 	if n < 0 {
-		return bv, fmt.Errorf("Negative n '%d' argument in NewBitVector", n)
+		return bv, NegativeBitVectorSize(n)
 	}
 
 	size = (n / bitsPerWord) + 1
@@ -61,7 +59,21 @@ func (bit BitVector) Clear(index int) error {
 
 func (bit BitVector) validateInput(index int) error {
 	if index < 0 || index >= size*bitsPerWord {
-		return fmt.Errorf("Index '%d' is Out of Range", index)
+		return IndexBitVectorOutOfRange(index)
 	}
 	return nil
+}
+
+//IndexBitVectorOutOfRange fires when the user provide a wrong index value as parameter for Get, Set, and Clear functions
+type IndexBitVectorOutOfRange int
+
+func (i IndexBitVectorOutOfRange) Error() string {
+	return fmt.Sprintf("Index '%d' for BitVector is Out of Range", i)
+}
+
+//NegativeBitVectorSize fires when n<0 for NewBitVector
+type NegativeBitVectorSize int
+
+func (n NegativeBitVectorSize) Error() string {
+	return fmt.Sprintf("Size '%d' for NewBitVector must be zero or positive", n)
 }
