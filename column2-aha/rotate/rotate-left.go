@@ -1,6 +1,8 @@
 package rotate
 
-import "fmt"
+import (
+	"fmt"
+)
 
 //using temp slices
 func rotateLeftSlice(str []string, shiftLeft int) error {
@@ -16,7 +18,7 @@ func rotateLeftSlice(str []string, shiftLeft int) error {
 	return nil
 }
 
-//without uaing temp slice
+//without using temp slice
 func rotateLeftReverse(str []string, shiftLeft int) error {
 	if err := validateShiftLeft(str, shiftLeft); err != nil {
 		return err
@@ -27,6 +29,39 @@ func rotateLeftReverse(str []string, shiftLeft int) error {
 	reverse(str, shiftLeft, lastElement)
 	reverse(str, 0, lastElement)
 	return nil
+}
+
+func rotateLeftSwapRange(str []string, shiftLeft int) error {
+	if err := validateShiftLeft(str, shiftLeft); err != nil {
+		return err
+	}
+
+	n := len(str)
+
+	if shiftLeft == 0 || shiftLeft == n {
+		return nil
+	}
+
+	var i, j = shiftLeft, n - shiftLeft
+
+	for i != j {
+		if i > j {
+			swapRange(str, shiftLeft-i, shiftLeft, j)
+			i -= j
+		} else {
+			swapRange(str, shiftLeft-i, shiftLeft+j-i, i)
+			j -= i
+		}
+	}
+
+	swapRange(str, shiftLeft-i, shiftLeft, i)
+	return nil
+}
+
+func swapRange(str []string, a, b, n int) {
+	for i := 0; i < n; i++ {
+		swap(str, a+i, b+i)
+	}
 }
 
 func reverse(str []string, i, j int) {
