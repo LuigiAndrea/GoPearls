@@ -37,13 +37,11 @@ func rotateLeftSwapRange(str []string, shiftLeft int) error {
 	}
 
 	n := len(str)
-
 	if shiftLeft == 0 || shiftLeft == n {
 		return nil
 	}
 
 	var i, j = shiftLeft, n - shiftLeft
-
 	for i != j {
 		if i > j {
 			swapRange(str, shiftLeft-i, shiftLeft, j)
