@@ -31,6 +31,13 @@ func rotateLeftReverse(str []string, shiftLeft int) error {
 	return nil
 }
 
+func reverse(str []string, i, j int) {
+	for ; j > i; i++ {
+		swap(str, i, j)
+		j--
+	}
+}
+
 func rotateLeftSwapRange(str []string, shiftLeft int) error {
 	if err := validateShiftLeft(str, shiftLeft); err != nil {
 		return err
@@ -62,11 +69,46 @@ func swapRange(str []string, a, b, n int) {
 	}
 }
 
-func reverse(str []string, i, j int) {
-	for ; j > i; i++ {
-		swap(str, i, j)
-		j--
+func rotateLeftJuggling(str []string, shiftLeft int) error {
+	if err := validateShiftLeft(str, shiftLeft); err != nil {
+		return err
 	}
+
+	n := len(str)
+	steps := gcd(shiftLeft, n)
+
+	for i := 0; i < steps; i++ {
+		temp := str[i]
+		j := i
+		for {
+			k := shiftLeft + j
+			if k >= n {
+				k -= n
+			}
+			if i == j {
+				break
+			}
+			str[j] = str[k]
+			j = k
+		}
+		str[j] = temp
+	}
+
+	return nil
+}
+
+func gcd(x, y int) int {
+	for x != 0 && y != 0 {
+		if x > y {
+			x %= y
+		} else {
+			y %= x
+		}
+	}
+	if x == 0 {
+		return y
+	}
+	return x
 }
 
 func swap(str []string, x, y int) {
