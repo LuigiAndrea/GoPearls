@@ -69,27 +69,41 @@ func swapRange(str []string, a, b, n int) {
 	}
 }
 
+type juggleNum int
+
+func (j *juggleNum) subtractIfGreaterOrEqualThan(quantityToSubtract int) {
+	qToSub := juggleNum(quantityToSubtract)
+	if *j >= qToSub {
+		*j -= qToSub
+	}
+}
+
+func (j *juggleNum) juggleNumToInt() int {
+	return int(*j)
+}
+
+func (j *juggleNum) setJuggleNum(value int) {
+	*j = juggleNum(value)
+}
+
 func rotateLeftJuggling(str []string, shiftLeft int) error {
 	if err := validateShiftLeft(str, shiftLeft); err != nil {
 		return err
 	}
-
 	n := len(str)
 	steps := gcd(shiftLeft, n)
 
 	for i := 0; i < steps; i++ {
 		temp := str[i]
 		j := i
-		for {
-			k := shiftLeft + j
-			if k >= n {
-				k -= n
-			}
-			if i == k {
-				break
-			}
+		k := juggleNum(shiftLeft + j)
+		k.subtractIfGreaterOrEqualThan(n)
+
+		for i != k.juggleNumToInt() {
 			str[j] = str[k]
-			j = k
+			j = k.juggleNumToInt()
+			k.setJuggleNum(shiftLeft + j)
+			k.subtractIfGreaterOrEqualThan(n)
 		}
 		str[j] = temp
 	}
