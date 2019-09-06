@@ -85,7 +85,7 @@ func rotateLeftJuggling(str []string, shiftLeft int) error {
 			if k >= n {
 				k -= n
 			}
-			if i == j {
+			if i == k {
 				break
 			}
 			str[j] = str[k]

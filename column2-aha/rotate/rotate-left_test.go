@@ -43,8 +43,19 @@ func TestRotateLeftSwapRange(t *testing.T) {
 	}
 }
 
+func TestRotateLeftJuggling(t *testing.T) {
+	str := [][]string{{"a", "b", "c", "d", "e"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"CC", "AA", "BB"}}
+	expectedValues := [][]string{{"c", "d", "e", "a", "b"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"BB", "CC", "AA"}}
+	shiftLength := []int{2, 1, 0, 0, 3, 0, 2}
+
+	for i, v := range str {
+		rotateLeftJuggling(v, shiftLength[i])
+		utls.CheckArraySameValues(t, utls.StringArrays{Expected: expectedValues[i], Actual: v})
+	}
+}
+
 func TestShiftLeftOutOfRange(t *testing.T) {
-	rotateLeftFunc := []func([]string, int) error{rotateLeftSlice, rotateLeftReverse, rotateLeftSwapRange}
+	rotateLeftFunc := []func([]string, int) error{rotateLeftSlice, rotateLeftReverse, rotateLeftSwapRange, rotateLeftJuggling}
 	for _, rotate := range rotateLeftFunc {
 		shiftLeftOutOfRange(t, [][]string{{}, {}, {"a", "b"}}, []int{2, -8, 3}, rotate)
 	}
