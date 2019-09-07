@@ -12,7 +12,7 @@ func CheckArraySameValues(t *testing.T, arrays CheckArrays) {
 	}
 
 	for i := 0; i < arrays.Size(); i++ {
-		if v := arrays.Equals(i); !v {
+		if v := arrays.AreEqual(i); !v {
 			arrays.PrintError(t, i)
 		}
 	}
@@ -21,7 +21,7 @@ func CheckArraySameValues(t *testing.T, arrays CheckArrays) {
 //CheckArrays interface is used for comparing two arrays in testing
 type CheckArrays interface {
 	SameLength() bool
-	Equals(i int) bool
+	AreEqual(i int) bool
 	Size() int
 	PrintError(t *testing.T, i int)
 }
@@ -35,8 +35,8 @@ type StringArrays struct {
 // SameLength checks if the two arrays have the same length
 func (s StringArrays) SameLength() bool { return len(s.Expected) == len(s.Actual) }
 
-// Equals checks if the two arrays have the same value at position i
-func (s StringArrays) Equals(i int) bool { return s.Expected[i] == s.Actual[i] }
+// AreEqual checks if the two arrays have the same value at position i
+func (s StringArrays) AreEqual(i int) bool { return s.Expected[i] == s.Actual[i] }
 
 // Size is the length of StringArrays
 func (s StringArrays) Size() int { return len(s.Expected) }
@@ -55,8 +55,8 @@ type IntArrays struct {
 // SameLength checks if the two arrays have the same length
 func (s IntArrays) SameLength() bool { return len(s.Expected) == len(s.Actual) }
 
-// Equals checks if the two arrays have the same value at position i
-func (s IntArrays) Equals(i int) bool { return s.Expected[i] == s.Actual[i] }
+// AreEqual checks if the two arrays have the same value at position i
+func (s IntArrays) AreEqual(i int) bool { return s.Expected[i] == s.Actual[i] }
 
 // Size is the length of IntArrays struct
 func (s IntArrays) Size() int { return len(s.Expected) }
@@ -75,8 +75,8 @@ type Float64Arrays struct {
 // SameLength checks if the two arrays have the same length
 func (s Float64Arrays) SameLength() bool { return len(s.Expected) == len(s.Actual) }
 
-// Equals checks if the two arrays have the same value at position i
-func (s Float64Arrays) Equals(i int) bool { return s.Expected[i] == s.Actual[i] }
+// AreEqual checks if the two arrays have the same value at position i
+func (s Float64Arrays) AreEqual(i int) bool { return s.Expected[i] == s.Actual[i] }
 
 // Size is the length of Float64Arrays struct
 func (s Float64Arrays) Size() int { return len(s.Expected) }
