@@ -14,9 +14,7 @@ var integers []int
 const Filename = "./kIntegers.data"
 
 func swap(x, y int) {
-	temp := integers[x]
-	integers[x] = integers[y]
-	integers[y] = temp
+	integers[x], integers[y] = integers[y], integers[x]
 }
 
 //MinMaxInterval contains the range of numbers to save in the file
