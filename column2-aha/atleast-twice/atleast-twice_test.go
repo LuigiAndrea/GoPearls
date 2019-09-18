@@ -6,26 +6,49 @@ import (
 	"testing"
 )
 
-func TestAtLeastTwice(t *testing.T) {
-	n := 20
-	list := make([]int, n)
-	populateSequentialList(list, n, map[int]struct{}{2: {}, 7: {}, 13: {}})
+type testData struct {
+	lengthList    int
+	indexesToSkip map[int]struct{}
+	expectedValue int
+}
 
-	if ok, v := searchAtLeastTwiceValue(list); ok {
-		if v != -9 {
-			t.Errorf("\nExpected value: '%d' - Actual value '%d' \nList: %#v", -10, v, list)
-		} else {
-			t.Logf("Repeated element '%d' \nList %#v", v, list)
-		}
-	} else {
-		t.Errorf("Repeated element not detected \nList: %#v", list)
+func TestAtLeastTwice(t *testing.T) {
+
+	tests := []testData{
+		testData{lengthList: 20, indexesToSkip: map[int]struct{}{2: {}, 3: {}, 7: {}, 13: {}}, expectedValue: -9},
+		testData{lengthList: 10, indexesToSkip: map[int]struct{}{7: {}}, expectedValue: 1},
+		testData{lengthList: 2, indexesToSkip: map[int]struct{}{1: {}}, expectedValue: -1},
 	}
 
+	for _, test := range tests {
+
+		list := make([]int, test.lengthList)
+		populateSequentialList(list, test.lengthList, test.indexesToSkip)
+
+		if ok, v := searchAtLeastTwiceValue(list); ok {
+			if v != test.expectedValue {
+				t.Errorf("\nExpected value: '%d' - Actual value '%d' \nList: %#v", test.expectedValue, v, list)
+			} else {
+				t.Logf("Repeated element: '%d' \nList: %#v", v, list)
+			}
+		} else {
+			t.Errorf("Repeated element not detected \nList: %#v", list)
+		}
+	}
+}
+
+func TestNilIndexes(t *testing.T) {
+	n := 5
+	list := make([]int, n)
 	populateSequentialList(list, n, nil)
 
 	if ok, _ := searchAtLeastTwiceValue(list); ok {
 		t.Errorf("No element appears at least twice in the list \nList: %#v", list)
 	}
+}
+
+func TestAtLeastTwiceEdgeCases(t *testing.T) {
+
 }
 
 type skipIndexes map[int]struct{}
@@ -39,17 +62,17 @@ func (s skipIndexes) contains(index int) bool {
 
 //nil indexes means no value is repeated
 func populateSequentialList(list []int, n int, indexes skipIndexes) {
-	j := 0
+	repeated := 0
 	odd := n % 2
 	midPoint := n / 2
 	for i := -midPoint; i < midPoint+odd; i++ {
 		idx := i + midPoint
 		if indexes != nil && idx != 0 && indexes.contains(idx) {
-			list[i+midPoint] = i + j - 1
-			j -= 1
+			list[i+midPoint] = i + repeated - 1
+			repeated -= 1
 			continue
 		}
 
-		list[i+midPoint] = i + j
+		list[i+midPoint] = i + repeated
 	}
 }
