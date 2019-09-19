@@ -37,18 +37,24 @@ func TestAtLeastTwice(t *testing.T) {
 	}
 }
 
-func TestNilIndexes(t *testing.T) {
-	n := 5
-	list := make([]int, n)
-	populateSequentialList(list, n, nil)
+func TestEdgeCases(t *testing.T) {
 
-	if ok, _ := searchAtLeastTwiceValue(list); ok {
-		t.Errorf("No element appears at least twice in the list \nList: %#v", list)
+	tests := []testData{
+		testData{lengthList: 5, indexesToSkip: nil, expectedValue: 5},
+		testData{lengthList: 0, indexesToSkip: nil, expectedValue: 0},
 	}
-}
 
-func TestAtLeastTwiceEdgeCases(t *testing.T) {
+	for _, test := range tests {
+		list := make([]int, test.lengthList)
 
+		populateSequentialList(list, test.lengthList, nil)
+
+		if ok, v := searchAtLeastTwiceValue(list); ok {
+			t.Errorf("No element appears at least twice in the list \nList: %#v", list)
+		} else if v != test.expectedValue {
+			t.Errorf("\nExpected value: '%d' - Actual value '%d' \nList: %#v", test.expectedValue, test.lengthList, list)
+		}
+	}
 }
 
 type skipIndexes map[int]struct{}
