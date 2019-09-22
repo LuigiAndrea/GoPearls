@@ -2,6 +2,7 @@ package rotate
 
 import (
 	"fmt"
+	. "sort"
 )
 
 //using temp slices
@@ -23,7 +24,7 @@ func rotateLeftReverse(str []string, shiftLeft int) error {
 	if err := validateShiftLeft(str, shiftLeft); err != nil {
 		return err
 	}
-
+	str = StringSlice(str)
 	lastElement := len(str) - 1
 	reverse(str, 0, shiftLeft-1)
 	reverse(str, shiftLeft, lastElement)
@@ -31,9 +32,9 @@ func rotateLeftReverse(str []string, shiftLeft int) error {
 	return nil
 }
 
-func reverse(str []string, i, j int) {
+func reverse(str StringSlice, i, j int) {
 	for ; j > i; i++ {
-		swap(str, i, j)
+		str.Swap(i, j)
 		j--
 	}
 }
@@ -63,9 +64,9 @@ func rotateLeftSwapRange(str []string, shiftLeft int) error {
 	return nil
 }
 
-func swapRange(str []string, a, b, n int) {
+func swapRange(str StringSlice, a, b, n int) {
 	for i := 0; i < n; i++ {
-		swap(str, a+i, b+i)
+		str.Swap(a+i, b+i)
 	}
 }
 
@@ -123,12 +124,6 @@ func gcd(x, y int) int {
 		return y
 	}
 	return x
-}
-
-func swap(str []string, x, y int) {
-	temp := str[x]
-	str[x] = str[y]
-	str[y] = temp
 }
 
 //ShiftLeftOutOfRange fires when the user provide a wrong shifteft value as parameter for rotate functions
