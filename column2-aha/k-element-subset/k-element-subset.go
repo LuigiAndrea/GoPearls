@@ -9,7 +9,7 @@ import (
 //Given a set of n real numbers, a real number t, and an integer k,
 // how quickly can you determine whether there exists a k-element subset of the set that sums to at most t?
 
-// n*log(n), true if the k-element subset exists
+// O(n*log(n)), true if the k-element subset exists
 func existKSubset(list []int, t, k int) bool {
 	listToCheck := sort.IntSlice(list)
 	listToCheck.Sort()
@@ -20,6 +20,7 @@ func existKSubset(list []int, t, k int) bool {
 	return false
 }
 
+// O(n), true if the k-element subset exists
 func existKSubsetQuickSelect(list []int, t, k int) bool {
 	subsetKQuickSelect(list, 0, len(list)-1, k)
 	result := sumElements(list[:k])
@@ -47,12 +48,17 @@ func subsetKQuickSelect(list []int, left, right, k int) {
 
 //Partition the list in half using a random pivot, return the index of the pivot
 func partition(list []int, left, right int) int {
-	rand.Seed(time.Now().UnixNano())
-	pos := rand.Intn(right-left) + left
-	pivot := list[pos]
-
 	intSlice := sort.IntSlice(list)
-	intSlice.Swap(pos, right)
+	var pivot int
+	diff := right - left
+	if diff < 3 {
+		pivot = list[right]
+	} else {
+		rand.Seed(time.Now().UnixNano())
+		pos := rand.Intn(right-left) + left
+		pivot = list[pos]
+		intSlice.Swap(pos, right)
+	}
 
 	i := left
 	for j := left; j < right; j++ {

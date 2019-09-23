@@ -1,8 +1,16 @@
 package utilities
 
 import (
+	"reflect"
+	"runtime"
+	"strings"
 	"testing"
 )
+
+//GetFuncName return the name of the function passed as parameter
+func GetFuncName(f interface{}) string {
+	return strings.Split(runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name(), ".")[1]
+}
 
 //CheckArraySameValues Check if two arrays have the same values and in the same order
 func CheckArraySameValues(t *testing.T, arrays CheckArrays) {
