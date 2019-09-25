@@ -4,75 +4,64 @@ package rotate
 
 import (
 	utls "GoPearls/utilities"
-	"reflect"
-	"runtime"
-	"strings"
 	"testing"
 )
 
-func TestRotateLeftSlice(t *testing.T) {
-	str := [][]string{{"a", "b", "c", "d", "e"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"CC", "AA", "BB"}}
-	expectedValues := [][]string{{"c", "d", "e", "a", "b"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"BB", "CC", "AA"}}
-	shiftLength := []int{2, 1, 0, 0, 3, 0, 2, 8}
-
-	for i, v := range str {
-		rotateLeftSlice(v, shiftLength[i])
-		utls.CheckArraySameValues(t, utls.StringArrays{Expected: expectedValues[i], Actual: v})
-	}
+type testData struct {
+	str           []string
+	shift         int
+	expectedValue []string
 }
 
-func TestRotateLeftReverse(t *testing.T) {
-	str := [][]string{{"a", "b", "c", "d", "e"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"CC", "AA", "BB"}}
-	expectedValues := [][]string{{"c", "d", "e", "a", "b"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"BB", "CC", "AA"}}
-	shiftLength := []int{2, 1, 0, 0, 3, 0, 2}
+var rotateLeftFunc = []func([]string, int) error{rotateLeftSlice, rotateLeftReverse, rotateLeftSwapRange, rotateLeftJuggling}
 
-	for i, v := range str {
-		rotateLeftReverse(v, shiftLength[i])
-		utls.CheckArraySameValues(t, utls.StringArrays{Expected: expectedValues[i], Actual: v})
+func TestRotateLeft(t *testing.T) {
+
+	tests := []testData{
+		testData{str: []string{"a", "b", "c", "d", "e"}, shift: 2, expectedValue: []string{"c", "d", "e", "a", "b"}},
+		testData{str: []string{"c"}, shift: 1, expectedValue: []string{"c"}},
+		testData{str: []string{""}, shift: 0, expectedValue: []string{""}},
+		testData{str: []string{}, shift: 0, expectedValue: []string{}},
+		testData{str: []string{"d", "e", "a"}, shift: 3, expectedValue: []string{"d", "e", "a"}},
+		testData{str: []string{"T", "R", "E"}, shift: 0, expectedValue: []string{"T", "R", "E"}},
+		testData{str: []string{"CC", "AA", "BB"}, shift: 2, expectedValue: []string{"BB", "CC", "AA"}},
 	}
-}
 
-func TestRotateLeftSwapRange(t *testing.T) {
-	str := [][]string{{"a", "b", "c", "d", "e"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"CC", "AA", "BB"}}
-	expectedValues := [][]string{{"c", "d", "e", "a", "b"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"BB", "CC", "AA"}}
-	shiftLength := []int{2, 1, 0, 0, 3, 0, 2}
-
-	for i, v := range str {
-		rotateLeftSwapRange(v, shiftLength[i])
-		utls.CheckArraySameValues(t, utls.StringArrays{Expected: expectedValues[i], Actual: v})
-	}
-}
-
-func TestRotateLeftJuggling(t *testing.T) {
-	str := [][]string{{"a", "b", "c", "d", "e"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"CC", "AA", "BB"}}
-	expectedValues := [][]string{{"c", "d", "e", "a", "b"}, {"c"}, {""}, {}, {"d", "e", "a"}, {"T", "R", "E"}, {"BB", "CC", "AA"}}
-	shiftLength := []int{2, 1, 0, 0, 3, 0, 2}
-
-	for i, v := range str {
-		rotateLeftJuggling(v, shiftLength[i])
-		utls.CheckArraySameValues(t, utls.StringArrays{Expected: expectedValues[i], Actual: v})
+	for _, rotate := range rotateLeftFunc {
+		t.Logf("%s", utls.GetFuncName(rotate))
+		for _, test := range tests {
+			actualStr := make([]string, len(test.str))
+			copy(actualStr, test.str)
+			rotate(actualStr, test.shift)
+			utls.CheckArraySameValues(t, utls.StringArrays{Expected: test.expectedValue, Actual: actualStr})
+		}
 	}
 }
 
 func TestShiftLeftOutOfRange(t *testing.T) {
-	rotateLeftFunc := []func([]string, int) error{rotateLeftSlice, rotateLeftReverse, rotateLeftSwapRange, rotateLeftJuggling}
+	tests := []testData{
+		testData{str: []string{}, shift: 2},
+		testData{str: []string{}, shift: -8},
+		testData{str: []string{"a", "b"}, shift: 3},
+	}
+
 	for _, rotate := range rotateLeftFunc {
-		shiftLeftOutOfRange(t, [][]string{{}, {}, {"a", "b"}}, []int{2, -8, 3}, rotate)
+		for _, test := range tests {
+			shiftLeftOutOfRange(t, test.str, test.shift, rotate)
+		}
 	}
 }
 
-func shiftLeftOutOfRange(t *testing.T, str [][]string, shiftLength []int, f func([]string, int) error) {
-	for i, v := range str {
-		var err error
-		if err = f(v, shiftLength[i]); err == nil {
-			t.Error("Expected an exception of 'rotate.ShiftLeftOutOfRange'")
+func shiftLeftOutOfRange(t *testing.T, str []string, shiftLength int, f func([]string, int) error) {
+	var err error
+	if err = f(str, shiftLength); err == nil {
+		t.Errorf("%s - Expected an exception of 'rotate.ShiftLeftOutOfRange'", utls.GetFuncName(f))
+	} else {
+		_, ok := err.(ShiftLeftOutOfRange)
+		if !ok {
+			t.Errorf("%s - Expected an exception %T for value '%s' and shiftLeft '%d'", utls.GetFuncName(f), err, str, shiftLength)
 		} else {
-			_, ok := err.(ShiftLeftOutOfRange)
-			if !ok {
-				t.Errorf("Expected an exception %T for value '%s' and shiftLeft '%d'", err, v, shiftLength[i])
-			} else {
-				t.Logf("%s - %v", strings.Split(runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name(), ".")[1], err)
-			}
+			t.Logf("%s - %v", utls.GetFuncName(f), err)
 		}
 	}
 }
