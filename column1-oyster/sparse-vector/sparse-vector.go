@@ -62,8 +62,8 @@ func (s *SparseVector) add(index int, value int) error {
 }
 
 func (s *SparseVector) validateIndex(index int) error {
-	if index < 0 || index > s.length {
-		return fmt.Errorf("index %d is Out of Range", index)
+	if index < 0 || index >= s.length {
+		return fmt.Errorf("Index %d is Out of Range", index)
 	}
 
 	return nil

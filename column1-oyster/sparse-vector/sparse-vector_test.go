@@ -37,20 +37,28 @@ func TestSparseVector(t *testing.T) {
 }
 
 func TestSparseVectorNegativeIndex(t *testing.T) {
+	indexesAdd := []int{10, -4, 3}
+	indexesGet := []int{12, 3, -4}
+
 	sparseVector, _ := NewSparseVector(3)
-	err := sparseVector.add(10, 3)
-	checkError(t, err)
-	err = sparseVector.add(-4, 30)
-	checkError(t, err)
-	_, err = sparseVector.get(12)
-	checkError(t, err)
-	_, err = sparseVector.get(-6)
-	checkError(t, err)
+	for _, v := range indexesAdd {
+		err := sparseVector.add(v, 100)
+		checkError(t, v, err)
+	}
+
+	for _, v := range indexesGet {
+		_, err := sparseVector.get(v)
+		checkError(t, v, err)
+	}
+
+	idx := -3
+	_, err := NewSparseVector(idx)
+	checkError(t, idx, err)
 }
 
-func checkError(t *testing.T, err error) {
+func checkError(t *testing.T, idx int, err error) {
 	if err == nil {
-		t.Errorf("Expected an index out of range")
+		t.Errorf("Expected index '%d' out of range", idx)
 	} else {
 		t.Log(err.Error())
 	}
