@@ -11,6 +11,10 @@ import (
 
 // O(n*log(n)), true if the k-element subset exists
 func existKSubset(list []int, t, k int) bool {
+	if r := areInputsValid(list, t, k); r == false {
+		return r
+	}
+
 	listToCheck := sort.IntSlice(list)
 	listToCheck.Sort()
 	result := sumElements(listToCheck[:k])
@@ -22,6 +26,10 @@ func existKSubset(list []int, t, k int) bool {
 
 // O(n), true if the k-element subset exists
 func existKSubsetQuickSelect(list []int, t, k int) bool {
+	if r := areInputsValid(list, t, k); r == false {
+		return r
+	}
+
 	subsetKQuickSelect(list, 0, len(list)-1, k)
 	result := sumElements(list[:k])
 
@@ -78,4 +86,19 @@ func sumElements(elements []int) int {
 		sum += v
 	}
 	return sum
+}
+
+func areInputsValid(list []int, t, k int) bool {
+	size := 0
+	res := false
+	if list != nil {
+		size = len(list)
+		if size == 0 || k > size {
+			res = false
+		} else {
+			res = true
+		}
+	}
+
+	return res
 }

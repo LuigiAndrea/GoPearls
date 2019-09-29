@@ -37,3 +37,22 @@ func TestExistKSubset(t *testing.T) {
 		}
 	}
 }
+
+func TestExistKSubsetEdgeCases(t *testing.T) {
+	tests := []testData{
+		testData{subset: []int{}, t: -10, k: -2, expectedValue: false},
+		testData{subset: nil, t: -10, k: 5, expectedValue: false},
+		testData{subset: []int{2, 3}, t: 5, k: 3, expectedValue: false},
+	}
+
+	funcToTest := []func([]int, int, int) bool{existKSubset, existKSubsetQuickSelect}
+
+	for _, f := range funcToTest {
+		for _, test := range tests {
+			if r := f(test.subset, test.t, test.k); r != test.expectedValue {
+				t.Errorf("\n%s: Expected value: '%t' - Actual value '%t' \nList: %#v \nt: %d, k: %d",
+					utilities.GetFuncName(f), test.expectedValue, r, test.subset, test.t, test.k)
+			}
+		}
+	}
+}
