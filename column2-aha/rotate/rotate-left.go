@@ -1,8 +1,9 @@
 package rotate
 
 import (
+	"GoPearls/utilities"
 	"fmt"
-	. "sort"
+	"sort"
 )
 
 //using temp slices
@@ -24,19 +25,12 @@ func rotateLeftReverse(str []string, shiftLeft int) error {
 	if err := validateShiftLeft(str, shiftLeft); err != nil {
 		return err
 	}
-	str = StringSlice(str)
-	lastElement := len(str) - 1
-	reverse(str, 0, shiftLeft-1)
-	reverse(str, shiftLeft, lastElement)
-	reverse(str, 0, lastElement)
+	strToReverse := sort.StringSlice(str)
+	lastElement := len(strToReverse) - 1
+	utilities.Reverse(strToReverse, 0, shiftLeft-1)
+	utilities.Reverse(strToReverse, shiftLeft, lastElement)
+	utilities.Reverse(strToReverse, 0, lastElement)
 	return nil
-}
-
-func reverse(str StringSlice, i, j int) {
-	for ; j > i; i++ {
-		str.Swap(i, j)
-		j--
-	}
 }
 
 func rotateLeftSwapRange(str []string, shiftLeft int) error {
@@ -64,7 +58,7 @@ func rotateLeftSwapRange(str []string, shiftLeft int) error {
 	return nil
 }
 
-func swapRange(str StringSlice, a, b, n int) {
+func swapRange(str sort.StringSlice, a, b, n int) {
 	for i := 0; i < n; i++ {
 		str.Swap(a+i, b+i)
 	}
