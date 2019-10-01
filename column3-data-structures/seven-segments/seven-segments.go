@@ -1,6 +1,7 @@
 package segments
 
 import (
+	"GoPearls/utilities"
 	"math"
 )
 
@@ -10,15 +11,17 @@ import (
 // 5|0_|6
 var segments [7]byte
 
-func displayNumber(number int16) [5]byte {
-	var display [5]byte
+func displayNumber(number int16) []byte {
+	var display []byte
 	buildSegments()
-	i := len(display) - 1
+
 	for number > 0 {
-		display[i] = encodeDigit(number % 10)
+		display = append(display, encodeDigit(number%10))
 		number /= 10
-		i--
 	}
+
+	size := len(display)
+	utilities.Reverse(utilities.ByteSlice(display), 0, size-1)
 
 	return display
 }
