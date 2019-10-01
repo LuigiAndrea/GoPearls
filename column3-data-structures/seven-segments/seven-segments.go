@@ -20,9 +20,7 @@ func displayNumber(number int16) []byte {
 		number /= 10
 	}
 
-	size := len(display)
-	utilities.Reverse(utilities.ByteSlice(display), 0, size-1)
-
+	utilities.Reverse(utilities.ByteSlice(display), 0, len(display)-1)
 	return display
 }
 
