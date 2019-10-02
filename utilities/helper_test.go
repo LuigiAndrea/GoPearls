@@ -12,7 +12,7 @@ type testData struct {
 	testValues    []Data
 }
 
-func TestPreAppendInt(t *testing.T) {
+func TestPreAppend(t *testing.T) {
 
 	tests := []testData{
 		testData{testValues: []Data{1, 2, -6, 111},
