@@ -61,17 +61,17 @@ type IntArrays struct {
 }
 
 // SameLength checks if the two arrays have the same length
-func (s IntArrays) SameLength() bool { return len(s.Expected) == len(s.Actual) }
+func (iarray IntArrays) SameLength() bool { return len(iarray.Expected) == len(iarray.Actual) }
 
 // AreEqual checks if the two arrays have the same value at position i
-func (s IntArrays) AreEqual(i int) bool { return s.Expected[i] == s.Actual[i] }
+func (iarray IntArrays) AreEqual(i int) bool { return iarray.Expected[i] == iarray.Actual[i] }
 
 // Size is the length of IntArrays struct
-func (s IntArrays) Size() int { return len(s.Expected) }
+func (iarray IntArrays) Size() int { return len(iarray.Expected) }
 
 // PrintError displays an error message when the values at position i are different
-func (s IntArrays) PrintError(t *testing.T, i int) {
-	t.Errorf("\nExpected '%d' - Actual '%d'", s.Expected[i], s.Actual[i])
+func (iarray IntArrays) PrintError(t *testing.T, i int) {
+	t.Errorf("\nExpected '%d' - Actual '%d'", iarray.Expected[i], iarray.Actual[i])
 }
 
 //Float64Arrays attaches the methods of CheckArrays to struct Float64Arrays
@@ -81,15 +81,35 @@ type Float64Arrays struct {
 }
 
 // SameLength checks if the two arrays have the same length
-func (s Float64Arrays) SameLength() bool { return len(s.Expected) == len(s.Actual) }
+func (f Float64Arrays) SameLength() bool { return len(f.Expected) == len(f.Actual) }
 
 // AreEqual checks if the two arrays have the same value at position i
-func (s Float64Arrays) AreEqual(i int) bool { return s.Expected[i] == s.Actual[i] }
+func (f Float64Arrays) AreEqual(i int) bool { return f.Expected[i] == f.Actual[i] }
 
 // Size is the length of Float64Arrays struct
-func (s Float64Arrays) Size() int { return len(s.Expected) }
+func (f Float64Arrays) Size() int { return len(f.Expected) }
 
 // PrintError displays an error message when the values at position i are different
-func (s Float64Arrays) PrintError(t *testing.T, i int) {
-	t.Errorf("\nExpected '%0.3f' - Actual '%0.3f'", s.Expected[i], s.Actual[i])
+func (f Float64Arrays) PrintError(t *testing.T, i int) {
+	t.Errorf("\nExpected '%0.3f' - Actual '%0.3f'", f.Expected[i], f.Actual[i])
+}
+
+//DataArrays attaches the methods of CheckArrays to struct DataArrays
+type DataArrays struct {
+	Expected []Data
+	Actual   []Data
+}
+
+// SameLength checks if the two arrays have the same length
+func (d DataArrays) SameLength() bool { return len(d.Expected) == len(d.Actual) }
+
+// AreEqual checks if the two arrays have the same value at position i
+func (d DataArrays) AreEqual(i int) bool { return d.Expected[i] == d.Actual[i] }
+
+// Size is the length of DataArrays struct
+func (d DataArrays) Size() int { return len(d.Expected) }
+
+// PrintError displays an error message when the values at position i are different
+func (d DataArrays) PrintError(t *testing.T, i int) {
+	t.Errorf("\nExpected '%v' - Actual '%v'", d.Expected[i], d.Actual[i])
 }

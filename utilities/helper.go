@@ -20,7 +20,7 @@ func (p ByteSlice) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 //Data is used as generic type
 type Data interface{}
 
-//PreAppend a value to a slice
+//PreAppend a generic value to a slice
 func PreAppend(list []Data, elements ...Data) []Data {
 	for _, element := range elements {
 		list = append([]Data{element}, list...)

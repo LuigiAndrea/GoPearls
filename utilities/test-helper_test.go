@@ -33,3 +33,12 @@ func TestUtilitiesTesttHelperFloat64(t *testing.T) {
 		CheckArraySameValues(t, Float64Arrays{Expected: expectedValues[i], Actual: actualValue})
 	}
 }
+
+func TestUtilitiesTesttHelperDataType(t *testing.T) {
+	actualValues := [][]Data{{-1, 3}, {}}
+	expectedValues := [][]Data{{-1, 3}, {}}
+
+	for i, actualValue := range actualValues {
+		CheckArraySameValues(t, DataArrays{Expected: expectedValues[i], Actual: actualValue})
+	}
+}
