@@ -13,9 +13,9 @@ func Reverse(data sort.Interface, i, j int) {
 //ByteSlice attaches the methods of Interface to []byte, sorting in increasing order.
 type ByteSlice []byte
 
-func (p ByteSlice) Len() int           { return len(p) }
-func (p ByteSlice) Less(i, j int) bool { return p[i] < p[j] }
-func (p ByteSlice) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (b ByteSlice) Len() int           { return len(b) }
+func (b ByteSlice) Less(i, j int) bool { return b[i] < b[j] }
+func (b ByteSlice) Swap(i, j int)      { b[i], b[j] = b[j], b[i] }
 
 //Data is used as generic type
 type Data interface{}
