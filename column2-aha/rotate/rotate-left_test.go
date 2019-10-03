@@ -33,7 +33,9 @@ func TestRotateLeft(t *testing.T) {
 			actualStr := make([]string, len(test.str))
 			copy(actualStr, test.str)
 			rotate(actualStr, test.shift)
-			utls.CheckArraySameValues(t, utls.StringArrays{Expected: test.expectedValue, Actual: actualStr})
+			if err := utls.CheckArraySameValues(utls.StringArrays{Expected: test.expectedValue, Actual: actualStr}); err != nil {
+				t.Errorf(err.Error())
+			}
 		}
 	}
 }

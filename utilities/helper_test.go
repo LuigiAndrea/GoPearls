@@ -28,6 +28,8 @@ func TestPreAppend(t *testing.T) {
 
 	for _, test := range tests {
 		data := PreAppend(test.testValues, test.newElements...)
-		CheckArraySameValues(t, DataArrays{Expected: test.expectedValue, Actual: data})
+		if err := CheckArraySameValues(DataArrays{Expected: test.expectedValue, Actual: data}); err != nil {
+			t.Errorf(err.Error())
+		}
 	}
 }

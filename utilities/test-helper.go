@@ -1,10 +1,10 @@
 package utilities
 
 import (
+	"fmt"
 	"reflect"
 	"runtime"
 	"strings"
-	"testing"
 )
 
 //GetFuncName return the name of the function passed as parameter
@@ -13,17 +13,18 @@ func GetFuncName(f interface{}) string {
 }
 
 //CheckArraySameValues Check if two arrays have the same values and in the same order
-func CheckArraySameValues(t *testing.T, arrays CheckArrays) {
+func CheckArraySameValues(arrays CheckArrays) error {
 	if !arrays.SameLength() {
-		t.Errorf("\nDifferent number of elements between the two arrays")
-		return
+		return fmt.Errorf("\nDifferent number of elements between the two arrays")
 	}
 
 	for i := 0; i < arrays.Size(); i++ {
 		if v := arrays.AreEqual(i); !v {
-			arrays.PrintError(t, i)
+			return arrays.GetError(i)
 		}
 	}
+
+	return nil
 }
 
 //CheckArrays interface is used for comparing two arrays in testing
@@ -31,7 +32,7 @@ type CheckArrays interface {
 	SameLength() bool
 	AreEqual(i int) bool
 	Size() int
-	PrintError(t *testing.T, i int)
+	GetError(i int) error
 }
 
 // StringArrays attaches the methods of CheckArrays to struct StringArray
@@ -49,9 +50,9 @@ func (s StringArrays) AreEqual(i int) bool { return s.Expected[i] == s.Actual[i]
 // Size is the length of StringArrays
 func (s StringArrays) Size() int { return len(s.Expected) }
 
-// PrintError displays an error message when the values at position i are different
-func (s StringArrays) PrintError(t *testing.T, i int) {
-	t.Errorf("\nExpected '%s' - Actual '%s'", s.Expected[i], s.Actual[i])
+// GetError displays an error message when the values at position i are different
+func (s StringArrays) GetError(i int) error {
+	return fmt.Errorf("\nExpected '%s' - Actual '%s'", s.Expected[i], s.Actual[i])
 }
 
 // IntArrays attaches the methods of CheckArrays to struct IntArrays
@@ -69,9 +70,9 @@ func (iarray IntArrays) AreEqual(i int) bool { return iarray.Expected[i] == iarr
 // Size is the length of IntArrays struct
 func (iarray IntArrays) Size() int { return len(iarray.Expected) }
 
-// PrintError displays an error message when the values at position i are different
-func (iarray IntArrays) PrintError(t *testing.T, i int) {
-	t.Errorf("\nExpected '%d' - Actual '%d'", iarray.Expected[i], iarray.Actual[i])
+// GetError displays an error message when the values at position i are different
+func (iarray IntArrays) GetError(i int) error {
+	return fmt.Errorf("\nExpected '%d' - Actual '%d'", iarray.Expected[i], iarray.Actual[i])
 }
 
 //Float64Arrays attaches the methods of CheckArrays to struct Float64Arrays
@@ -89,9 +90,9 @@ func (f Float64Arrays) AreEqual(i int) bool { return f.Expected[i] == f.Actual[i
 // Size is the length of Float64Arrays struct
 func (f Float64Arrays) Size() int { return len(f.Expected) }
 
-// PrintError displays an error message when the values at position i are different
-func (f Float64Arrays) PrintError(t *testing.T, i int) {
-	t.Errorf("\nExpected '%0.3f' - Actual '%0.3f'", f.Expected[i], f.Actual[i])
+// GetError displays an error message when the values at position i are different
+func (f Float64Arrays) GetError(i int) error {
+	return fmt.Errorf("\nExpected '%0.3f' - Actual '%0.3f'", f.Expected[i], f.Actual[i])
 }
 
 //DataArrays attaches the methods of CheckArrays to struct DataArrays
@@ -109,7 +110,7 @@ func (d DataArrays) AreEqual(i int) bool { return d.Expected[i] == d.Actual[i] }
 // Size is the length of DataArrays struct
 func (d DataArrays) Size() int { return len(d.Expected) }
 
-// PrintError displays an error message when the values at position i are different
-func (d DataArrays) PrintError(t *testing.T, i int) {
-	t.Errorf("\nExpected '%v' - Actual '%v'", d.Expected[i], d.Actual[i])
+// GetError displays an error message when the values at position i are different
+func (d DataArrays) GetError(i int) error {
+	return fmt.Errorf("\nExpected '%v' - Actual '%v'", d.Expected[i], d.Actual[i])
 }
