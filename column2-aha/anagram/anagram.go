@@ -15,7 +15,7 @@ func ListAnagrams(dictionary []string) map[string][]string {
 func buildSignature(dic []string) Signature {
 	signatures := NewSignature(len(dic))
 	for i, v := range dic {
-		sign := sort.StringSlice(strings.Split(string(v), ""))
+		sign := sort.StringSlice(strings.Split(v, ""))
 		sort.Stable(sign)
 		signatures[i][0], signatures[i][1] = strings.Join(sign, ""), v
 	}
