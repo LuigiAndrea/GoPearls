@@ -95,6 +95,26 @@ func (f Float64Arrays) GetError(i int) error {
 	return fmt.Errorf("\nExpected '%0.3f' - Actual '%0.3f'", f.Expected[i], f.Actual[i])
 }
 
+//ByteArrays attaches the methods of CheckArrays to struct ByteArrays
+type ByteArrays struct {
+	Expected []byte
+	Actual   []byte
+}
+
+// SameLength checks if the two arrays have the same length
+func (b ByteArrays) SameLength() bool { return len(b.Expected) == len(b.Actual) }
+
+// AreEqual checks if the two arrays have the same value at position i
+func (b ByteArrays) AreEqual(i int) bool { return b.Expected[i] == b.Actual[i] }
+
+// Size is the length of ByteArrays struct
+func (b ByteArrays) Size() int { return len(b.Expected) }
+
+// GetError displays an error message when the values at position i are different
+func (b ByteArrays) GetError(i int) error {
+	return fmt.Errorf("\nExpected '%b' - Actual '%b'", b.Expected[i], b.Actual[i])
+}
+
 //DataArrays attaches the methods of CheckArrays to struct DataArrays
 type DataArrays struct {
 	Expected []Data
