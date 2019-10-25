@@ -5,15 +5,21 @@ import (
 	"math"
 )
 
+//Program that displays a 16-bit positive integer in five seven-segment digits
 //segments
 //   2_
 // 3|1_|4
 // 5|0_|6
 var segments [7]byte
 
-func displayNumber(number int16) []byte {
+func displayNumber(number uint16) []byte {
+
 	var display []byte
 	buildSegments()
+
+	if number == 0 {
+		return append(display, encodeDigit(number))
+	}
 
 	for number > 0 {
 		display = append(display, encodeDigit(number%10))
@@ -30,7 +36,7 @@ func buildSegments() {
 	}
 }
 
-func encodeDigit(digit int16) byte {
+func encodeDigit(digit uint16) byte {
 	var encodedDigit byte
 	switch digit {
 	case 0:
