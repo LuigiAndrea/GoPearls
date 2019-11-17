@@ -3,8 +3,9 @@
 package segments
 
 import (
-	"GoPearls/utilities"
 	"testing"
+
+	goth "github.com/LuigiAndrea/test-helper"
 )
 
 type testData struct {
@@ -33,7 +34,7 @@ func TestDispalyNumbers(t *testing.T) {
 
 	for _, test := range tests {
 		result := displayNumber(test.number)
-		if err := utilities.CheckArraySameValues(utilities.ByteArrays{Expected: test.expectedValue, Actual: result}); err != nil {
+		if err := goth.CheckArraySameValues(goth.ByteArrays{Expected: test.expectedValue, Actual: result}); err != nil {
 			t.Errorf(err.Error())
 		}
 	}

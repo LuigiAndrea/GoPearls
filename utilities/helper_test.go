@@ -4,31 +4,34 @@ package utilities
 
 import (
 	"testing"
+
+	goth "github.com/LuigiAndrea/test-helper"
 )
 
 type testData struct {
-	expectedValue []Data
-	newElements   []Data
-	testValues    []Data
+	expectedValues []goth.Data
+	newElements    []goth.Data
+	testValues     []goth.Data
 }
 
 func TestPreAppend(t *testing.T) {
 
 	tests := []testData{
-		testData{testValues: []Data{1, 2, -6, 111},
-			expectedValue: []Data{12, 3, 1, 2, -6, 111},
-			newElements:   []Data{3, 12}},
-		testData{testValues: []Data{"Ciao", "Hello", "Car"},
-			expectedValue: []Data{"NewCiao", "Ciao", "Hello", "Car"},
-			newElements:   []Data{"NewCiao"}},
-		testData{testValues: []Data{"Ciao", "Hello", "Car"},
-			expectedValue: []Data{123, "Ciao", "Hello", "Car"},
-			newElements:   []Data{123}},
+		testData{testValues: []goth.Data{1, 2, -6, 111},
+			expectedValues: []goth.Data{12, 3, 1, 2, -6, 111},
+			newElements:    []goth.Data{3, 12}},
+		testData{testValues: []goth.Data{"Ciao", "Hello", "Car"},
+			expectedValues: []goth.Data{"NewCiao", "Ciao", "Hello", "Car"},
+			newElements:    []goth.Data{"NewCiao"}},
+		testData{testValues: []goth.Data{"Ciao", "Hello", "Car"},
+			expectedValues: []goth.Data{123, "Ciao", "Hello", "Car"},
+			newElements:    []goth.Data{123}},
 	}
 
 	for _, test := range tests {
+
 		data := PreAppend(test.testValues, test.newElements...)
-		if err := CheckArraySameValues(DataArrays{Expected: test.expectedValue, Actual: data}); err != nil {
+		if err := goth.CheckArraySameValues(goth.DataArrays{Expected: test.expectedValues, Actual: data}); err != nil {
 			t.Errorf(err.Error())
 		}
 	}

@@ -3,8 +3,9 @@
 package ksubset
 
 import (
-	"github.com/LuigiAndrea/GoPearls/utilities"
 	"testing"
+
+	goth "github.com/LuigiAndrea/test-helper"
 )
 
 type testData struct {
@@ -32,7 +33,7 @@ func TestExistKSubset(t *testing.T) {
 		for _, test := range tests {
 			if r := f(test.subset, test.t, test.k); r != test.expectedValue {
 				t.Errorf("\n%s: Expected value: '%t' - Actual value '%t' \nList: %#v \nt: %d, k: %d",
-					utilities.GetFuncName(f), test.expectedValue, r, test.subset, test.t, test.k)
+					goth.GetFuncName(f), test.expectedValue, r, test.subset, test.t, test.k)
 			}
 		}
 	}
@@ -51,7 +52,7 @@ func TestExistKSubsetEdgeCases(t *testing.T) {
 		for _, test := range tests {
 			if r := f(test.subset, test.t, test.k); r != test.expectedValue {
 				t.Errorf("\n%s: Expected value: '%t' - Actual value '%t' \nList: %#v \nt: %d, k: %d",
-					utilities.GetFuncName(f), test.expectedValue, r, test.subset, test.t, test.k)
+					goth.GetFuncName(f), test.expectedValue, r, test.subset, test.t, test.k)
 			}
 		}
 	}

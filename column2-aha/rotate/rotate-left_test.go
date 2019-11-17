@@ -3,8 +3,9 @@
 package rotate
 
 import (
-	utls "github.com/LuigiAndrea/GoPearls/utilities"
 	"testing"
+
+	goth "github.com/LuigiAndrea/test-helper"
 )
 
 type testData struct {
@@ -28,12 +29,12 @@ func TestRotateLeft(t *testing.T) {
 	}
 
 	for _, rotate := range rotateLeftFunc {
-		t.Logf("%s", utls.GetFuncName(rotate))
+		t.Logf("%s", goth.GetFuncName(rotate))
 		for _, test := range tests {
 			actualStr := make([]string, len(test.str))
 			copy(actualStr, test.str)
 			rotate(actualStr, test.shift)
-			if err := utls.CheckArraySameValues(utls.StringArrays{Expected: test.expectedValue, Actual: actualStr}); err != nil {
+			if err := goth.CheckArraySameValues(goth.StringArrays{Expected: test.expectedValue, Actual: actualStr}); err != nil {
 				t.Errorf(err.Error())
 			}
 		}
@@ -57,13 +58,13 @@ func TestShiftLeftOutOfRange(t *testing.T) {
 func shiftLeftOutOfRange(t *testing.T, str []string, shiftLength int, f func([]string, int) error) {
 	var err error
 	if err = f(str, shiftLength); err == nil {
-		t.Errorf("%s - Expected an exception of 'rotate.ShiftLeftOutOfRange'", utls.GetFuncName(f))
+		t.Errorf("%s - Expected an exception of 'rotate.ShiftLeftOutOfRange'", goth.GetFuncName(f))
 	} else {
 		_, ok := err.(ShiftLeftOutOfRange)
 		if !ok {
-			t.Errorf("%s - Expected an exception %T for value '%s' and shiftLeft '%d'", utls.GetFuncName(f), err, str, shiftLength)
+			t.Errorf("%s - Expected an exception %T for value '%s' and shiftLeft '%d'", goth.GetFuncName(f), err, str, shiftLength)
 		} else {
-			t.Logf("%s - %v", utls.GetFuncName(f), err)
+			t.Logf("%s - %v", goth.GetFuncName(f), err)
 		}
 	}
 }

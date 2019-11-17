@@ -3,8 +3,9 @@
 package recurrence
 
 import (
-	"github.com/LuigiAndrea/GoPearls/utilities"
 	"testing"
+
+	goth "github.com/LuigiAndrea/test-helper"
 )
 
 type testData struct {
@@ -29,7 +30,7 @@ func TestLinearRecurence(t *testing.T) {
 	for _, test := range tests {
 		if result, err := linearRecurrence(test.a, test.c, test.m); err != nil {
 			t.Error(err.Error())
-		} else if err = utilities.CheckArraySameValues(utilities.IntArrays{
+		} else if err = goth.CheckArraySameValues(goth.IntArrays{
 			Expected: test.expectedValues,
 			Actual:   result}); err != nil {
 			t.Error(err.Error())

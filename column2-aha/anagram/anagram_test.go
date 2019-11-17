@@ -3,8 +3,9 @@
 package anagram
 
 import (
-	"github.com/LuigiAndrea/GoPearls/utilities"
 	"testing"
+
+	goth "github.com/LuigiAndrea/test-helper"
 )
 
 type testData struct {
@@ -31,7 +32,7 @@ func TestAnagram(t *testing.T) {
 			t.Errorf("\nExpected '%d' - Actual '%d'", test.lengthSignature, lengthSign)
 		}
 
-		if err := utilities.CheckArraySameValues(utilities.StringArrays{
+		if err := goth.CheckArraySameValues(goth.StringArrays{
 			Expected: test.expectedSignatures, Actual: squashSignatures[test.keySignature]}); err != nil {
 			t.Errorf(err.Error())
 		}
