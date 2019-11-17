@@ -9,23 +9,23 @@ import (
 )
 
 type testData struct {
-	expectedValues []goth.Data
-	newElements    []goth.Data
-	testValues     []goth.Data
+	expectedValues []interface{}
+	newElements    []interface{}
+	testValues     []interface{}
 }
 
 func TestPreAppend(t *testing.T) {
 
 	tests := []testData{
-		testData{testValues: []goth.Data{1, 2, -6, 111},
-			expectedValues: []goth.Data{12, 3, 1, 2, -6, 111},
-			newElements:    []goth.Data{3, 12}},
-		testData{testValues: []goth.Data{"Ciao", "Hello", "Car"},
-			expectedValues: []goth.Data{"NewCiao", "Ciao", "Hello", "Car"},
-			newElements:    []goth.Data{"NewCiao"}},
-		testData{testValues: []goth.Data{"Ciao", "Hello", "Car"},
-			expectedValues: []goth.Data{123, "Ciao", "Hello", "Car"},
-			newElements:    []goth.Data{123}},
+		testData{testValues: []interface{}{1, 2, -6, 111},
+			expectedValues: []interface{}{12, 3, 1, 2, -6, 111},
+			newElements:    []interface{}{3, 12}},
+		testData{testValues: []interface{}{"Ciao", "Hello", "Car"},
+			expectedValues: []interface{}{"NewCiao", "Ciao", "Hello", "Car"},
+			newElements:    []interface{}{"NewCiao"}},
+		testData{testValues: []interface{}{"Ciao", "Hello", "Car"},
+			expectedValues: []interface{}{123, "Ciao", "Hello", "Car"},
+			newElements:    []interface{}{123}},
 	}
 
 	for _, test := range tests {

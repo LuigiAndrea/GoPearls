@@ -2,8 +2,6 @@ package utilities
 
 import (
 	"sort"
-
-	goth "github.com/LuigiAndrea/test-helper"
 )
 
 //Reverse a slice
@@ -22,9 +20,9 @@ func (b ByteSlice) Less(i, j int) bool { return b[i] < b[j] }
 func (b ByteSlice) Swap(i, j int)      { b[i], b[j] = b[j], b[i] }
 
 //PreAppend a generic value to a slice
-func PreAppend(list []goth.Data, elements ...goth.Data) []goth.Data {
+func PreAppend(list []interface{}, elements ...interface{}) []interface{} {
 	for _, element := range elements {
-		list = append([]goth.Data{element}, list...)
+		list = append([]interface{}{element}, list...)
 	}
 	return list
 }
