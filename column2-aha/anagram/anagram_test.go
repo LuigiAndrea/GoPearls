@@ -3,7 +3,7 @@
 package anagram
 
 import (
-	"GoPearls/utilities"
+	"github.com/LuigiAndrea/GoPearls/utilities"
 	"testing"
 )
 

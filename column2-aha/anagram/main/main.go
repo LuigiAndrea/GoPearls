@@ -1,8 +1,9 @@
 package main
 
 import (
-	"GoPearls/column2-aha/anagram"
 	"fmt"
+
+	"github.com/LuigiAndrea/GoPearls/column2-aha/anagram"
 )
 
 func main() {

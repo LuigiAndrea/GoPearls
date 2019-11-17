@@ -1,7 +1,7 @@
 package segments
 
 import (
-	"GoPearls/utilities"
+	"github.com/LuigiAndrea/GoPearls/utilities"
 	"math"
 )
 

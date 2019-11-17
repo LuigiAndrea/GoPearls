@@ -3,7 +3,7 @@
 package rotate
 
 import (
-	utls "GoPearls/utilities"
+	utls "github.com/LuigiAndrea/GoPearls/utilities"
 	"testing"
 )
 

@@ -3,7 +3,7 @@
 package ksubset
 
 import (
-	"GoPearls/utilities"
+	"github.com/LuigiAndrea/GoPearls/utilities"
 	"testing"
 )
 

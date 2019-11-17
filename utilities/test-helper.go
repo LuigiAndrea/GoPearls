@@ -9,7 +9,8 @@ import (
 
 //GetFuncName return the name of the function passed as parameter
 func GetFuncName(f interface{}) string {
-	return strings.Split(runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name(), ".")[1]
+	link := strings.Split(runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name(), ".")
+	return link[len(link)-1]
 }
 
 //CheckArraySameValues Check if two arrays have the same values and in the same order
