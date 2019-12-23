@@ -42,13 +42,13 @@ func TestBitVectorGetOperationWrongValue(t *testing.T) {
 
 	for i, v := range testValue {
 		if _, err := bitVectors.Get(v); err == nil {
-			t.Errorf("Expected an Index Out of Range exception")
+			t.Errorf("Expected '%T' exception for value '%d'", IndexBitVectorOutOfRange(v), v)
 		} else {
 			switch err.(type) {
 			case IndexBitVectorOutOfRange:
 				t.Logf("%d-Get: %v", i, err)
 			default:
-				t.Errorf("Expected an exception %T for value '%d'", err, v)
+				t.Errorf("Expected '%T' exception for value '%d'", IndexBitVectorOutOfRange(v), v)
 			}
 		}
 	}
@@ -60,13 +60,13 @@ func TestBitVectorSetOperationWrongValue(t *testing.T) {
 
 	for i, v := range testValue {
 		if err := bitVectors.Set(v); err == nil {
-			t.Errorf("Expected an Index Out of Range exception")
+			t.Errorf("Expected '%T' exception for value '%d'", IndexBitVectorOutOfRange(v), v)
 		} else {
 			switch err.(type) {
 			case IndexBitVectorOutOfRange:
 				t.Logf("%d-Set: %v", i, err)
 			default:
-				t.Errorf("Expected an exception %T for value '%d'", err, v)
+				t.Errorf("Expected '%T' exception for value '%d'", IndexBitVectorOutOfRange(v), v)
 			}
 		}
 	}
@@ -78,13 +78,13 @@ func TestBitVectorClearOperationWrongValue(t *testing.T) {
 
 	for i, v := range testValue {
 		if err := bitVectors.Clear(v); err == nil {
-			t.Errorf("Expected an Index Out of Range exception")
+			t.Errorf("Expected '%T' exception for value '%d'", IndexBitVectorOutOfRange(v), v)
 		} else {
 			switch err.(type) {
 			case IndexBitVectorOutOfRange:
 				t.Logf("%d-Clear: %v", i, err)
 			default:
-				t.Errorf("Expected an exception %T for value '%d'", err, v)
+				t.Errorf("Expected '%T' exception for value '%d'", IndexBitVectorOutOfRange(v), v)
 			}
 		}
 	}
@@ -92,14 +92,15 @@ func TestBitVectorClearOperationWrongValue(t *testing.T) {
 
 func TestBitVectorLength(t *testing.T) {
 	testValue := -20
+
 	if _, err := NewBitVector(testValue); err == nil {
-		t.Errorf("\nExpected a bitvector.NegativeBitVectorSize exception")
+		t.Errorf("Expected '%T' for value '%d'", NegativeBitVectorSize(testValue), testValue)
 	} else {
 		switch err.(type) {
 		case NegativeBitVectorSize:
 			t.Log(err)
 		default:
-			t.Errorf("Expected an exception %T for value '%d'", err, testValue)
+			t.Errorf("Expected '%T' for value '%d'", NegativeBitVectorSize(testValue), testValue)
 		}
 	}
 

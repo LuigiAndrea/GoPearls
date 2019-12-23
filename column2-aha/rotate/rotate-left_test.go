@@ -57,12 +57,14 @@ func TestShiftLeftOutOfRange(t *testing.T) {
 
 func shiftLeftOutOfRange(t *testing.T, str []string, shiftLength int, f func([]string, int) error) {
 	var err error
+	var ex ShiftLeftOutOfRange
+
 	if err = f(str, shiftLength); err == nil {
-		t.Errorf("%s - Expected an exception of 'rotate.ShiftLeftOutOfRange'", goth.GetFuncName(f))
+		t.Errorf("%s - Expected an exception '%T' for value '%s' and shiftLeft '%d'", goth.GetFuncName(f), ex, str, shiftLength)
 	} else {
 		_, ok := err.(ShiftLeftOutOfRange)
 		if !ok {
-			t.Errorf("%s - Expected an exception %T for value '%s' and shiftLeft '%d'", goth.GetFuncName(f), err, str, shiftLength)
+			t.Errorf("%s - Expected an exception '%T' for value '%s' and shiftLeft '%d'", goth.GetFuncName(f), ex, str, shiftLength)
 		} else {
 			t.Logf("%s - %v", goth.GetFuncName(f), err)
 		}

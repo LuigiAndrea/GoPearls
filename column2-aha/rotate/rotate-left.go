@@ -1,9 +1,10 @@
 package rotate
 
 import (
-	"github.com/LuigiAndrea/GoPearls/utilities"
 	"fmt"
 	"sort"
+
+	"github.com/LuigiAndrea/GoPearls/utilities"
 )
 
 //using temp slices
