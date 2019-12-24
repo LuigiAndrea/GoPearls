@@ -34,7 +34,7 @@ func TestDispalyNumbers(t *testing.T) {
 
 	for _, test := range tests {
 		result := displayNumber(test.number)
-		if err := goth.CheckArraySameValues(goth.ByteArrays{Expected: test.expectedValue, Actual: result}); err != nil {
+		if err := goth.AssertArraysEqual(goth.ByteArrays{Expected: test.expectedValue, Actual: result}); err != nil {
 			t.Errorf(err.Error())
 		}
 	}

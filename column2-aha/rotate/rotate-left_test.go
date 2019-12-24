@@ -34,7 +34,7 @@ func TestRotateLeft(t *testing.T) {
 			actualStr := make([]string, len(test.str))
 			copy(actualStr, test.str)
 			rotate(actualStr, test.shift)
-			if err := goth.CheckArraySameValues(goth.StringArrays{Expected: test.expectedValue, Actual: actualStr}); err != nil {
+			if err := goth.AssertArraysEqual(goth.StringArrays{Expected: test.expectedValue, Actual: actualStr}); err != nil {
 				t.Errorf(err.Error())
 			}
 		}

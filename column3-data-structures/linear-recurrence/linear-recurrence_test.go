@@ -30,7 +30,7 @@ func TestLinearRecurence(t *testing.T) {
 	for _, test := range tests {
 		if result, err := linearRecurrence(test.a, test.c, test.m); err != nil {
 			t.Error(err.Error())
-		} else if err = goth.CheckArraySameValues(goth.IntArrays{
+		} else if err = goth.AssertArraysEqual(goth.IntArrays{
 			Expected: test.expectedValues,
 			Actual:   result}); err != nil {
 			t.Error(err.Error())

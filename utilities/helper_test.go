@@ -31,7 +31,7 @@ func TestPreAppend(t *testing.T) {
 	for _, test := range tests {
 
 		data := PreAppend(test.testValues, test.newElements...)
-		if err := goth.CheckArraySameValues(goth.DataArrays{Expected: test.expectedValues, Actual: data}); err != nil {
+		if err := goth.AssertArraysEqual(goth.DataArrays{Expected: test.expectedValues, Actual: data}); err != nil {
 			t.Errorf(err.Error())
 		}
 	}
