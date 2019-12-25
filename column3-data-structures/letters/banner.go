@@ -7,7 +7,10 @@ import (
 
 //encoded as number of character to print for each row, --> "4b1*4b" means 4 blank, 1* and four blank for the first row
 var letters = map[rune][]string{'A': []string{"4b1*4b", "3b1*1b1*3b", "2b5*2b", "1b1*5b1*1b", "1*7b1*"},
-	'E': []string{"5*", "1*4b", "1*4b", "5*", "1*4b", "1*4b", "5*"},
+	'E': []string{"4*", "1*4b", "1*4b", "4*", "1*4b", "1*4b", "4*"},
+	'I': []string{"6*", "2b2*2b", "2b2*2b", "2b2*2b", "6*"},
+	'O': []string{"1b4*1b", "1*4b1*", "1*4b1*", "1*4b1*", "1b4*1b"},
+	'U': []string{"1*4b1*", "1*4b1*", "1*4b1*", "1*4b1*", "1b4*1b"},
 }
 
 //Banner take a Capital Letter as input and produces as output the letter depicted graphically as string
