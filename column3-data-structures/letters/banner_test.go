@@ -3,6 +3,7 @@
 package banner
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -27,6 +28,8 @@ func TestBanner(t *testing.T) {
 	decodedLetter := decodeLetter(letters['A'])
 	if bannerStr := Banner('A'); bannerStr != decodedLetter {
 		t.Errorf("Expected value '%s' - Actual value '%s'", decodedLetter, bannerStr)
+	} else {
+		fmt.Println(bannerStr)
 	}
 
 }

@@ -14,7 +14,6 @@ type testData struct {
 }
 
 func TestBuildSegmentsAndEncoding(t *testing.T) {
-
 	tests := []byte{125, 80, 55, 87, 90, 79, 111, 84, 127, 94}
 	buildSegments()
 	for i := 0; i <= 9; i++ {
@@ -35,8 +34,12 @@ func TestDispalyNumbers(t *testing.T) {
 	for _, test := range tests {
 		result := displayNumber(test.number)
 		if err := goth.AssertArraysEqual(goth.ByteArrays{Expected: test.expectedValue, Actual: result}); err != nil {
-			t.Errorf(err.Error())
+			t.Error(err.Error())
 		}
 	}
+}
 
+func TestPrintNumber(t *testing.T) {
+	printDisplay(50948)
+	printDisplay(61723)
 }
