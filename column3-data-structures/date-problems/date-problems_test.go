@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func TestNumberDaysGoWay(t *testing.T) {
+func TestNumberDaysBetweenTwoDay(t *testing.T) {
 	type testData struct {
 		date1, date2 time.Time
 		days         int
@@ -17,8 +17,8 @@ func TestNumberDaysGoWay(t *testing.T) {
 		testData{date1: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
 			date2: time.Date(2000, 2, 1, 0, 0, 0, 0, time.UTC),
 			days:  31},
-		testData{date1: time.Date(2000, 2, 1, 0, 0, 0, 0, time.UTC),
-			date2: time.Date(2000, 3, 1, 0, 0, 0, 0, time.UTC),
+		testData{date1: time.Date(2000, 3, 1, 0, 0, 0, 0, time.UTC),
+			date2: time.Date(2000, 2, 1, 0, 0, 0, 0, time.UTC),
 			days:  29},
 		testData{date1: time.Date(1996, 2, 1, 0, 0, 0, 0, time.UTC),
 			date2: time.Date(1997, 2, 1, 0, 0, 0, 0, time.UTC),
