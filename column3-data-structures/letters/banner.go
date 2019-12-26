@@ -15,21 +15,21 @@ var letters = map[rune][]string{'A': []string{"4b1*4b", "3b1*1b1*3b", "2b5*2b", 
 
 //Banner take a Capital Letter as input and produces as output the letter depicted graphically as string
 func Banner(letter rune) string {
-	return printAsString(letters[letter])
+	return decodeLetter(letters[letter])
 }
 
-func printAsString(letterEncode []string) string {
+func decodeLetter(letterEncode []string) string {
 	var letter strings.Builder
 
 	for _, c := range letterEncode {
-		letter.WriteString(decodeLetter(c))
+		letter.WriteString(decodeString(c))
 		letter.WriteString("\n")
 	}
 
 	return letter.String()
 }
 
-func decodeLetter(code string) string {
+func decodeString(code string) string {
 	var result strings.Builder
 	var num int
 	var char string
