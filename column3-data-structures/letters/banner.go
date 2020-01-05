@@ -1,11 +1,12 @@
 package banner
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
 
-//encoded as number of character to print for each row, --> "4b1*4b" means 4 blank, 1* and four blank for the first row
+//encoded as number of characters to print for each row, --> "4b1*4b" means 4 blanks, 1 asterisk and four blanks for the first row
 var letters = map[rune][]string{'A': []string{"4b1*4b", "3b1*1b1*3b", "2b5*2b", "1b1*5b1*1b", "1*7b1*"},
 	'E': []string{"4*", "1*4b", "1*4b", "4*", "1*4b", "1*4b", "4*"},
 	'I': []string{"6*", "2b2*2b", "2b2*2b", "2b2*2b", "6*"},
@@ -13,22 +14,23 @@ var letters = map[rune][]string{'A': []string{"4b1*4b", "3b1*1b1*3b", "2b5*2b", 
 	'U': []string{"1*4b1*", "1*4b1*", "1*4b1*", "1*4b1*", "1b4*1b"},
 }
 
-//Banner take a Capital Letter as input and produces as output the letter depicted graphically as string
+//Banner takes a Capital Letter as input and produces as output the letter depicted graphically as string
 func Banner(letter rune) string {
 	return decodeLetter(letters[letter])
 }
 
+//decodeLetter takes an array of encoded strings and returns the concatenation of their decoded value
 func decodeLetter(letterEncode []string) string {
 	var letter strings.Builder
 
 	for _, c := range letterEncode {
-		letter.WriteString(decodeString(c))
-		letter.WriteString("\n")
+		fmt.Fprintf(&letter, "%s\n", decodeString(c))
 	}
 
 	return letter.String()
 }
 
+//decodeString takes an encoded string and returns its expanding version. Ex: "2*1b1*" -> "** *"
 func decodeString(code string) string {
 	var result strings.Builder
 	var num int
@@ -52,6 +54,7 @@ func getChar(c byte) string {
 	return string(c)
 }
 
+//buildString writes the character 'char' n times
 func buildString(n int, char string) string {
 	var result strings.Builder
 
