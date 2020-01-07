@@ -3,6 +3,7 @@
 package anagram
 
 import (
+	"fmt"
 	"testing"
 
 	goth "github.com/LuigiAndrea/test-helper"
@@ -38,4 +39,12 @@ func TestAnagram(t *testing.T) {
 		}
 	}
 
+	printAnagram(squashSignatures)
+
+}
+
+func printAnagram(squashSignatures map[string][]string) {
+	for key, el := range squashSignatures {
+		fmt.Printf("%s --> %s\n", key, el)
+	}
 }
