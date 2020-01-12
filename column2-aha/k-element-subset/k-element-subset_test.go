@@ -5,7 +5,7 @@ package ksubset
 import (
 	"testing"
 
-	goth "github.com/LuigiAndrea/test-helper"
+	goth "github.com/LuigiAndrea/test-helper/messages"
 )
 
 type testData struct {

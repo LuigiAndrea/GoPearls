@@ -5,7 +5,7 @@ package segments
 import (
 	"testing"
 
-	goth "github.com/LuigiAndrea/test-helper"
+	goth "github.com/LuigiAndrea/test-helper/assertions"
 )
 
 type testData struct {
@@ -33,7 +33,7 @@ func TestDispalyNumbers(t *testing.T) {
 
 	for _, test := range tests {
 		result := displayNumber(test.number)
-		if err := goth.AssertArraysEqual(goth.ByteArrays{Expected: test.expectedValue, Actual: result}); err != nil {
+		if err := goth.AssertSlicesEqual(goth.ByteSlicesMatch{Expected: test.expectedValue, Actual: result}); err != nil {
 			t.Error(err.Error())
 		}
 	}

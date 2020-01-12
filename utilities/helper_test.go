@@ -5,7 +5,7 @@ package utilities
 import (
 	"testing"
 
-	goth "github.com/LuigiAndrea/test-helper"
+	goth "github.com/LuigiAndrea/test-helper/assertions"
 )
 
 func TestPreAppend(t *testing.T) {
@@ -28,7 +28,7 @@ func TestPreAppend(t *testing.T) {
 	for _, test := range tests {
 
 		data := PreAppend(test.testValues, test.newElements...)
-		if err := goth.AssertArraysEqual(goth.DataArrays{Expected: test.expectedValues, Actual: data}); err != nil {
+		if err := goth.AssertSlicesEqual(goth.DataSlicesMatch{Expected: test.expectedValues, Actual: data}); err != nil {
 			t.Errorf(err.Error())
 		}
 	}
@@ -47,7 +47,7 @@ func TestReverse(t *testing.T) {
 
 	for _, test := range tests {
 		Reverse(ByteSlice(test.in), 0, len(test.in)-1)
-		if err := goth.AssertArraysEqual(goth.ByteArrays{Expected: test.out, Actual: test.in}); err != nil {
+		if err := goth.AssertSlicesEqual(goth.ByteSlicesMatch{Expected: test.out, Actual: test.in}); err != nil {
 			t.Errorf(err.Error())
 		}
 	}
@@ -85,7 +85,7 @@ func TestByteSliceType(t *testing.T) {
 		}
 
 		byteSlice.Swap(test.swapLessIndexes.i, test.swapLessIndexes.j)
-		if err := goth.AssertArraysEqual(goth.ByteArrays{Expected: test.out, Actual: test.in}); err != nil {
+		if err := goth.AssertSlicesEqual(goth.ByteSlicesMatch{Expected: test.out, Actual: test.in}); err != nil {
 			t.Errorf(err.Error())
 		}
 	}

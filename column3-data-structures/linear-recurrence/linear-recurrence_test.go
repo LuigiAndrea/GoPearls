@@ -5,7 +5,7 @@ package recurrence
 import (
 	"testing"
 
-	goth "github.com/LuigiAndrea/test-helper"
+	goth "github.com/LuigiAndrea/test-helper/assertions"
 )
 
 type testData struct {
@@ -30,7 +30,7 @@ func TestLinearRecurence(t *testing.T) {
 	for _, test := range tests {
 		if result, err := linearRecurrence(test.a, test.c, test.m); err != nil {
 			t.Error(err.Error())
-		} else if err = goth.AssertArraysEqual(goth.IntArrays{
+		} else if err = goth.AssertSlicesEqual(goth.IntSlicesMatch{
 			Expected: test.expectedValues,
 			Actual:   result}); err != nil {
 			t.Error(err.Error())

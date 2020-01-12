@@ -5,7 +5,8 @@ package rotate
 import (
 	"testing"
 
-	goth "github.com/LuigiAndrea/test-helper"
+	assert "github.com/LuigiAndrea/test-helper/assertions"
+	msg "github.com/LuigiAndrea/test-helper/messages"
 )
 
 type testData struct {
@@ -29,12 +30,12 @@ func TestRotateLeft(t *testing.T) {
 	}
 
 	for _, rotate := range rotateLeftFunc {
-		t.Logf("%s", goth.GetFuncName(rotate))
+		t.Logf("%s", msg.GetFuncName(rotate))
 		for _, test := range tests {
 			actualStr := make([]string, len(test.str))
 			copy(actualStr, test.str)
 			rotate(actualStr, test.shift)
-			if err := goth.AssertArraysEqual(goth.StringArrays{Expected: test.expectedValue, Actual: actualStr}); err != nil {
+			if err := assert.AssertSlicesEqual(assert.StringSlicesMatch{Expected: test.expectedValue, Actual: actualStr}); err != nil {
 				t.Errorf(err.Error())
 			}
 		}
@@ -60,13 +61,13 @@ func shiftLeftOutOfRange(t *testing.T, str []string, shiftLength int, f func([]s
 	var ex ShiftLeftOutOfRange
 
 	if err = f(str, shiftLength); err == nil {
-		t.Errorf("%s - Expected an exception '%T' for value '%s' and shiftLeft '%d'", goth.GetFuncName(f), ex, str, shiftLength)
+		t.Errorf("%s - Expected an exception '%T' for value '%s' and shiftLeft '%d'", msg.GetFuncName(f), ex, str, shiftLength)
 	} else {
 		_, ok := err.(ShiftLeftOutOfRange)
 		if !ok {
-			t.Errorf("%s - Expected an exception '%T' for value '%s' and shiftLeft '%d'", goth.GetFuncName(f), ex, str, shiftLength)
+			t.Errorf("%s - Expected an exception '%T' for value '%s' and shiftLeft '%d'", msg.GetFuncName(f), ex, str, shiftLength)
 		} else {
-			t.Logf("%s - %v", goth.GetFuncName(f), err)
+			t.Logf("%s - %v", msg.GetFuncName(f), err)
 		}
 	}
 }

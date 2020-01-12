@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	goth "github.com/LuigiAndrea/test-helper"
+	goth "github.com/LuigiAndrea/test-helper/assertions"
 )
 
 type testData struct {
@@ -33,7 +33,7 @@ func TestAnagram(t *testing.T) {
 			t.Errorf("\nExpected '%d' - Actual '%d'", test.lengthSignature, lengthSign)
 		}
 
-		if err := goth.AssertArraysEqual(goth.StringArrays{
+		if err := goth.AssertSlicesEqual(goth.StringSlicesMatch{
 			Expected: test.expectedSignatures, Actual: squashSignatures[test.keySignature]}); err != nil {
 			t.Errorf(err.Error())
 		}
