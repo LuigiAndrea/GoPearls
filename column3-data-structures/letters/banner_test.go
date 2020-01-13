@@ -38,5 +38,4 @@ func TestBannerNotSupportedCharacter(t *testing.T) {
 	if res := Banner('$'); len(res) > 0 {
 		t.Errorf("Expected an empty string - Actual value '%s'", res)
 	}
-
 }
