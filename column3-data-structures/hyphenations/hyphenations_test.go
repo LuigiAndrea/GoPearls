@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	assert "github.com/LuigiAndrea/test-helper/assertions"
-	message "github.com/LuigiAndrea/test-helper/messages"
 )
 
 func TestHyphenations(t *testing.T) {
@@ -29,9 +28,8 @@ func TestHyphenations(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		res := hyphenation(test.in)
-		if err := assert.AssertDeepEqual(res, test.out); err != nil {
-			t.Errorf(message.ErrorMessage(test.out, res))
+		if err := assert.AssertDeepEqual(hyphenation(test.in), test.out); err != nil {
+			t.Error(err)
 		}
 	}
 }
