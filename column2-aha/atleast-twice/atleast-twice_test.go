@@ -4,6 +4,8 @@ package twice
 
 import (
 	"testing"
+
+	te "github.com/LuigiAndrea/test-helper/assertions"
 )
 
 type testData struct {
@@ -26,8 +28,8 @@ func TestAtLeastTwice(t *testing.T) {
 		populateSequentialList(list, test.lengthList, test.indexesToSkip)
 
 		if ok, v := searchAtLeastTwiceValue(list); ok {
-			if v != test.expectedValue {
-				t.Errorf("\nExpected value: '%d' - Actual value '%d' \nList: %#v", test.expectedValue, v, list)
+			if err := te.AssertDeepEqual(test.expectedValue, v); err != nil {
+				t.Error(err)
 			}
 		} else {
 			t.Errorf("Repeated element not detected \nList: %#v", list)
@@ -49,8 +51,8 @@ func TestEdgeCases(t *testing.T) {
 
 		if ok, v := searchAtLeastTwiceValue(list); ok {
 			t.Errorf("No element appears at least twice in the list \nList: %#v", list)
-		} else if v != test.expectedValue {
-			t.Errorf("\nExpected value: '%d' - Actual value '%d' \nList: %#v", test.expectedValue, test.lengthList, list)
+		} else if err := te.AssertDeepEqual(test.expectedValue, v); err != nil {
+			t.Error(err)
 		}
 	}
 }
@@ -72,8 +74,8 @@ func TestAtLeastTwiceGeneral(t *testing.T) {
 	for _, test := range tests {
 
 		if ok, v := searchAtLeastTwiceValue(test.list); ok {
-			if v != test.expectedValue {
-				t.Errorf("\nExpected value: '%d' - Actual value '%d' \nList: %#v", test.expectedValue, v, test.list)
+			if err := te.AssertDeepEqual(test.expectedValue, v); err != nil {
+				t.Error(err)
 			}
 		} else {
 			t.Errorf("Repeated element not detected \nList: %#v", test.list)
