@@ -10,16 +10,25 @@ import (
 
 type testData struct {
 	lengthList    int
-	indexesToSkip map[int]struct{}
+	indexesToSkip skipIndexes
 	expectedValue int
+}
+
+type skipIndexes map[int]struct{}
+
+func (s skipIndexes) contains(index int) bool {
+	if _, ok := s[index]; ok {
+		return true
+	}
+	return false
 }
 
 func TestAtLeastTwice(t *testing.T) {
 
 	tests := []testData{
-		testData{lengthList: 20, indexesToSkip: map[int]struct{}{2: {}, 3: {}, 7: {}, 13: {}}, expectedValue: -9},
-		testData{lengthList: 10, indexesToSkip: map[int]struct{}{7: {}}, expectedValue: 1},
-		testData{lengthList: 2, indexesToSkip: map[int]struct{}{1: {}}, expectedValue: -1},
+		testData{lengthList: 20, indexesToSkip: indexesToSkip(2, 3, 7, 13), expectedValue: -9},
+		testData{lengthList: 10, indexesToSkip: indexesToSkip(7), expectedValue: 1},
+		testData{lengthList: 2, indexesToSkip: indexesToSkip(1), expectedValue: -1},
 	}
 
 	for _, test := range tests {
@@ -84,16 +93,7 @@ func TestAtLeastTwiceGeneral(t *testing.T) {
 
 }
 
-type skipIndexes map[int]struct{}
-
-func (s skipIndexes) contains(index int) bool {
-	if _, ok := s[index]; ok {
-		return true
-	}
-	return false
-}
-
-//nil indexes means no value is repeated
+//build a list from scratch skipping the indexes provided as parameter, nil indexes means no value is repeated
 func populateSequentialList(list []int, n int, indexes skipIndexes) {
 	repeated := 0
 	odd := n % 2
@@ -108,4 +108,13 @@ func populateSequentialList(list []int, n int, indexes skipIndexes) {
 
 		list[i+midPoint] = i + repeated
 	}
+}
+
+//simplify test initialization
+func indexesToSkip(index ...int) skipIndexes {
+	result := make(skipIndexes, len(index))
+	for _, v := range index {
+		result[v] = struct{}{}
+	}
+	return result
 }
