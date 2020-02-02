@@ -7,16 +7,16 @@ import (
 	"io"
 	"os"
 	"testing"
+
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
+const Filename = "./kIntegers.data"
+
 func TestCreateFileWithKIntegers(t *testing.T) {
-	if err := CreateFileWithRandomIntegers(
-		MinMaxInterval{Min: 1000000, Max: 1000010},
-		MinMaxInterval{Min: 1000050, Max: 1000054},
-		MinMaxInterval{Min: 1000500, Max: 2000000}); err != nil {
+	valuesTest := []MinMaxInterval{MinMaxInterval{Min: 1000000, Max: 1000010}, MinMaxInterval{Min: 1000050, Max: 1000054}, MinMaxInterval{Min: 1000500, Max: 2000000}}
+	if err := CreateFileWithRandomIntegers(Filename, valuesTest...); err != nil {
 		t.Errorf("\nError during creation of the file %v", err)
-	} else {
-		t.Logf("File '%s' succesfully created", Filename)
 	}
 
 	file, err := os.Open(Filename)
@@ -39,7 +39,7 @@ func TestCreateFileWithKIntegers(t *testing.T) {
 	}
 	expectedValue := 999514
 	if numbersInFile != expectedValue {
-		t.Errorf("\nExpected value %d - Actual value %d", expectedValue, numbersInFile)
+		t.Error(m.ErrorMessage(expectedValue, numbersInFile))
 	}
 
 	if err := os.Remove(Filename); err != nil {
@@ -48,14 +48,20 @@ func TestCreateFileWithKIntegers(t *testing.T) {
 }
 
 func TestCreateFileWithKIntegersWrongValues(t *testing.T) {
-
 	valuesTest := []MinMaxInterval{{Min: -3, Max: 4}, {Min: 2, Max: -8}, {Min: 100, Max: 99}}
 
 	for i, v := range valuesTest {
-		if err := CreateFileWithRandomIntegers(MinMaxInterval{v.Min, v.Max}); err == nil {
-			t.Error("Expected an parameter error")
+		if err := CreateFileWithRandomIntegers(Filename, MinMaxInterval{v.Min, v.Max}); err == nil {
+			t.Error("Expected a parameter error")
 		} else {
 			t.Logf("%d: %s", i, err)
 		}
+	}
+}
+
+func TestCreateFileWithKIntegersWrongValues2(t *testing.T) {
+	if err := CreateFileWithRandomIntegers("///",
+		MinMaxInterval{Min: 1000000, Max: 1000010}, MinMaxInterval{Min: 1000500, Max: 2000000}); err == nil {
+		t.Error("Expected a parameter error")
 	}
 }

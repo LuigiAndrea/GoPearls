@@ -3,23 +3,25 @@
 package sortfile
 
 import (
-	kintegers "github.com/LuigiAndrea/GoPearls/column1-oyster/generate-k-random-integer"
 	"bufio"
 	"io"
 	"log"
 	"os"
 	"strings"
 	"testing"
+
+	kintegers "github.com/LuigiAndrea/GoPearls/column1-oyster/generate-k-random-integer"
 )
 
+const Filename = "./kIntegers.data"
+
 func TestSortFile(t *testing.T) {
-	if err := kintegers.CreateFileWithRandomIntegers(
-		kintegers.MinMaxInterval{Min: 200, Max: 300},
-		kintegers.MinMaxInterval{Min: 500, Max: 1200}); err != nil {
+	if err := kintegers.CreateFileWithRandomIntegers(Filename,
+		kintegers.MinMaxInterval{Min: 200, Max: 300}, kintegers.MinMaxInterval{Min: 500, Max: 1200}); err != nil {
 		log.Fatal(err)
 	}
 
-	file, err := SortFile(kintegers.Filename)
+	file, err := SortFile(Filename)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -67,7 +69,7 @@ func TestSortFile(t *testing.T) {
 			}
 		}
 	}
-	cleanWorkSpace(t, kintegers.Filename)
+	cleanWorkSpace(t, Filename)
 	cleanWorkSpace(t, filenameResult)
 }
 

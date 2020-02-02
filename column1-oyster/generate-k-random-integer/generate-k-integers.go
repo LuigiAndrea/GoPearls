@@ -10,9 +10,6 @@ import (
 
 var integers []int
 
-//Filename of the file created with k random integers
-const Filename = "./kIntegers.data"
-
 func swap(x, y int) {
 	integers[x], integers[y] = integers[y], integers[x]
 }
@@ -24,7 +21,7 @@ type MinMaxInterval struct {
 }
 
 //CreateFileWithRandomIntegers create a file with k integers in random order
-func CreateFileWithRandomIntegers(mmi ...MinMaxInterval) error {
+func CreateFileWithRandomIntegers(filename string, mmi ...MinMaxInterval) error {
 	var k int
 
 	for _, v := range mmi {
@@ -42,9 +39,9 @@ func CreateFileWithRandomIntegers(mmi ...MinMaxInterval) error {
 	rand.Seed(time.Now().Unix())
 	rand.Shuffle(k, swap)
 
-	file, err := os.Create(Filename)
+	file, err := os.Create(filename)
 	if err != nil {
-		return fmt.Errorf("Unable to create file '%s': %s", Filename, err)
+		return fmt.Errorf("Unable to create file '%s': %s", filename, err)
 	}
 
 	writer := bufio.NewWriter(file)

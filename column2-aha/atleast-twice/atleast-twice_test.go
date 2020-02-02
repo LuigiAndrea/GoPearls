@@ -3,9 +3,11 @@
 package twice
 
 import (
+	"fmt"
 	"testing"
 
-	te "github.com/LuigiAndrea/test-helper/assertions"
+	a "github.com/LuigiAndrea/test-helper/assertions"
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
 type testData struct {
@@ -31,17 +33,17 @@ func TestAtLeastTwice(t *testing.T) {
 		testData{lengthList: 2, indexesToSkip: indexesToSkip(1), expectedValue: -1},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 
 		list := make([]int, test.lengthList)
 		populateSequentialList(list, test.lengthList, test.indexesToSkip)
 
 		if ok, v := searchAtLeastTwiceValue(list); ok {
-			if err := te.AssertDeepEqual(test.expectedValue, v); err != nil {
+			if err := a.AssertDeepEqual(test.expectedValue, v); err != nil {
 				t.Error(err)
 			}
 		} else {
-			t.Errorf("Repeated element not detected \nList: %#v", list)
+			t.Error(m.ErrorMessageTestCount(i+1, fmt.Sprintf("Repeated element not detected \nList: %#v", list)))
 		}
 	}
 }
@@ -53,14 +55,14 @@ func TestEdgeCases(t *testing.T) {
 		testData{lengthList: 0, indexesToSkip: nil, expectedValue: 0},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		list := make([]int, test.lengthList)
 
 		populateSequentialList(list, test.lengthList, nil)
 
 		if ok, v := searchAtLeastTwiceValue(list); ok {
-			t.Errorf("No element appears at least twice in the list \nList: %#v", list)
-		} else if err := te.AssertDeepEqual(test.expectedValue, v); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, fmt.Sprintf("No element appears at least twice in the list \nList: %#v", list)))
+		} else if err := a.AssertDeepEqual(test.expectedValue, v); err != nil {
 			t.Error(err)
 		}
 	}
@@ -80,17 +82,16 @@ func TestAtLeastTwiceGeneral(t *testing.T) {
 		testData{list: []int{10, 11, 12, 13, 13}, expectedValue: 13},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 
 		if ok, v := searchAtLeastTwiceValue(test.list); ok {
-			if err := te.AssertDeepEqual(test.expectedValue, v); err != nil {
+			if err := a.AssertDeepEqual(test.expectedValue, v); err != nil {
 				t.Error(err)
 			}
 		} else {
-			t.Errorf("Repeated element not detected \nList: %#v", test.list)
+			t.Error(m.ErrorMessageTestCount(i+1, fmt.Sprintf("Repeated elements not detected \nList: %#v", test.list)))
 		}
 	}
-
 }
 
 //build a list from scratch skipping the indexes provided as parameter, nil indexes means no value is repeated
