@@ -1,4 +1,4 @@
-// +build all column3 formgenerator lettergenerator generator
+// +build all column3 formgenerator lettergenerator generator form
 
 package formgenerator
 
@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	assert "github.com/LuigiAndrea/test-helper/assertions"
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
 var filename = "./templateEmailAbsence.data"
@@ -34,9 +35,9 @@ func TestFormLetterGenerator(t *testing.T) {
 		testData{in: par.supervisorName, out: 2},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		if err := assert.AssertDeepEqual(test.out, strings.Count(result, test.in)); err != nil {
-			t.Error(err)
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 
@@ -60,5 +61,11 @@ func TestFormLetterGeneratorLessParameters(t *testing.T) {
 		if err := assert.AssertDeepEqual(test.out, strings.Count(result, test.in)); err != nil {
 			t.Error(err)
 		}
+	}
+}
+
+func TestFormLetterGeneratorWrongFilename(t *testing.T) {
+	if _, err := formLetterGenerator("file?"); err == nil {
+		t.Error("Expected unable to open file error")
 	}
 }

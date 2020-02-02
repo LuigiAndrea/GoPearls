@@ -59,9 +59,9 @@ func TestCreateFileWithKIntegersWrongValues(t *testing.T) {
 	}
 }
 
-func TestCreateFileWithKIntegersWrongValues2(t *testing.T) {
+func TestCreateFileWithKIntegersWrongFilename(t *testing.T) {
 	if err := CreateFileWithRandomIntegers("///",
 		MinMaxInterval{Min: 1000000, Max: 1000010}, MinMaxInterval{Min: 1000500, Max: 2000000}); err == nil {
-		t.Error("Expected a parameter error")
+		t.Error("Expected unable to create file error")
 	}
 }
