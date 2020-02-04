@@ -1,5 +1,3 @@
-// +build all column1 sortFile
-
 package sortfile
 
 import (
@@ -14,6 +12,7 @@ import (
 )
 
 const Filename = "./kIntegers.data"
+const FilenameResult = "./kIntegersSorted.data"
 
 func TestSortFile(t *testing.T) {
 	if err := kintegers.CreateFileWithRandomIntegers(Filename,
@@ -21,7 +20,7 @@ func TestSortFile(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	file, err := SortFile(Filename)
+	file, err := SortFile(Filename, FilenameResult)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -70,15 +69,30 @@ func TestSortFile(t *testing.T) {
 		}
 	}
 	cleanWorkSpace(t, Filename)
-	cleanWorkSpace(t, filenameResult)
+	cleanWorkSpace(t, FilenameResult)
 }
 
-func TestWrongFilename(t *testing.T) {
-	if _, err := SortFile("NotExistingFilename"); err == nil {
-		t.Errorf("Expected an error: Not Existing Filename")
+func TestNotFoundFile(t *testing.T) {
+	if _, err := SortFile("NotExistingFilename", FilenameResult); err == nil {
+		t.Errorf("Expected an error: Not Found File")
 	} else {
 		t.Log(err)
 	}
+}
+
+func TestWrongFileName(t *testing.T) {
+	if err := kintegers.CreateFileWithRandomIntegers(Filename,
+		kintegers.MinMaxInterval{Min: 200, Max: 300}, kintegers.MinMaxInterval{Min: 500, Max: 1200}); err != nil {
+		log.Fatal(err)
+	}
+
+	if _, err := SortFile(Filename, "///"); err == nil {
+		t.Errorf("Expected an error: Wrong Filename")
+	} else {
+		t.Log(err)
+	}
+
+	cleanWorkSpace(t, Filename)
 }
 
 func TestWrongDataInFile(t *testing.T) {
@@ -93,7 +107,7 @@ func TestWrongDataInFile(t *testing.T) {
 	writer.Flush()
 	file.Close()
 
-	if _, err := SortFile(wrongDataFile); err == nil {
+	if _, err := SortFile(wrongDataFile, FilenameResult); err == nil {
 		t.Errorf("Expected an error: Wrong Data in file")
 	} else {
 		t.Log(err)

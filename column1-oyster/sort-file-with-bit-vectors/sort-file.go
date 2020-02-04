@@ -1,7 +1,6 @@
 package sortfile
 
 import (
-	bv "github.com/LuigiAndrea/GoPearls/column1-oyster/bit-vectors"
 	"bufio"
 	"errors"
 	"fmt"
@@ -9,24 +8,25 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	bv "github.com/LuigiAndrea/GoPearls/column1-oyster/bit-vectors"
 )
 
 const bitVectorSize = 20000
-const filenameResult = "./kIntegersSorted.data"
 
 //SortFile Sort a file with integers, return the sorted File
-func SortFile(path string) (*os.File, error) {
+func SortFile(path string, sortedFilename string) (*os.File, error) {
 	bitVector, err := createBitVectorFromFile(path)
 	if err != nil {
 		return nil, err
 	}
 
-	err = createSortedFile(bitVector)
+	err = createSortedFile(bitVector, sortedFilename)
 	if err != nil {
 		return nil, err
 	}
 
-	return os.Open(filenameResult)
+	return os.Open(sortedFilename)
 }
 
 func createBitVectorFromFile(path string) (bv.BitVector, error) {
@@ -61,10 +61,10 @@ func createBitVectorFromFile(path string) (bv.BitVector, error) {
 	return *bitVector, nil
 }
 
-func createSortedFile(bitVector bv.BitVector) error {
-	file, err := os.Create(filenameResult)
+func createSortedFile(bitVector bv.BitVector, sortedFilename string) error {
+	file, err := os.Create(sortedFilename)
 	if err != nil {
-		return fmt.Errorf("Unable to create file '%s': %s", filenameResult, err)
+		return fmt.Errorf("Unable to create file '%s': %s", sortedFilename, err)
 	}
 
 	writer := bufio.NewWriter(file)
