@@ -28,7 +28,7 @@ func (bit BitVector) Get(index int) (byte, error) {
 
 	word := bit[index/bitsPerWord]
 
-	if word&(1<<uint(index%bitsPerWord)) > 0 {
+	if word&(1<<(index%bitsPerWord)) > 0 {
 		return 1, nil
 	}
 
@@ -42,7 +42,7 @@ func (bit BitVector) Set(index int) error {
 		return err
 	}
 
-	bit[index/bitsPerWord] |= 1 << uint(index%bitsPerWord)
+	bit[index/bitsPerWord] |= 1 << (index % bitsPerWord)
 
 	return nil
 }
@@ -53,7 +53,7 @@ func (bit BitVector) Clear(index int) error {
 		return err
 	}
 
-	bit[index/bitsPerWord] &= ^(1 << uint(index%bitsPerWord))
+	bit[index/bitsPerWord] &= ^(1 << (index % bitsPerWord))
 	return nil
 }
 

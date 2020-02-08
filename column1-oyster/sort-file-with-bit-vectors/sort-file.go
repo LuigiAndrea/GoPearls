@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
-	"io"
 	"os"
 	"strconv"
 	"strings"
@@ -12,7 +11,8 @@ import (
 	bv "github.com/LuigiAndrea/GoPearls/column1-oyster/bit-vectors"
 )
 
-const bitVectorSize = 20000
+//Capacity of BitVector
+const bitVectorSize = 200000
 
 //SortFile Sort a file with integers, return the sorted File
 func SortFile(path string, sortedFilename string) (*os.File, error) {
@@ -36,19 +36,12 @@ func createBitVectorFromFile(path string) (bv.BitVector, error) {
 	}
 	defer fileRandomIntegers.Close()
 
-	bitVector, err := bv.NewBitVector(bitVectorSize)
-	if err != nil {
-		return nil, fmt.Errorf("%s", err)
-	}
+	bitVector, _ := bv.NewBitVector(bitVectorSize)
 
 	reader := bufio.NewReader(fileRandomIntegers)
 	for {
 		if value, err := reader.ReadString(' '); err != nil {
-			if err == io.EOF {
-				break
-			} else {
-				return nil, fmt.Errorf("Error reading '%s': %s", path, err)
-			}
+			break
 		} else {
 			intValue, err := strconv.Atoi(strings.TrimSpace(value))
 			if err != nil {
@@ -71,9 +64,7 @@ func createSortedFile(bitVector bv.BitVector, sortedFilename string) error {
 	defer file.Close()
 
 	for i := 0; i < bitVectorSize; i++ {
-		if r, err := bitVector.Get(i); err != nil {
-			return errors.New(err.Error())
-		} else if r == 1 {
+		if r, _ := bitVector.Get(i); r == 1 {
 			writer.WriteString(fmt.Sprintf("%d ", i))
 		}
 	}
