@@ -1,6 +1,6 @@
-package terminate
+package hailstone
 
-func terminate3xplus1(x int) []int {
+func hailstoneSequence(x int) []int {
 	var result []int
 
 	for i := 0; x != 1; i++ {
