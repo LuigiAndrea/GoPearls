@@ -1,3 +1,5 @@
+// +build all column1 sortFile
+
 package sortfile
 
 import (
