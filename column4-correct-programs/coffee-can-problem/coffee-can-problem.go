@@ -19,8 +19,8 @@ func coffeeCanBeans(coffeeCan []bean) bean {
 	for size := len(coffeeCan); size > 2; size-- {
 		rand.Seed(time.Now().UnixNano())
 		posA, posB := rand.Intn(size), rand.Intn(size-1)
-		for posB == posA {
-			posB = rand.Intn(size - 1)
+		if posB == posA {
+			posB++
 		}
 		removeBeans(&coffeeCan, posA, posB)
 	}
