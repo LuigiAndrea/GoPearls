@@ -41,15 +41,21 @@ func coffeeCanBeans(coffeeCan []bean) (bean, error) {
 	if err := validateCanBean(coffeeCan); err != nil {
 		return bean{}, err
 	}
+	size := len(coffeeCan)
+	if size == 1 {
+		return coffeeCan[0], nil
+	}
 
-	for size := len(coffeeCan); size > 2; size-- {
-		rand.Seed(time.Now().UnixNano())
+	rand.Seed(time.Now().UnixNano())
+
+	for ; size > 2; size-- {
 		posA, posB := rand.Intn(size), rand.Intn(size-1)
 		if posB == posA {
 			posB++
 		}
 		removeBeans(&coffeeCan, posA, posB)
 	}
+
 	removeBeans(&coffeeCan, 0, 1)
 	return coffeeCan[0], nil
 }
@@ -78,8 +84,8 @@ func delete(coffeeCan *[]bean, pos int) {
 }
 
 func validateCanBean(beans []bean) error {
-	if len(beans) < 2 {
-		return fmt.Errorf("Coffee Can Bean must have at least %s", unknown)
+	if len(beans) < 1 {
+		return fmt.Errorf("Coffee Can must have at least one bean")
 	}
 
 	for _, v := range beans {

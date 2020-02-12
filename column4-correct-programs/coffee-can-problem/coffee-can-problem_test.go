@@ -21,6 +21,7 @@ func TestCoffeeBean(t *testing.T) {
 		testData{beans: []bean{bean{color: white}, bean{color: black}, bean{color: black}, bean{color: black}}, lastBeanColor: white},
 		testData{beans: []bean{bean{color: black}, bean{color: white}, bean{color: black}, bean{color: black}, bean{color: black}}, lastBeanColor: white},
 		testData{beans: []bean{bean{color: black}, bean{color: black}}, lastBeanColor: black},
+		testData{beans: []bean{bean{color: black}}, lastBeanColor: black},
 	}
 
 	for _, test := range tests {
@@ -34,7 +35,6 @@ func TestCoffeeBean(t *testing.T) {
 func TestCoffeeBeanWrongColor(t *testing.T) {
 	tests := []testData{
 		testData{beans: []bean{bean{color: 3}, bean{color: white}, bean{color: white}}},
-		testData{beans: []bean{bean{color: black}}},
 		testData{beans: []bean{}},
 	}
 
