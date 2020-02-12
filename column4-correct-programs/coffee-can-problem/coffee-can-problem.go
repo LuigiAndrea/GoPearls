@@ -6,15 +6,41 @@
 package coffeebean
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
 
 type bean struct {
-	color string
+	color colorBean
 }
 
-func coffeeCanBeans(coffeeCan []bean) bean {
+type colorBean int
+
+const unknown = "Unknown"
+const (
+	black = iota + 1
+	white
+)
+
+//ToString for colorBean type
+func (color colorBean) String() string {
+	names := [...]string{
+		unknown,
+		"Black",
+		"White"}
+
+	if color < black || color > white {
+		return unknown
+	}
+
+	return names[color]
+}
+
+func coffeeCanBeans(coffeeCan []bean) (bean, error) {
+	if err := validateCanBean(coffeeCan); err != nil {
+		return bean{}, err
+	}
 
 	for size := len(coffeeCan); size > 2; size-- {
 		rand.Seed(time.Now().UnixNano())
@@ -25,7 +51,7 @@ func coffeeCanBeans(coffeeCan []bean) bean {
 		removeBeans(&coffeeCan, posA, posB)
 	}
 	removeBeans(&coffeeCan, 0, 1)
-	return coffeeCan[0]
+	return coffeeCan[0], nil
 }
 
 func haveSameColor(A, B bean) bool {
@@ -35,10 +61,10 @@ func haveSameColor(A, B bean) bool {
 func removeBeans(coffeeCan *[]bean, posA, posB int) {
 	beanA, beanB := (*coffeeCan)[posA], (*coffeeCan)[posB]
 	if haveSameColor(beanA, beanB) {
-		*coffeeCan = append(*coffeeCan, bean{color: "Black"})
+		*coffeeCan = append(*coffeeCan, bean{color: black})
 		delete(coffeeCan, posA)
 		delete(coffeeCan, posB)
-	} else if beanA.color == "Black" {
+	} else if beanA.color == black {
 		delete(coffeeCan, posA)
 	} else {
 		delete(coffeeCan, posB)
@@ -49,4 +75,17 @@ func delete(coffeeCan *[]bean, pos int) {
 	size := len(*coffeeCan) - 1
 	(*coffeeCan)[pos] = (*coffeeCan)[size]
 	*coffeeCan = (*coffeeCan)[:size]
+}
+
+func validateCanBean(beans []bean) error {
+	if len(beans) < 2 {
+		return fmt.Errorf("Coffee Can Bean must have at least %s", unknown)
+	}
+
+	for _, v := range beans {
+		if v.color.String() == unknown {
+			return fmt.Errorf("Bean color %s", unknown)
+		}
+	}
+	return nil
 }
