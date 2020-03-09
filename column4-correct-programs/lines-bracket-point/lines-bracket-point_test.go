@@ -4,8 +4,10 @@ package linesbracketpoint
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 
+	a "github.com/LuigiAndrea/test-helper/assertions"
 	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
@@ -15,15 +17,16 @@ type testData struct {
 	result [2]line
 }
 
-func TestLineBracketPoint(t *testing.T) {
-	points := []point{
-		point{x: 0.09},
-		point{x: 0.08, y: 1},
-		point{x: -0.05, y: 2},
-		point{x: 0.05, y: 2.5},
-		point{x: 0.3, y: 2.95},
-		point{x: 0.005, y: 4},
-	}
+var points = []point{
+	point{x: 0.09},
+	point{x: 0.08, y: 1},
+	point{x: -0.05, y: 2},
+	point{x: 0.05, y: 2.5},
+	point{x: 0.3, y: 2.95},
+	point{x: 0.005, y: 4},
+}
+
+func TestLinesBracketPoint(t *testing.T) {
 
 	tests := []testData{
 		testData{points: points,
@@ -47,7 +50,37 @@ func TestLineBracketPoint(t *testing.T) {
 		found, lines := getLinesBracketPoint(test.points, test.p)
 		if found == false {
 			t.Error(m.ErrorMessage(true, found))
-		} else if !lines[0].AreEqual(test.result[0]) || !lines[1].AreEqual(test.result[1]) {
+		} else if !reflect.DeepEqual(lines[0], test.result[0]) || !reflect.DeepEqual(lines[1], test.result[1]) {
+			t.Error(m.ErrorMessageTestCount(i+1,
+				m.ErrorMessage(fmt.Sprintf("(%s,%s)", test.result[0], test.result[1]),
+					fmt.Sprintf("(%s,%s)", lines[0], lines[1]))))
+		}
+	}
+}
+
+func TestLineToString(t *testing.T) {
+	expected := "2.000x + 4.000"
+	actual := line(point{x: 2, y: 4}).String()
+	if err := a.AssertDeepEqual(expected, actual); err != nil {
+		t.Error(err)
+	}
+}
+
+func TestPointOutOfRange(t *testing.T) {
+	tests := []testData{
+		testData{points: points,
+			p:      point{x: 1.5, y: 2},
+			result: [2]line{}},
+		testData{points: points,
+			p:      point{x: 0.9, y: 5},
+			result: [2]line{}},
+	}
+
+	for i, test := range tests {
+		found, lines := getLinesBracketPoint(test.points, test.p)
+		if found == true {
+			t.Error(m.ErrorMessage(false, found))
+		} else if !reflect.DeepEqual(lines[0], test.result[0]) || !reflect.DeepEqual(lines[1], test.result[1]) {
 			t.Error(m.ErrorMessageTestCount(i+1,
 				m.ErrorMessage(fmt.Sprintf("(%s,%s)", test.result[0], test.result[1]),
 					fmt.Sprintf("(%s,%s)", lines[0], lines[1]))))

@@ -26,14 +26,14 @@ func (p *point) below(line line) bool {
 	return p.x <= xBreakingPoint
 }
 
+func (p *point) above(line line) bool {
+	return !p.below(line)
+}
+
 type line point
 
 func (l line) String() string {
 	return fmt.Sprintf("%.3fx + %.3f", l.x, l.y)
-}
-
-func (l line) AreEqual(l2 line) bool {
-	return l.x == l2.x && l.y == l2.y
 }
 
 //Assume the lines are ordered in the x-interval [0,1]
@@ -52,7 +52,7 @@ func getLinesBracketPoint(points []point, p point) (found bool, bracket [2]line)
 func getInterval(points []point, p point) [2]point {
 	size := len(points)
 	if size == 2 {
-		if p.below(line(points[1])) && !p.below(line(points[0])) {
+		if p.below(line(points[1])) && p.above(line(points[0])) {
 			return [2]point{points[0], points[1]}
 		}
 		return [2]point{}
