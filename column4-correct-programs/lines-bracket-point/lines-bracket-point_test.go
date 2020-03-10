@@ -44,6 +44,9 @@ func TestLinesBracketPoint(t *testing.T) {
 		testData{points: points,
 			p:      point{x: 0.6, y: 3.2},
 			result: [2]line{line(point{x: 0.3, y: 2.95}), line(point{x: 0.005, y: 4})}},
+		testData{points: []point{point{x: 0.86, y: 2}, point{x: 0.86, y: 5}},
+			p:      point{x: 0.3, y: 2.5},
+			result: [2]line{line(point{x: 0.86, y: 2}), line(point{x: 0.86, y: 5})}},
 	}
 
 	for i, test := range tests {
@@ -73,6 +76,9 @@ func TestPointOutOfRange(t *testing.T) {
 			result: [2]line{}},
 		testData{points: points,
 			p:      point{x: 0.9, y: 5},
+			result: [2]line{}},
+		testData{points: []point{point{x: 0.86}},
+			p:      point{x: 0.9, y: 2},
 			result: [2]line{}},
 	}
 

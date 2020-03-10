@@ -42,8 +42,8 @@ func getLinesBracketPoint(points []point, p point) (found bool, bracket [2]line)
 	if numPoints < 2 || !p.isValid() {
 		return false, bracket
 	}
-	interval := getInterval(points, p)
-	if interval != ([2]point{}) {
+	if p.below(line(points[numPoints-1])) && p.above(line(points[0])) {
+		interval := getInterval(points, p)
 		return true, [2]line{line(interval[0]), line(interval[1])}
 	}
 	return false, bracket
@@ -52,12 +52,8 @@ func getLinesBracketPoint(points []point, p point) (found bool, bracket [2]line)
 func getInterval(points []point, p point) [2]point {
 	size := len(points)
 	if size == 2 {
-		if p.below(line(points[1])) && p.above(line(points[0])) {
-			return [2]point{points[0], points[1]}
-		}
-		return [2]point{}
+		return [2]point{points[0], points[1]}
 	}
-
 	midpoint := (size - 1) / 2
 
 	if p.below(line(points[midpoint])) {
