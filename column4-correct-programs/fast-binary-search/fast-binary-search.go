@@ -12,10 +12,11 @@ func fastSearch(a []int, v int) (p int) {
 			u = m
 		}
 	}
+
+	p = u
 	if u == n || a[u] != v {
 		p = -1
 	}
 
-	p = u
 	return
 }
