@@ -19,6 +19,7 @@ func TestFastSearchVersion1(t *testing.T) {
 		testData{array: []int{1, 5, 7, 8, 9, 12, 14, 22, 434}, v: 8, pos: 3},
 		testData{array: []int{1, 5, 7, 8, 9, 12, 14, 22, 434}, v: 434, pos: 8},
 		testData{array: []int{1, 5, 7, 8, 9, 12, 14, 22, 434}, v: 200, pos: -1},
+		testData{array: []int{1, 5, 7, 8, 9, 12, 14, 22, 434}, v: 1, pos: 0},
 		testData{array: []int{}, v: 0, pos: -1},
 		testData{array: []int{-5, -3, 0, 5}, v: -3, pos: 1},
 		testData{array: nil, v: 0, pos: -1},
