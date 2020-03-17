@@ -56,3 +56,20 @@ func TestFastSearchVersion2(t *testing.T) {
 		}
 	}
 }
+
+func TestFastSearchVersion3(t *testing.T) {
+	tests := []testDataV2{
+		testDataV2{array: data, v: 8, pos: 3},
+		testDataV2{array: data, v: 434, pos: 9},
+		testDataV2{array: data, v: 200, pos: -1},
+		testDataV2{array: data, v: 1, pos: 0},
+		testDataV2{array: [10]int{}, v: 10, pos: -1},
+		testDataV2{array: [10]int{-5, -3}, v: -3, pos: 1},
+	}
+
+	for i, test := range tests {
+		if err := a.AssertDeepEqual(test.pos, fastSearch3(test.array, test.v)); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
+		}
+	}
+}
