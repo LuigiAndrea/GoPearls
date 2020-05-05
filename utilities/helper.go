@@ -1,7 +1,9 @@
 package utilities
 
 import (
+	"fmt"
 	"sort"
+	"time"
 )
 
 //Reverse a slice
@@ -25,4 +27,13 @@ func PreAppend(list []interface{}, elements ...interface{}) []interface{} {
 		list = append([]interface{}{element}, list...)
 	}
 	return list
+}
+
+//Elapse calculate the time elapsed
+func Elapse(name string) func() {
+	start := time.Now()
+
+	return func() {
+		fmt.Printf("%s took %v\n", name, time.Since(start))
+	}
 }
