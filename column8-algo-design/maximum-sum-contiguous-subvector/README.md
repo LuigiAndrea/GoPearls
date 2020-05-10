@@ -1,0 +1,1 @@
+The input is a vector x of n floating-point numbers; the output is the maximum sum found in any contiguous subvector of the input. When all inputs are negative the maximum sub-vector is the empty vector, which has sum zero

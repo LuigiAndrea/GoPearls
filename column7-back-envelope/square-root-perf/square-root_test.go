@@ -9,7 +9,7 @@ import (
 	goth "github.com/LuigiAndrea/test-helper/messages"
 )
 
-var steps int = 1000000000
+var steps int = 10000000
 
 func TestCallSquareRoot(t *testing.T) {
 	defer utilities.Elapse(goth.GetFuncName(squareRoot))()

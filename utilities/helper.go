@@ -37,3 +37,14 @@ func Elapse(name string) func() {
 		fmt.Printf("%s took %v\n", name, time.Since(start))
 	}
 }
+
+//Max calculate the max element in the parameters list
+func Max(elements ...float64) float64 {
+	maxElement := 0.0
+	for _, el := range elements {
+		if el > maxElement {
+			maxElement = el
+		}
+	}
+	return maxElement
+}
