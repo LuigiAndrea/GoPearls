@@ -15,6 +15,7 @@ type testData struct {
 }
 
 func TestMaxSubVector(t *testing.T) {
+	funcToTest := []func([]float64) float64{maxSubvector, maxSubvectorCubic}
 
 	tests := []testData{
 		testData{vector: []float64{-2.4, 8, 3.3, -5.1, 2, -13}, expectedValue: 11.3},
@@ -25,9 +26,11 @@ func TestMaxSubVector(t *testing.T) {
 		testData{vector: nil, expectedValue: 0},
 	}
 
-	for i, test := range tests {
-		if err := a.AssertDeepEqual(test.expectedValue, maxSubvector(test.vector)); err != nil {
-			t.Error(m.ErrorMessageTestCount(i+1, err))
+	for _, f := range funcToTest {
+		for i, test := range tests {
+			if err := a.AssertDeepEqual(test.expectedValue, f(test.vector)); err != nil {
+				t.Errorf("(%s)%v", m.GetFuncName(f), m.ErrorMessageTestCount(i+1, err))
+			}
 		}
 	}
 }
