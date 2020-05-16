@@ -3,6 +3,8 @@
 package utilities
 
 import (
+	"errors"
+	"fmt"
 	"math"
 	"testing"
 
@@ -123,13 +125,38 @@ func TestRound(t *testing.T) {
 	tests := []testData{
 		testData{in: 183.467, in2: 2, out: 183.47},
 		testData{in: 183.467, in2: 5, out: 183.46700},
-		testData{in: 183.467, in2: math.MaxInt8, out: 183.46700},
+		testData{in: 146.7032, in2: 0, out: 147},
 		testData{in: -12.455787, in2: 2, out: -12.46},
+		testData{in: 1.79, in2: 308, out: 1.79},
 	}
 
 	for _, test := range tests {
-		if err := a.AssertDeepEqual(test.out, Round(test.in, test.in2)); err != nil {
+		num, _ := Round(test.in, test.in2)
+		if err := a.AssertDeepEqual(test.out, num); err != nil {
 			t.Errorf(err.Error())
 		}
+	}
+}
+
+func TestRoundEdgeCases(t *testing.T) {
+	num, _ := Round(1.80, 308)
+	fmt.Println(num)
+	if err := a.AssertDeepEqual(true, math.IsInf(num, 0)); err != nil {
+		t.Errorf(err.Error())
+	}
+
+	num, _ = Round(180.43, 3108)
+	fmt.Println(num)
+	if err := a.AssertDeepEqual(true, math.IsNaN(num)); err != nil {
+		t.Errorf(err.Error())
+	}
+
+	if _, err := Round(1.80, -3); err == nil {
+		t.Errorf("Excepted an exception!")
+	}
+
+	_, excRound := Round(1.80, -3)
+	if err := a.AssertException(errors.New("Some exception returned"), excRound); err != nil {
+		t.Error(err)
 	}
 }

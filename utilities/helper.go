@@ -1,6 +1,7 @@
 package utilities
 
 import (
+	"errors"
 	"fmt"
 	"math"
 	"sort"
@@ -51,7 +52,11 @@ func Max(elements ...float64) float64 {
 }
 
 //Round a number to n decimal places
-func Round(number float64, decimalPlaces int) float64 {
+func Round(number float64, decimalPlaces int) (float64, error) {
+	if decimalPlaces < 0 {
+		return 0.0, errors.New("decimalPlace parameter must be a positive number")
+	}
+
 	normalize := math.Pow10(decimalPlaces)
-	return math.Round(number*normalize) / normalize
+	return math.Round(number*normalize) / normalize, nil
 }

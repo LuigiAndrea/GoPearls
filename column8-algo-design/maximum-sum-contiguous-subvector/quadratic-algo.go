@@ -26,7 +26,7 @@ func maxSubvectorQuadratic2(vector []float64) (maxsofar float64) {
 	cumSum := make([]float64, n)
 	cumSum[0] = vector[0]
 	for i := 1; i < n; i++ {
-		cumSum[i] = utilities.Round(vector[i]+cumSum[i-1], 2)
+		cumSum[i], _ = utilities.Round(vector[i]+cumSum[i-1], 2)
 	}
 
 	sum := 0.0
