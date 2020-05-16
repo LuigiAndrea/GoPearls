@@ -1,8 +1,6 @@
 package maxsubvector
 
 import (
-	"math"
-
 	"github.com/LuigiAndrea/GoPearls/utilities"
 )
 
@@ -28,17 +26,19 @@ func maxSubvectorQuadratic2(vector []float64) (maxsofar float64) {
 	cumSum := make([]float64, n)
 	cumSum[0] = vector[0]
 	for i := 1; i < n; i++ {
-		cumSum[i] = math.Round((vector[i]+cumSum[i-1])*100) / 100
+		cumSum[i] = utilities.Round(vector[i]+cumSum[i-1], 2)
 	}
 
+	sum := 0.0
 	for i := 0; i < n; i++ {
-		sum := 0.0
+		sum = cumSum[i]
+		maxsofar = utilities.Max(sum, maxsofar)
+	}
+
+	for i := 1; i < n; i++ {
+		sum = 0.0
 		for j := i; j < n; j++ {
-			if i == 0 {
-				sum = cumSum[j]
-			} else {
-				sum = cumSum[j] - cumSum[i-1]
-			}
+			sum = cumSum[j] - cumSum[i-1]
 			maxsofar = utilities.Max(sum, maxsofar)
 		}
 	}

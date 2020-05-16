@@ -1,4 +1,4 @@
-// +build all column8 maxsubvector
+// +build all column8 maxsubvector subvector
 
 package maxsubvector
 
