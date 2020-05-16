@@ -3,9 +3,10 @@
 package utilities
 
 import (
+	"math"
 	"testing"
 
-	goth "github.com/LuigiAndrea/test-helper/assertions"
+	a "github.com/LuigiAndrea/test-helper/assertions"
 )
 
 func TestPreAppend(t *testing.T) {
@@ -28,7 +29,7 @@ func TestPreAppend(t *testing.T) {
 	for _, test := range tests {
 
 		data := PreAppend(test.testValues, test.newElements...)
-		if err := goth.AssertSlicesEqual(goth.DataSlicesMatch{Expected: test.expectedValues, Actual: data}); err != nil {
+		if err := a.AssertSlicesEqual(a.DataSlicesMatch{Expected: test.expectedValues, Actual: data}); err != nil {
 			t.Errorf(err.Error())
 		}
 	}
@@ -47,7 +48,7 @@ func TestReverse(t *testing.T) {
 
 	for _, test := range tests {
 		Reverse(ByteSlice(test.in), 0, len(test.in)-1)
-		if err := goth.AssertSlicesEqual(goth.ByteSlicesMatch{Expected: test.out, Actual: test.in}); err != nil {
+		if err := a.AssertSlicesEqual(a.ByteSlicesMatch{Expected: test.out, Actual: test.in}); err != nil {
 			t.Errorf(err.Error())
 		}
 	}
@@ -85,7 +86,49 @@ func TestByteSliceType(t *testing.T) {
 		}
 
 		byteSlice.Swap(test.swapLessIndexes.i, test.swapLessIndexes.j)
-		if err := goth.AssertSlicesEqual(goth.ByteSlicesMatch{Expected: test.out, Actual: test.in}); err != nil {
+		if err := a.AssertSlicesEqual(a.ByteSlicesMatch{Expected: test.out, Actual: test.in}); err != nil {
+			t.Errorf(err.Error())
+		}
+	}
+}
+
+func TestMax(t *testing.T) {
+	type testData struct {
+		in  []float64
+		out float64
+	}
+
+	tests := []testData{
+		testData{in: []float64{18.2, 12.4, 3.5}, out: 18.2},
+		testData{in: []float64{}, out: 0},
+		testData{in: nil, out: 0},
+		testData{in: []float64{1.2, -12.4, 3.5}, out: 3.5},
+		testData{in: []float64{3.75}, out: 3.75},
+	}
+
+	for _, test := range tests {
+		if err := a.AssertDeepEqual(test.out, Max(test.in...)); err != nil {
+			t.Errorf(err.Error())
+		}
+	}
+}
+
+func TestRound(t *testing.T) {
+	type testData struct {
+		in  float64
+		in2 int
+		out float64
+	}
+
+	tests := []testData{
+		testData{in: 183.467, in2: 2, out: 183.47},
+		testData{in: 183.467, in2: 5, out: 183.46700},
+		testData{in: 183.467, in2: math.MaxInt8, out: 183.46700},
+		testData{in: -12.455787, in2: 2, out: -12.46},
+	}
+
+	for _, test := range tests {
+		if err := a.AssertDeepEqual(test.out, Round(test.in, test.in2)); err != nil {
 			t.Errorf(err.Error())
 		}
 	}

@@ -2,6 +2,7 @@ package utilities
 
 import (
 	"fmt"
+	"math"
 	"sort"
 	"time"
 )
@@ -47,4 +48,10 @@ func Max(elements ...float64) float64 {
 		}
 	}
 	return maxElement
+}
+
+//Round a number to n decimal places
+func Round(number float64, decimalPlaces int) float64 {
+	normalize := math.Pow10(decimalPlaces)
+	return math.Round(number*normalize) / normalize
 }
