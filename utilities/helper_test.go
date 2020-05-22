@@ -4,8 +4,6 @@ package utilities
 
 import (
 	"errors"
-	"fmt"
-	"math"
 	"testing"
 
 	a "github.com/LuigiAndrea/test-helper/assertions"
@@ -139,16 +137,13 @@ func TestRound(t *testing.T) {
 }
 
 func TestRoundEdgeCases(t *testing.T) {
-	num, _ := Round(1.80, 308)
-	fmt.Println(num)
-	if err := a.AssertDeepEqual(true, math.IsInf(num, 0)); err != nil {
-		t.Errorf(err.Error())
+
+	if _, err := Round(1.80, 308); err == nil {
+		t.Errorf("Excepted an exception!")
 	}
 
-	num, _ = Round(180.43, 3108)
-	fmt.Println(num)
-	if err := a.AssertDeepEqual(true, math.IsNaN(num)); err != nil {
-		t.Errorf(err.Error())
+	if _, err := Round(180.43, 3108); err == nil {
+		t.Errorf("Excepted an exception!")
 	}
 
 	if _, err := Round(1.80, -3); err == nil {

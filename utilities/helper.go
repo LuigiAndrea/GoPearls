@@ -56,7 +56,16 @@ func Round(number float64, decimalPlaces int) (float64, error) {
 	if decimalPlaces < 0 {
 		return 0.0, errors.New("decimalPlace parameter must be a positive number")
 	}
-
 	normalize := math.Pow10(decimalPlaces)
-	return math.Round(number*normalize) / normalize, nil
+
+	if math.IsInf(normalize, 0) {
+		return 0.0, errors.New("parameters too big")
+	}
+	numberToRound := number * normalize
+
+	if math.IsInf(numberToRound, 0) {
+		return 0.0, errors.New("parameters too big")
+	}
+
+	return math.Round(numberToRound) / normalize, nil
 }
