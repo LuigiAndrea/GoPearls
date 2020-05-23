@@ -3,10 +3,10 @@
 package utilities
 
 import (
-	"errors"
 	"testing"
 
 	a "github.com/LuigiAndrea/test-helper/assertions"
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
 func TestPreAppend(t *testing.T) {
@@ -26,11 +26,11 @@ func TestPreAppend(t *testing.T) {
 			newElements:    []interface{}{123}},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 
 		data := PreAppend(test.testValues, test.newElements...)
 		if err := a.AssertSlicesEqual(a.DataSlicesMatch{Expected: test.expectedValues, Actual: data}); err != nil {
-			t.Errorf(err.Error())
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
@@ -46,10 +46,10 @@ func TestReverse(t *testing.T) {
 		testData{in: nil, out: nil},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		Reverse(ByteSlice(test.in), 0, len(test.in)-1)
 		if err := a.AssertSlicesEqual(a.ByteSlicesMatch{Expected: test.out, Actual: test.in}); err != nil {
-			t.Errorf(err.Error())
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
@@ -67,27 +67,25 @@ func TestByteSliceType(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{in: []byte{125, 55, 90, 112}, out: []byte{112, 55, 90, 125},
-			lengthOut: 4, lessOut: false, swapLessIndexes: swapLessIndex{i: 0, j: 3}},
-		testData{in: []byte{125, 55, 90}, out: []byte{125, 90, 55},
-			lengthOut: 3, lessOut: true, swapLessIndexes: swapLessIndex{i: 1, j: 2}},
+		testData{in: []byte{125, 55, 90, 112}, lengthOut: 4, lessOut: false, swapLessIndexes: swapLessIndex{i: 0, j: 3}},
+		testData{in: []byte{125, 55, 90}, lengthOut: 3, lessOut: true, swapLessIndexes: swapLessIndex{i: 1, j: 2}},
 	}
 
-	for _, test := range tests {
-		t.Logf("--> %v", test.in)
+	for i, test := range tests {
+
 		byteSlice := ByteSlice(test.in)
 
-		if byteSliceLength := byteSlice.Len(); byteSliceLength != test.lengthOut {
-			t.Errorf("Expected '%d' - Actual '%d'", test.lengthOut, byteSliceLength)
+		if err := a.AssertDeepEqual(test.lengthOut, byteSlice.Len()); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 
-		if byteLess := byteSlice.Less(test.swapLessIndexes.i, test.swapLessIndexes.j); byteLess != test.lessOut {
-			t.Errorf("Expected '%t' - Actual '%t'", test.lessOut, byteLess)
+		if err := a.AssertDeepEqual(test.lessOut, byteSlice.Less(test.swapLessIndexes.i, test.swapLessIndexes.j)); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 
 		byteSlice.Swap(test.swapLessIndexes.i, test.swapLessIndexes.j)
-		if err := a.AssertSlicesEqual(a.ByteSlicesMatch{Expected: test.out, Actual: test.in}); err != nil {
-			t.Errorf(err.Error())
+		if err := a.AssertSlicesEqual(a.ByteSlicesMatch{Expected: byteSlice, Actual: test.in}); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
@@ -106,9 +104,9 @@ func TestMax(t *testing.T) {
 		testData{in: []float64{3.75}, out: 3.75},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		if err := a.AssertDeepEqual(test.out, Max(test.in...)); err != nil {
-			t.Errorf(err.Error())
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
@@ -128,30 +126,33 @@ func TestRound(t *testing.T) {
 		testData{in: 1.79, in2: 308, out: 1.79},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		num, _ := Round(test.in, test.in2)
 		if err := a.AssertDeepEqual(test.out, num); err != nil {
-			t.Errorf(err.Error())
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
 
 func TestRoundEdgeCases(t *testing.T) {
-
-	if _, err := Round(1.80, 308); err == nil {
-		t.Errorf("Excepted an exception!")
+	type testException struct {
+		number        float64
+		decimalPlaces int
+		expected      error
 	}
 
-	if _, err := Round(180.43, 3108); err == nil {
-		t.Errorf("Excepted an exception!")
+	errorString := "parameters too big"
+
+	tests := []testException{
+		testException{number: 1.80, decimalPlaces: 308, expected: &RoundError{Err: errorString}},
+		testException{number: 180.43, decimalPlaces: 3108, expected: &RoundError{Err: errorString}},
+		testException{number: 1.80, decimalPlaces: -3, expected: &RoundError{Err: "decimalPlace parameter must be a positive number"}},
 	}
 
-	if _, err := Round(1.80, -3); err == nil {
-		t.Errorf("Excepted an exception!")
-	}
-
-	_, excRound := Round(1.80, -3)
-	if err := a.AssertException(errors.New("Some exception returned"), excRound); err != nil {
-		t.Error(err)
+	for i, test := range tests {
+		_, e := Round(test.number, test.decimalPlaces)
+		if err := a.AssertDeepException(test.expected, e); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
+		}
 	}
 }

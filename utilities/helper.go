@@ -54,18 +54,39 @@ func Max(elements ...float64) float64 {
 //Round a number to n decimal places
 func Round(number float64, decimalPlaces int) (float64, error) {
 	if decimalPlaces < 0 {
-		return 0.0, errors.New("decimalPlace parameter must be a positive number")
+		return 0.0, &RoundError{Err: "decimalPlace parameter must be a positive number"}
 	}
+
+	errorString := "parameters too big"
 	normalize := math.Pow10(decimalPlaces)
 
 	if math.IsInf(normalize, 0) {
-		return 0.0, errors.New("parameters too big")
+		return 0.0, &RoundError{Err: errorString}
 	}
 	numberToRound := number * normalize
 
 	if math.IsInf(numberToRound, 0) {
-		return 0.0, errors.New("parameters too big")
+		return 0.0, &RoundError{Err: errorString}
 	}
 
 	return math.Round(numberToRound) / normalize, nil
+}
+
+//RoundError records an error for Round function
+type RoundError struct {
+	Err string
+}
+
+func (re *RoundError) Error() string {
+	return re.Err
+}
+
+// Is Compare the values of RoundError
+func (re *RoundError) Is(e error) bool {
+	var err *RoundError
+	if errors.As(e, &err) {
+		return re.Err == err.Err
+	}
+
+	return false
 }
