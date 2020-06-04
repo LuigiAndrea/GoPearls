@@ -3,6 +3,8 @@
 package utilities
 
 import (
+	"math"
+	"reflect"
 	"testing"
 
 	a "github.com/LuigiAndrea/test-helper/assertions"
@@ -155,4 +157,23 @@ func TestRoundEdgeCases(t *testing.T) {
 			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
+}
+
+//Just run the function and check the type of the function returned
+func TestElapse(t *testing.T) {
+
+	var funcExpected func()
+	funcReturned := Elapse("testFunction")
+
+	//do some work
+	for i := 0; i < 1000000; i++ {
+		math.Cos(float64(i))
+	}
+
+	funcReturned()
+
+	if err := a.AssertDeepEqual(reflect.TypeOf(funcExpected), reflect.TypeOf(funcReturned)); err != nil {
+		t.Error(err.Error())
+	}
+
 }
