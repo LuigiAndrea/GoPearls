@@ -100,10 +100,14 @@ func TestMax(t *testing.T) {
 
 	tests := []testData{
 		testData{in: []float64{18.2, 12.4, 3.5}, out: 18.2},
-		testData{in: []float64{}, out: 0},
-		testData{in: nil, out: 0},
+		testData{in: []float64{}, out: math.Inf(-1)},
+		testData{in: nil, out: math.Inf(-1)},
 		testData{in: []float64{1.2, -12.4, 3.5}, out: 3.5},
 		testData{in: []float64{3.75}, out: 3.75},
+		testData{in: []float64{3.75, math.Inf(-1)}, out: 3.75},
+		testData{in: []float64{3.75, math.Inf(1)}, out: math.Inf(5)},
+		testData{in: []float64{-3.75, math.Inf(-1)}, out: -3.75},
+		testData{in: []float64{math.Inf(1), math.Inf(-1)}, out: math.Inf(0)},
 	}
 
 	for i, test := range tests {
@@ -163,7 +167,7 @@ func TestRoundEdgeCases(t *testing.T) {
 func TestElapse(t *testing.T) {
 
 	var funcExpected func()
-	funcReturned := Elapse("testFunction")
+	funcReturned := Elapse("Elapse")
 
 	//do some work
 	for i := 0; i < 1000000; i++ {

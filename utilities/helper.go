@@ -40,9 +40,9 @@ func Elapse(name string) func() {
 	}
 }
 
-//Max calculate the max element in the parameters list
+//Max calculate the max element in the parameters list, return -Inf if no parameters are passed
 func Max(elements ...float64) float64 {
-	maxElement := 0.0
+	maxElement := math.Inf(-1)
 	for _, el := range elements {
 		if el > maxElement {
 			maxElement = el
