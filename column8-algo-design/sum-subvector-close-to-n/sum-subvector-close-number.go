@@ -31,8 +31,16 @@ func newSubvector(from, to int, value float64) subvector {
 		distanceToNumber: math.Abs(value)}
 }
 
+// Return the subvector with the sum closest to zero,
+// if there are more subvectors with the same sum closest to zero return the first occurrence
 func sumSubvectorCloseToZero(vector []float64) []float64 {
-	size := len(vector)
+	var size int
+	if vector == nil {
+		return []float64{}
+	} else if size = len(vector); size == 0 {
+		return []float64{}
+	}
+
 	cumArray := calculateCummulativeArray(vector)
 	sort.Stable(cumArray)
 
@@ -59,7 +67,7 @@ func sumSubvectorCloseToZero(vector []float64) []float64 {
 
 	// Check last element of the cummulative array
 	if math.Abs(cumArray[size-1].value) < currentCloseNumber.distanceToNumber {
-		currentCloseNumber = newSubvector(0, cumArray[size-1].originalIndex+1, cumArray[size-1].value)
+		currentCloseNumber = newSubvector(0, cumArray[size-1].originalIndex, cumArray[size-1].value)
 	}
 
 	return vector[currentCloseNumber.from : currentCloseNumber.to+1]
