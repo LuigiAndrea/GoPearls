@@ -54,7 +54,7 @@ func Max(elements ...float64) float64 {
 //Round a number to n decimal places
 func Round(number float64, decimalPlaces int) (float64, error) {
 	if decimalPlaces < 0 {
-		return 0.0, &RoundError{Err: "decimalPlace parameter must be a positive number"}
+		return 0.0, &RoundError{Err: "utilities.Round: decimalPlace parameter must be a positive number"}
 	}
 
 	errorString := "parameters too big"

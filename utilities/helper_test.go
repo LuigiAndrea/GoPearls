@@ -3,6 +3,7 @@
 package utilities
 
 import (
+	"errors"
 	"math"
 	"reflect"
 	"testing"
@@ -152,13 +153,34 @@ func TestRoundEdgeCases(t *testing.T) {
 	tests := []testException{
 		testException{number: 1.80, decimalPlaces: 308, expected: &RoundError{Err: errorString}},
 		testException{number: 180.43, decimalPlaces: 3108, expected: &RoundError{Err: errorString}},
-		testException{number: 1.80, decimalPlaces: -3, expected: &RoundError{Err: "decimalPlace parameter must be a positive number"}},
+		testException{number: 1.80, decimalPlaces: -3, expected: &RoundError{Err: "utilities.Round: decimalPlace parameter must be a positive number"}},
 	}
 
 	for i, test := range tests {
 		_, e := Round(test.number, test.decimalPlaces)
 		if err := a.AssertDeepException(test.expected, e); err != nil {
 			t.Error(m.ErrorMessageTestCount(i+1, err))
+		}
+	}
+}
+
+func TestRoundWrongException(t *testing.T) {
+	type testException struct {
+		number        float64
+		decimalPlaces int
+		expected      error
+	}
+	errorString := "utilities.Round: decimalPlace parameter must be a positive number"
+	tests := []testException{
+		testException{number: 1.80, decimalPlaces: -3, expected: errors.New(errorString)},
+	}
+
+	for _, test := range tests {
+		_, e := Round(test.number, test.decimalPlaces)
+		if err := a.AssertException(test.expected, e); err == nil { //The expected exception should be RoundError
+			t.Error("Expected exception!")
+		} else {
+			a.AssertDeepEqual(errorString, e.Error()) //check the message returned
 		}
 	}
 }

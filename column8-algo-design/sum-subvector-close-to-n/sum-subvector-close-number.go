@@ -86,6 +86,7 @@ func calculateCummulativeArray(vector []float64) cummulativeArray {
 	return cArray
 }
 
-func getDistance(value1, value2 float64) float64 {
-	return math.Abs(value1 - value2)
+func getDistance(value1, value2 float64) (returnValue float64) {
+	returnValue, _ = utilities.Round(math.Abs(value1-value2), 2)
+	return
 }
