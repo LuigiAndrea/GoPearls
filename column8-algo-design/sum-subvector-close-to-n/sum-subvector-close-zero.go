@@ -3,6 +3,8 @@ package sumsubvectornumber
 import (
 	"math"
 	"sort"
+
+	"github.com/LuigiAndrea/GoPearls/utilities"
 )
 
 // Return the subvector with the sum closest to zero,
@@ -14,25 +16,25 @@ func sumSubvectorCloseToZero(vector []float64) []float64 {
 		return []float64{}
 	}
 
-	cumArray := calculateCummulativeArray(vector)
+	cumArray := utilities.CalculateCummulativeArray(vector)
 	sort.Stable(cumArray)
 
-	currentCloseNumber := newSubvector(0, cumArray[0].originalIndex, math.Abs(cumArray[0].value))
+	currentCloseNumber := newSubvector(0, cumArray[0].OriginalIndex, math.Abs(cumArray[0].Value))
 
 	for i := 0; i < size-1; i++ {
-		fromZeroToCurrent := math.Abs(cumArray[i].value)
+		fromZeroToCurrent := math.Abs(cumArray[i].Value)
 		if fromZeroToCurrent < currentCloseNumber.distanceToNumber {
-			currentCloseNumber = newSubvector(0, cumArray[i].originalIndex, fromZeroToCurrent)
+			currentCloseNumber = newSubvector(0, cumArray[i].OriginalIndex, fromZeroToCurrent)
 		}
 
 		// Calculate the difference from i and i+1 in the cummulative array
-		diff := getDistance(cumArray[i].value, cumArray[i+1].value)
+		diff := getDistance(cumArray[i].Value, cumArray[i+1].Value)
 		if diff < currentCloseNumber.distanceToNumber {
 			var fromIdx, toIdx int
-			if cumArray[i].originalIndex < cumArray[i+1].originalIndex {
-				fromIdx, toIdx = cumArray[i].originalIndex, cumArray[i+1].originalIndex
+			if cumArray[i].OriginalIndex < cumArray[i+1].OriginalIndex {
+				fromIdx, toIdx = cumArray[i].OriginalIndex, cumArray[i+1].OriginalIndex
 			} else {
-				fromIdx, toIdx = cumArray[i+1].originalIndex, cumArray[i].originalIndex
+				fromIdx, toIdx = cumArray[i+1].OriginalIndex, cumArray[i].OriginalIndex
 			}
 
 			currentCloseNumber = newSubvector(fromIdx+1, toIdx, diff)
@@ -40,9 +42,9 @@ func sumSubvectorCloseToZero(vector []float64) []float64 {
 	}
 
 	// Check last element of the cummulative array
-	fromZeroToCurrent := math.Abs(cumArray[size-1].value)
+	fromZeroToCurrent := math.Abs(cumArray[size-1].Value)
 	if fromZeroToCurrent < currentCloseNumber.distanceToNumber {
-		currentCloseNumber = newSubvector(0, cumArray[size-1].originalIndex, fromZeroToCurrent)
+		currentCloseNumber = newSubvector(0, cumArray[size-1].OriginalIndex, fromZeroToCurrent)
 	}
 
 	return vector[currentCloseNumber.from : currentCloseNumber.to+1]

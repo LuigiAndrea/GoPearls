@@ -1,5 +1,7 @@
 package sumsubvectornumber
 
+import "github.com/LuigiAndrea/GoPearls/utilities"
+
 // Return the subvector with the sum closest to a number
 func sumSubvectorCloseToNumber(vector []float64, number float64) []float64 {
 	var size int
@@ -8,19 +10,20 @@ func sumSubvectorCloseToNumber(vector []float64, number float64) []float64 {
 		return []float64{}
 	}
 
-	cumArray := calculateCummulativeArray(vector)
-	currentCloseNumber := newSubvector(0, 0, getDistance(cumArray[0].value, number))
+	cumArray := utilities.CalculateCummulativeArray(vector)
+	currentCloseNumber := newSubvector(0, 0, getDistance(cumArray[0].Value, number))
 
 	for i := 0; i < size-1; i++ {
-		currentNumber := cumArray[i].value
+		currentNumber := cumArray[i].Value
 
-		fromZeroToCurrent := getDistance(cumArray[i].value, number)
+		// Check i element of the cummulative array
+		fromZeroToCurrent := getDistance(cumArray[i].Value, number)
 		if fromZeroToCurrent < currentCloseNumber.distanceToNumber {
 			currentCloseNumber = newSubvector(0, i, fromZeroToCurrent)
 		}
 
 		for j := i + 1; j < size; j++ {
-			currentDiff := getDistance(cumArray[j].value-currentNumber, number)
+			currentDiff := getDistance(cumArray[j].Value-currentNumber, number)
 			if currentDiff < currentCloseNumber.distanceToNumber {
 				currentCloseNumber = newSubvector(i+1, j, currentDiff)
 			}
@@ -28,7 +31,7 @@ func sumSubvectorCloseToNumber(vector []float64, number float64) []float64 {
 	}
 
 	// Check last element of the cummulative array
-	fromZeroToCurrent := getDistance(cumArray[size-1].value, number)
+	fromZeroToCurrent := getDistance(cumArray[size-1].Value, number)
 	if fromZeroToCurrent < currentCloseNumber.distanceToNumber {
 		currentCloseNumber = newSubvector(0, size-1, fromZeroToCurrent)
 	}

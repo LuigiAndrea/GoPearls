@@ -72,6 +72,10 @@ func TestSumSubVectorCloseNumber(t *testing.T) {
 		testData{vector: []float64{-6, 12, -4, -3, 2, 4}, subvector: []float64{-4, -3}, number: -7.0},
 		testData{vector: []float64{-6, 12, -4, -3, 2, 4}, subvector: []float64{12, -4, -3, 2}, number: 7.0},
 		testData{vector: []float64{-6, -12, -4, -3, -2}, subvector: []float64{-4, -3, -2}, number: -10},
+		testData{vector: []float64{-1, -4, -0.2, -5}, subvector: []float64{-1}, number: -2.01},
+		testData{vector: []float64{9.1, -4, -0.2, -5}, subvector: []float64{-0.2}, number: -2.01},
+		testData{vector: []float64{-1, -4, -0.2, -5}, subvector: []float64{-0.2}, number: 5},
+		testData{vector: []float64{2, -3.99, -2, -5}, subvector: []float64{-2}, number: -2},
 	}
 
 	for i, test := range tests {
