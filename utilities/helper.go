@@ -61,12 +61,12 @@ func Round(number float64, decimalPlaces int) (float64, error) {
 	normalize := math.Pow10(decimalPlaces)
 
 	if math.IsInf(normalize, 0) {
-		return 0.0, &RoundError{Err: errorString}
+		return normalize, &RoundError{Err: errorString}
 	}
 	numberToRound := number * normalize
 
 	if math.IsInf(numberToRound, 0) {
-		return 0.0, &RoundError{Err: errorString}
+		return numberToRound, &RoundError{Err: errorString}
 	}
 
 	return math.Round(numberToRound) / normalize, nil
