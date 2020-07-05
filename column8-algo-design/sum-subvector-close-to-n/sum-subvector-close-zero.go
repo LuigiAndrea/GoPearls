@@ -4,7 +4,7 @@ import (
 	"math"
 	"sort"
 
-	"github.com/LuigiAndrea/GoPearls/utilities"
+	u "github.com/LuigiAndrea/GoPearls/utilities"
 )
 
 // Return the subvector with the sum closest to zero,
@@ -16,7 +16,7 @@ func sumSubvectorCloseToZero(vector []float64) []float64 {
 		return []float64{}
 	}
 
-	cumArray := utilities.CalculateCummulativeArray(vector)
+	cumArray := u.CalculateCummulativeArray(vector)
 	sort.Stable(cumArray)
 
 	currentCloseNumber := newSubvector(0, cumArray[0].OriginalIndex, math.Abs(cumArray[0].Value))
@@ -28,7 +28,7 @@ func sumSubvectorCloseToZero(vector []float64) []float64 {
 		}
 
 		// Calculate the difference from i and i+1 in the cummulative array
-		diff := getDistance(cumArray[i].Value, cumArray[i+1].Value)
+		diff := cumArray.GetDistance(i, i+1)
 		if diff < currentCloseNumber.distanceToNumber {
 			var fromIdx, toIdx int
 			if cumArray[i].OriginalIndex < cumArray[i+1].OriginalIndex {

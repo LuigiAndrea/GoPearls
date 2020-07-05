@@ -90,3 +90,9 @@ func (re *RoundError) Is(e error) bool {
 
 	return false
 }
+
+//GetDistance calculate the difference between two values
+func GetDistance(value1, value2 float64) (returnValue float64) {
+	returnValue, _ = Round(math.Abs(value1-value2), 2)
+	return
+}
