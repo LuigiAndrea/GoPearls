@@ -202,3 +202,24 @@ func TestElapse(t *testing.T) {
 		t.Error(err.Error())
 	}
 }
+
+func TestGetDistance(t *testing.T) {
+
+	type testData struct {
+		value1, value2, result float64
+	}
+
+	tests := []testData{
+		testData{value1: 12, value2: -1, result: 13},
+		testData{value1: 0, value2: -1, result: 1},
+		testData{value1: 12, value2: 12, result: 0},
+		testData{value1: 12, value2: math.Inf(0), result: math.Inf(0)},
+		testData{value1: math.Inf(-1), value2: 12, result: math.Inf(0)},
+	}
+
+	for i, test := range tests {
+		if err := a.AssertDeepEqual(GetDistance(test.value1, test.value2), test.result); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
+		}
+	}
+}

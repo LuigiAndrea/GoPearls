@@ -17,6 +17,10 @@ type CummulativeValue struct {
 
 //GetDistance calculate the difference between two values in the CummulativeArray
 func (ca *CummulativeArray) GetDistance(from, to int) float64 {
+	size := len(*ca)
+	if from < 0 || to < 0 || from >= size || to >= size {
+		return -1
+	}
 	return GetDistance((*ca)[from].Value, (*ca)[to].Value)
 }
 

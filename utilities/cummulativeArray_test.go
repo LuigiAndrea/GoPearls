@@ -72,6 +72,30 @@ func TestCummulativeArraySort(t *testing.T) {
 	}
 }
 
+func TestCummulativeArrayDistance(t *testing.T) {
+	type testData struct {
+		from, to int
+		distance float64
+	}
+
+	cArray := CummulativeArray([]CummulativeValue{{Value: 100}, {Value: -2}, {Value: -1}, {Value: 0}})
+
+	tests := []testData{
+		testData{from: 0, to: 1, distance: 102},
+		testData{from: 1, to: 0, distance: 102},
+		testData{from: 1, to: 3, distance: 2},
+		testData{from: 1, to: 4, distance: -1},
+		testData{from: 1, to: -2, distance: -1},
+	}
+
+	for i, test := range tests {
+		if err := a.AssertDeepEqual(cArray.GetDistance(test.from, test.to), test.distance); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
+		}
+	}
+
+}
+
 //Extend test-helper library for CummulativeArray test
 type CummulativeArrayMatch struct {
 	Expected []float64
