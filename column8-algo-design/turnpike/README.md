@@ -1,1 +1,3 @@
+#### 8.7.11
+
 A turnpike consists of n – 1 stretches of road between n toll stations; each stretch has an associated cost of travel. It is trivial to tell the cost of going between any two stations in O(n) time using only an array of the costs or in constant time using a table with O(n2) entries. Describe a data structure that requires O(n) space but allows the cost of any route to be computed in constant time.
