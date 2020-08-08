@@ -72,4 +72,19 @@ func TestComputeValuesMultipleTimes(t *testing.T) {
 	if err := a.AssertSlicesEqual(a.Float64SlicesMatch{Expected: Operation{10, 25, 15, 13, 3}, Actual: op}); err != nil {
 		t.Errorf(err.Error())
 	}
+
+	op.Reset()
+}
+
+func TestOperationWithValues(t *testing.T) {
+
+	op.LoadOperation([]float64{2, 3, 5, 10, 12})
+	op.RunOperation(1, 1, 2)
+	op.RunOperation(2, 0, 3)
+	op.RunOperation(10, 3, 4)
+	op.ComputeValues()
+
+	if err := a.AssertSlicesEqual(a.Float64SlicesMatch{Expected: Operation{4, 6, 8, 22, 22}, Actual: op}); err != nil {
+		t.Errorf(err.Error())
+	}
 }

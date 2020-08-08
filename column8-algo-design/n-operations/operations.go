@@ -1,6 +1,6 @@
 package operations
 
-var sizeX int
+var sizeOp int
 var cumm []float64
 
 //Operation o
@@ -8,7 +8,7 @@ type Operation []float64
 
 // NewOperation create a new operation object
 func NewOperation(size int) Operation {
-	sizeX = size
+	sizeOp = size
 	Op := Operation{}
 	for i := 0; i < size; i++ {
 		Op = append(Op, 0.0)
@@ -18,9 +18,17 @@ func NewOperation(size int) Operation {
 	return Op
 }
 
+// LoadOperation load data in operation type
+func (o Operation) LoadOperation(data []float64) {
+	for i, v := range data {
+		o.RunOperation(v, i, i)
+	}
+	o.ComputeValues()
+}
+
 // RunOperation assign value v from position l to u, return true if the assignements are successfully, false otherwise
 func (o Operation) RunOperation(v float64, l, u int) bool {
-	if l < 0 || l > u || u >= sizeX {
+	if l < 0 || l > u || u >= sizeOp {
 		return false
 	}
 
@@ -34,8 +42,8 @@ func (o Operation) RunOperation(v float64, l, u int) bool {
 
 // ComputeValues Compute the values of Operation type
 func (o Operation) ComputeValues() {
-	o[sizeX-1] = cumm[sizeX-1]
-	for i := sizeX - 2; i >= 0; i-- {
+	o[sizeOp-1] = cumm[sizeOp-1]
+	for i := sizeOp - 2; i >= 0; i-- {
 		o[i] = o[i+1] + cumm[i]
 	}
 }
