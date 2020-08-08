@@ -58,3 +58,18 @@ func TestOperationsWrongIntervals(t *testing.T) {
 		}
 	}
 }
+
+func TestComputeValuesMultipleTimes(t *testing.T) {
+
+	op.RunOperation(10, 1, 3)
+	op.RunOperation(5, 1, 2)
+	op.ComputeValues()
+	op.RunOperation(10, 0, 1)
+	op.ComputeValues()
+	op.RunOperation(3, 3, 4)
+	op.ComputeValues()
+
+	if err := a.AssertSlicesEqual(a.Float64SlicesMatch{Expected: Operation{10, 25, 15, 13, 3}, Actual: op}); err != nil {
+		t.Errorf(err.Error())
+	}
+}

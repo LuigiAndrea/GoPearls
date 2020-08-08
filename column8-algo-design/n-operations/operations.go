@@ -44,5 +44,6 @@ func (o Operation) ComputeValues() {
 func (o Operation) Reset() {
 	for i := range o {
 		o[i] = 0.0
+		cumm[i] = 0.0
 	}
 }
