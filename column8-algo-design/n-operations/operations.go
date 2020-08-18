@@ -25,7 +25,7 @@ func NewOperation(size int) Operation {
 
 // LoadOperation load data in operation type
 //if data slice length is greater than operation length 'lop' then LoadOperation loads the first lop elements from data in operation type
-func (o Operation) LoadOperation(data []float64) {
+func (o *Operation) LoadOperation(data []float64) {
 	for i, v := range data {
 		o.RunOperation(v, i, i)
 	}
@@ -34,7 +34,7 @@ func (o Operation) LoadOperation(data []float64) {
 }
 
 // RunOperation assign value v from position l to u, return true if the assignements are successfully, false otherwise
-func (o Operation) RunOperation(v float64, l, u int) bool {
+func (o *Operation) RunOperation(v float64, l, u int) bool {
 
 	if l < 0 || l > u || u >= o.Size {
 		return false
@@ -50,7 +50,7 @@ func (o Operation) RunOperation(v float64, l, u int) bool {
 }
 
 // computeValues Compute the values of Operation type
-func computeValues(o Operation) {
+func computeValues(o *Operation) {
 	o.Values[o.Size-1] = o.cumm[o.Size-1]
 	for i := o.Size - 2; i >= 0; i-- {
 		o.Values[i] = o.Values[i+1] + o.cumm[i]
