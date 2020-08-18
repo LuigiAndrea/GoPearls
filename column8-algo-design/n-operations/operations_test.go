@@ -16,6 +16,22 @@ type testData struct {
 
 var op = NewOperation(5)
 
+func TestOperationResetValues(t *testing.T) {
+
+	op.RunOperation(10, 0, 0)
+
+	if err := a.AssertDeepEqual(10.0, op.Values[0]); err != nil {
+		t.Error(err)
+	}
+
+	op.Reset()
+
+	if err := a.AssertDeepEqual(0.0, op.Values[0]); err != nil {
+		t.Error(err)
+	}
+
+}
+
 func TestOperations(t *testing.T) {
 
 	tests := []testData{
@@ -31,15 +47,27 @@ func TestOperations(t *testing.T) {
 		}
 	}
 
-	op.ComputeValues()
-
-	if err := a.AssertSlicesEqual(a.Float64SlicesMatch{Expected: Operation{50, 35, 40, 40, -15}, Actual: op}); err != nil {
+	if err := a.AssertSlicesEqual(a.Float64SlicesMatch{Expected: []float64{50, 35, 40, 40, -15}, Actual: op.Values}); err != nil {
 		t.Error(err)
 	}
 
 	op.Reset()
-	expected := make(Operation, 5)
-	if err := a.AssertSlicesEqual(a.Float64SlicesMatch{Expected: expected, Actual: op}); err != nil {
+
+	if err := a.AssertSlicesEqual(a.Float64SlicesMatch{Expected: make([]float64, op.Size), Actual: op.Values}); err != nil {
+		t.Error(err)
+	}
+
+	op2 := NewOperation(2)
+	op2.LoadOperation([]float64{2, 3, 5, 10, 12})
+	op2.RunOperation(2, 0, 0)
+	if err := a.AssertSlicesEqual(a.Float64SlicesMatch{Expected: []float64{4, 3}, Actual: op2.Values}); err != nil {
+		t.Error(err)
+	}
+
+	op3 := NewOperation(4)
+	op3.LoadOperation([]float64{2, 3})
+	op3.RunOperation(2, 0, 1)
+	if err := a.AssertSlicesEqual(a.Float64SlicesMatch{Expected: []float64{4, 5, 0, 0}, Actual: op3.Values}); err != nil {
 		t.Error(err)
 	}
 }
@@ -59,32 +87,14 @@ func TestOperationsWrongIntervals(t *testing.T) {
 	}
 }
 
-func TestComputeValuesMultipleTimes(t *testing.T) {
-
-	op.RunOperation(10, 1, 3)
-	op.RunOperation(5, 1, 2)
-	op.ComputeValues()
-	op.RunOperation(10, 0, 1)
-	op.ComputeValues()
-	op.RunOperation(3, 3, 4)
-	op.ComputeValues()
-
-	if err := a.AssertSlicesEqual(a.Float64SlicesMatch{Expected: Operation{10, 25, 15, 13, 3}, Actual: op}); err != nil {
-		t.Errorf(err.Error())
-	}
-
-	op.Reset()
-}
-
 func TestOperationWithValues(t *testing.T) {
 
-	op.LoadOperation([]float64{2, 3, 5, 10, 12})
+	op.LoadOperation([]float64{2, 3, 5, 10, 12, 33, 44, 6, 56})
 	op.RunOperation(1, 1, 2)
 	op.RunOperation(2, 0, 3)
 	op.RunOperation(10, 3, 4)
-	op.ComputeValues()
 
-	if err := a.AssertSlicesEqual(a.Float64SlicesMatch{Expected: Operation{4, 6, 8, 22, 22}, Actual: op}); err != nil {
+	if err := a.AssertSlicesEqual(a.Float64SlicesMatch{Expected: []float64{4, 6, 8, 22, 22}, Actual: op.Values}); err != nil {
 		t.Errorf(err.Error())
 	}
 }
