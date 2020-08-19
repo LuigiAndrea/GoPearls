@@ -98,3 +98,9 @@ func TestOperationWithValues(t *testing.T) {
 		t.Errorf(err.Error())
 	}
 }
+
+func TestOperationPanic(t *testing.T) {
+	if err := a.AssertPanic(func() { NewOperation(0) }); err != nil {
+		t.Error(err)
+	}
+}

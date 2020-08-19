@@ -9,8 +9,8 @@ type Operation struct {
 // NewOperation create a new operation object
 func NewOperation(size int) Operation {
 
-	if size < 0 {
-		panic("Operation size must be greater than 0")
+	if size < 1 {
+		panic("Operation size must be greater than zero")
 	}
 
 	Op := Operation{}
