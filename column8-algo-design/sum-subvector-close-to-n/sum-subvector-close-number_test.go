@@ -10,8 +10,7 @@ import (
 )
 
 type testData struct {
-	vector    []float64
-	subvector []float64
+	vector, subvector []float64
 }
 
 func TestSumSubVectorCloseZero(t *testing.T) {
