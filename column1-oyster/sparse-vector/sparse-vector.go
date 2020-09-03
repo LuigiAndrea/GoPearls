@@ -1,3 +1,5 @@
+//Simulate the Sparse Vector Algorithm
+
 package sparsevector
 
 import (
