@@ -1,4 +1,4 @@
-// build all column1 bitvector
+// +build all column1 bitvector
 
 package bitvector
 
@@ -13,6 +13,11 @@ type testData struct {
 	in, out int
 }
 
+type testOperationData struct {
+	in  int
+	out byte
+}
+
 func TestBitVectorOperations(t *testing.T) {
 	bitVectors, _ := NewBitVector(5000000)
 	setValues := []int{500000, 500001, 500005}
@@ -21,24 +26,30 @@ func TestBitVectorOperations(t *testing.T) {
 		bitVectors.Set(v)
 	}
 
-	getValues := []int{500000, 500001, 500005, 500002, 0}
-	expectedGetValues := []byte{1, 1, 1, 0, 0}
+	tests := []testOperationData{
+		testOperationData{in: 500000, out: 1},
+		testOperationData{in: 500001, out: 1},
+		testOperationData{in: 500005, out: 1},
+		testOperationData{in: 500002, out: 0},
+		testOperationData{in: 0, out: 0}}
 
-	for i := 0; i < len(getValues); i++ {
-		getValue, _ := bitVectors.Get(getValues[i])
-		if getValue != expectedGetValues[i] {
-			t.Errorf("\nExpected value %d - Actual value %d", expectedGetValues[i], getValue)
+	for i, test := range tests {
+		if value, e := bitVectors.Get(test.in); e != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, e))
+		} else if err := a.AssertDeepEqual(test.out, value); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 
-	for _, v := range getValues {
-		bitVectors.Clear(v)
+	for _, test := range tests {
+		bitVectors.Clear(test.in)
 	}
 
-	for _, v := range getValues {
-		clearValue, _ := bitVectors.Get(v)
-		if clearValue != 0 {
-			t.Errorf("\nExpected value %d - Actual value %d", 0, clearValue)
+	for i, test := range tests {
+		if clearValue, e := bitVectors.Get(test.in); e != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, e))
+		} else if err := a.AssertDeepEqual(byte(0), clearValue); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
