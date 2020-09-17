@@ -1,10 +1,17 @@
-// +build all column1 bitvector
+// build all column1 bitvector
 
 package bitvector
 
 import (
 	"testing"
+
+	a "github.com/LuigiAndrea/test-helper/assertions"
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
+
+type testData struct {
+	in, out int
+}
 
 func TestBitVectorOperations(t *testing.T) {
 	bitVectors, _ := NewBitVector(5000000)
@@ -91,27 +98,26 @@ func TestBitVectorClearOperationWrongValue(t *testing.T) {
 }
 
 func TestBitVectorLength(t *testing.T) {
-	testValue := -20
 
-	if _, err := NewBitVector(testValue); err == nil {
-		t.Errorf("Expected '%T' for value '%d'", NegativeBitVectorSize(testValue), testValue)
-	} else {
-		switch err.(type) {
-		case NegativeBitVectorSize:
-			t.Log(err)
-		default:
-			t.Errorf("Expected '%T' for value '%d'", NegativeBitVectorSize(testValue), testValue)
-		}
+	testValue := -20
+	_, e := NewBitVector(testValue)
+	if err := a.AssertDeepException(&NegativeBitVectorSize{size: testValue}, e); err != nil {
+		t.Error(err)
 	}
 
-	testValues := []int{500000, 31, 0, 32, 2000000, 2000031}
-	expectedValues := []int{15626, 1, 1, 2, 62501, 62501}
+	tests := []testData{
+		testData{in: 500000, out: 15626},
+		testData{in: 31, out: 1},
+		testData{in: 0, out: 1},
+		testData{in: 32, out: 2},
+		testData{in: 2000000, out: 62501},
+		testData{in: 2000031, out: 62501}}
 
-	for i := 0; i < len(testValues); i++ {
-		bitVector, _ := NewBitVector(testValues[i])
+	for i, test := range tests {
+		bitVector, _ := NewBitVector(test.in)
 		lenBitVector := len(*bitVector)
-		if lenBitVector != expectedValues[i] {
-			t.Errorf("\nExpected value %d - Actual value %d", expectedValues[i], lenBitVector)
+		if err := a.AssertDeepEqual(test.out, lenBitVector); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }

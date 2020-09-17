@@ -1,6 +1,9 @@
 package bitvector
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 //BitVector Type BitVector
 type BitVector []int
@@ -11,7 +14,7 @@ var size = 0
 //NewBitVector create a new BitVector
 func NewBitVector(n int) (bv *BitVector, err error) {
 	if n < 0 {
-		return bv, NegativeBitVectorSize(n)
+		return bv, &NegativeBitVectorSize{size: n}
 	}
 
 	size = (n / bitsPerWord) + 1
@@ -67,13 +70,35 @@ func (bit BitVector) validateInput(index int) error {
 //IndexBitVectorOutOfRange fires when the user provide a wrong index value as parameter for Get, Set, and Clear functions
 type IndexBitVectorOutOfRange int
 
-func (i IndexBitVectorOutOfRange) Error() string {
-	return fmt.Sprintf("Index '%d' for BitVector is Out of Range", i)
+func (idxOutRange IndexBitVectorOutOfRange) Error() string {
+	return fmt.Sprintf("Index '%d' for BitVector is Out of Range", idxOutRange)
+}
+
+// Is Compare the values of ValueError
+func (idxOutRange IndexBitVectorOutOfRange) Is(e error) bool {
+	var err IndexBitVectorOutOfRange
+	if errors.As(e, &err) {
+		return err == idxOutRange
+	}
+
+	return false
 }
 
 //NegativeBitVectorSize fires when n<0 for NewBitVector
-type NegativeBitVectorSize int
+type NegativeBitVectorSize struct {
+	size int
+}
 
-func (n NegativeBitVectorSize) Error() string {
-	return fmt.Sprintf("Size '%d' for NewBitVector must be zero or positive", n)
+func (n *NegativeBitVectorSize) Error() string {
+	return fmt.Sprintf("Size '%d' for NewBitVector must be zero or positive", n.size)
+}
+
+// Is Compare the values of NegativeBitVectorSize
+func (n *NegativeBitVectorSize) Is(e error) bool {
+	var err *NegativeBitVectorSize
+	if errors.As(e, &err) {
+		return err.size == n.size
+	}
+
+	return false
 }
