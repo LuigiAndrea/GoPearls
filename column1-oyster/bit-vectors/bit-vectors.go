@@ -62,23 +62,25 @@ func (bit BitVector) Clear(index int) error {
 
 func (bit BitVector) validateInput(index int) error {
 	if index < 0 || index >= size*bitsPerWord {
-		return IndexBitVectorOutOfRange(index)
+		return &IndexBitVectorOutOfRange{size: index}
 	}
 	return nil
 }
 
 //IndexBitVectorOutOfRange fires when the user provide a wrong index value as parameter for Get, Set, and Clear functions
-type IndexBitVectorOutOfRange int
+type IndexBitVectorOutOfRange struct {
+	size int
+}
 
 func (idxOutRange IndexBitVectorOutOfRange) Error() string {
 	return fmt.Sprintf("Index '%d' for BitVector is Out of Range", idxOutRange)
 }
 
-// Is Compare the values of ValueError
-func (idxOutRange IndexBitVectorOutOfRange) Is(e error) bool {
-	var err IndexBitVectorOutOfRange
+// Is Compare the values of IndexBitVectorOutOfRange
+func (idxOutRange *IndexBitVectorOutOfRange) Is(e error) bool {
+	var err *IndexBitVectorOutOfRange
 	if errors.As(e, &err) {
-		return err == idxOutRange
+		return err.size == idxOutRange.size
 	}
 
 	return false

@@ -54,56 +54,29 @@ func TestBitVectorOperations(t *testing.T) {
 	}
 }
 
+func TestBitVectorSetAndClearOperationsWrongValues(t *testing.T) {
+	testValues := []int{-200, -2, 5024}
+	bitVectors, _ := NewBitVector(5000)
+	funcToTest := []func(int) error{bitVectors.Set, bitVectors.Clear}
+
+	for _, vectorOp := range funcToTest {
+		for i, v := range testValues {
+			e := vectorOp(v)
+			if err := a.AssertDeepException(&IndexBitVectorOutOfRange{size: v}, e); err != nil {
+				t.Error(m.ErrorMessageTestCount(i+1, err))
+			}
+		}
+	}
+}
+
 func TestBitVectorGetOperationWrongValue(t *testing.T) {
-	testValue := []int{-200, -2, 5024}
+	testValues := []int{-200, -2, 5024}
 	bitVectors, _ := NewBitVector(5000)
 
-	for i, v := range testValue {
-		if _, err := bitVectors.Get(v); err == nil {
-			t.Errorf("Expected '%T' exception for value '%d'", IndexBitVectorOutOfRange(v), v)
-		} else {
-			switch err.(type) {
-			case IndexBitVectorOutOfRange:
-				t.Logf("%d-Get: %v", i, err)
-			default:
-				t.Errorf("Expected '%T' exception for value '%d'", IndexBitVectorOutOfRange(v), v)
-			}
-		}
-	}
-}
-
-func TestBitVectorSetOperationWrongValue(t *testing.T) {
-	testValue := []int{-200, -2, 50000}
-	bitVectors, _ := NewBitVector(5000)
-
-	for i, v := range testValue {
-		if err := bitVectors.Set(v); err == nil {
-			t.Errorf("Expected '%T' exception for value '%d'", IndexBitVectorOutOfRange(v), v)
-		} else {
-			switch err.(type) {
-			case IndexBitVectorOutOfRange:
-				t.Logf("%d-Set: %v", i, err)
-			default:
-				t.Errorf("Expected '%T' exception for value '%d'", IndexBitVectorOutOfRange(v), v)
-			}
-		}
-	}
-}
-
-func TestBitVectorClearOperationWrongValue(t *testing.T) {
-	testValue := []int{-200, -2, 50000}
-	bitVectors, _ := NewBitVector(5000)
-
-	for i, v := range testValue {
-		if err := bitVectors.Clear(v); err == nil {
-			t.Errorf("Expected '%T' exception for value '%d'", IndexBitVectorOutOfRange(v), v)
-		} else {
-			switch err.(type) {
-			case IndexBitVectorOutOfRange:
-				t.Logf("%d-Clear: %v", i, err)
-			default:
-				t.Errorf("Expected '%T' exception for value '%d'", IndexBitVectorOutOfRange(v), v)
-			}
+	for i, v := range testValues {
+		_, e := bitVectors.Get(v)
+		if err := a.AssertDeepException(&IndexBitVectorOutOfRange{size: v}, e); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
