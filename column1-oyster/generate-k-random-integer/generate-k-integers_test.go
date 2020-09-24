@@ -4,10 +4,12 @@ package kintegers
 
 import (
 	"bufio"
+	"errors"
 	"io"
 	"os"
 	"testing"
 
+	a "github.com/LuigiAndrea/test-helper/assertions"
 	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
@@ -15,35 +17,38 @@ const Filename = "./kIntegers.data"
 
 func TestCreateFileWithKIntegers(t *testing.T) {
 	valuesTest := []MinMaxInterval{MinMaxInterval{Min: 1000000, Max: 1000010}, MinMaxInterval{Min: 1000050, Max: 1000054}, MinMaxInterval{Min: 1000500, Max: 2000000}}
-	if err := CreateFileWithRandomIntegers(Filename, valuesTest...); err != nil {
-		t.Errorf("\nError during creation of the file %v", err)
+
+	if err := a.AssertException(nil, CreateFileWithRandomIntegers(Filename, valuesTest...)); err != nil {
+		t.Error(err)
 	}
 
-	file, err := os.Open(Filename)
-	if err != nil {
-		t.Errorf("Unable to open file %s: %s", Filename, err)
+	file, e := os.Open(Filename)
+	if err := a.AssertException(nil, e); err != nil {
+		t.Error(err)
 		return
 	}
+
 	defer file.Close()
 
 	reader := bufio.NewReader(file)
 	var numbersInFile = 0
 	for ; ; numbersInFile++ {
-		if _, err := reader.ReadString(' '); err != nil {
-			if err == io.EOF {
+		if _, er := reader.ReadString(' '); er != nil {
+			if er == io.EOF {
 				break
-			} else {
-				t.Errorf("Error reading %s: %s", Filename, err)
+			} else if err := a.AssertException(nil, er); err != nil {
+				t.Error(err)
 			}
 		}
 	}
 	expectedValue := 999514
-	if numbersInFile != expectedValue {
-		t.Error(m.ErrorMessage(expectedValue, numbersInFile))
+
+	if err := a.AssertDeepEqual(expectedValue, numbersInFile); err != nil {
+		t.Error(err)
 	}
 
-	if err := os.Remove(Filename); err != nil {
-		t.Logf("Error deleting the file")
+	if err := a.AssertException(nil, os.Remove(Filename)); err != nil {
+		t.Error(err)
 	}
 }
 
@@ -51,17 +56,16 @@ func TestCreateFileWithKIntegersWrongValues(t *testing.T) {
 	valuesTest := []MinMaxInterval{{Min: -3, Max: 4}, {Min: 2, Max: -8}, {Min: 100, Max: 99}}
 
 	for i, v := range valuesTest {
-		if err := CreateFileWithRandomIntegers(Filename, MinMaxInterval{v.Min, v.Max}); err == nil {
-			t.Error("Expected a parameter error")
-		} else {
-			t.Logf("%d: %s", i, err)
+		if err := a.AssertException(errors.New(""),
+			CreateFileWithRandomIntegers(Filename, MinMaxInterval{v.Min, v.Max})); err != nil {
+			t.Error(m.ErrorMessageTestCount(i, err))
 		}
 	}
 }
 
 func TestCreateFileWithKIntegersWrongFilename(t *testing.T) {
-	if err := CreateFileWithRandomIntegers("///",
-		MinMaxInterval{Min: 1000000, Max: 1000010}, MinMaxInterval{Min: 1000500, Max: 2000000}); err == nil {
-		t.Error("Expected unable to create file error")
+	if err := a.AssertException(errors.New(""), CreateFileWithRandomIntegers("///",
+		MinMaxInterval{Min: 1000000, Max: 1000010}, MinMaxInterval{Min: 1000500, Max: 2000000})); err != nil {
+		t.Error(err)
 	}
 }
