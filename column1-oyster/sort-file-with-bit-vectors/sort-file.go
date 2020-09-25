@@ -2,7 +2,6 @@ package sortfile
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -32,7 +31,7 @@ func SortFile(path string, sortedFilename string) (*os.File, error) {
 func createBitVectorFromFile(path string) (bv.BitVector, error) {
 	fileRandomIntegers, err := os.Open(path)
 	if err != nil {
-		return nil, fmt.Errorf("Unable to open file '%s': %s", path, err)
+		return nil, err
 	}
 	defer fileRandomIntegers.Close()
 
@@ -45,7 +44,7 @@ func createBitVectorFromFile(path string) (bv.BitVector, error) {
 		} else {
 			intValue, err := strconv.Atoi(strings.TrimSpace(value))
 			if err != nil {
-				return nil, errors.New(err.Error())
+				return nil, err
 			}
 
 			bitVector.Set(intValue)
@@ -57,7 +56,7 @@ func createBitVectorFromFile(path string) (bv.BitVector, error) {
 func createSortedFile(bitVector bv.BitVector, sortedFilename string) error {
 	file, err := os.Create(sortedFilename)
 	if err != nil {
-		return fmt.Errorf("Unable to create file '%s': %s", sortedFilename, err)
+		return err
 	}
 
 	writer := bufio.NewWriter(file)

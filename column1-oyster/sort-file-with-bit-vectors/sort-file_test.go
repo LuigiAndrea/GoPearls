@@ -7,24 +7,27 @@ import (
 	"io"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 	"testing"
 
 	kintegers "github.com/LuigiAndrea/GoPearls/column1-oyster/generate-k-random-integer"
+	a "github.com/LuigiAndrea/test-helper/assertions"
 )
 
 const Filename = "./kIntegers.data"
 const FilenameResult = "./kIntegersSorted.data"
 
 func TestSortFile(t *testing.T) {
-	if err := kintegers.CreateFileWithRandomIntegers(Filename,
-		kintegers.MinMaxInterval{Min: 200, Max: 300}, kintegers.MinMaxInterval{Min: 500, Max: 1200}); err != nil {
-		log.Fatal(err)
+
+	if err := a.AssertException(nil, kintegers.CreateFileWithRandomIntegers(Filename,
+		kintegers.MinMaxInterval{Min: 200, Max: 300}, kintegers.MinMaxInterval{Min: 500, Max: 1200})); err != nil {
+		t.Error(err)
 	}
 
-	file, err := SortFile(Filename, FilenameResult)
-	if err != nil {
-		log.Fatal(err)
+	file, e := SortFile(Filename, FilenameResult)
+	if err := a.AssertException(nil, e); err != nil {
+		t.Error(e)
 	}
 
 	defer file.Close()
@@ -34,40 +37,13 @@ func TestSortFile(t *testing.T) {
 	for i := 0; ; i++ {
 		if v, err := reader.ReadString(' '); err != nil {
 			if err == io.EOF {
-				if i != expectedEOFIndex {
-					t.Errorf("Expected EOF at position %d - Actual value %d", expectedEOFIndex, i)
+				if err := a.AssertDeepEqual(i, expectedEOFIndex); err != nil {
+					t.Errorf("EOF: %v", err)
 				}
 				break
 			}
 		} else {
-			var expectedValue string
-			switch i {
-			case 0:
-				expectedValue = "200"
-				if expectedValue != strings.TrimSpace(v) {
-					t.Errorf("Expected value %s - Actual value %s", expectedValue, v)
-				}
-			case 99:
-				expectedValue = "299"
-				if expectedValue != strings.TrimSpace(v) {
-					t.Errorf("Expected value %s - Actual value %s", expectedValue, v)
-				}
-			case 100:
-				expectedValue = "500"
-				if expectedValue != strings.TrimSpace(v) {
-					t.Errorf("Expected value %s - Actual value %s", expectedValue, v)
-				}
-			case 300:
-				expectedValue = "700"
-				if expectedValue != strings.TrimSpace(v) {
-					t.Errorf("Expected value %s - Actual value %s", expectedValue, v)
-				}
-			case 799:
-				expectedValue = "1199"
-				if expectedValue != strings.TrimSpace(v) {
-					t.Errorf("Expected value %s - Actual value %s", expectedValue, v)
-				}
-			}
+			assertValueAtIndex(t, i, v)
 		}
 	}
 	cleanWorkSpace(t, Filename)
@@ -75,23 +51,23 @@ func TestSortFile(t *testing.T) {
 }
 
 func TestNotFoundFile(t *testing.T) {
-	if _, err := SortFile("NotExistingFilename", FilenameResult); err == nil {
-		t.Errorf("Expected an error: Not Found File")
-	} else {
-		t.Log(err)
+	_, e := SortFile("NotExistingFilename", FilenameResult)
+
+	if err := a.AssertException(&os.PathError{}, e); err != nil {
+		t.Error(err)
 	}
 }
 
 func TestWrongFileName(t *testing.T) {
-	if err := kintegers.CreateFileWithRandomIntegers(Filename,
-		kintegers.MinMaxInterval{Min: 200, Max: 300}, kintegers.MinMaxInterval{Min: 500, Max: 1200}); err != nil {
-		log.Fatal(err)
+
+	if err := a.AssertException(nil, kintegers.CreateFileWithRandomIntegers(Filename,
+		kintegers.MinMaxInterval{Min: 200, Max: 300}, kintegers.MinMaxInterval{Min: 500, Max: 1200})); err != nil {
+		t.Error(err)
 	}
 
-	if _, err := SortFile(Filename, "///"); err == nil {
-		t.Errorf("Expected an error: Wrong Filename")
-	} else {
-		t.Log(err)
+	_, e := SortFile(Filename, "///")
+	if err := a.AssertException(&os.PathError{}, e); err != nil {
+		t.Error(err)
 	}
 
 	cleanWorkSpace(t, Filename)
@@ -109,10 +85,9 @@ func TestWrongDataInFile(t *testing.T) {
 	writer.Flush()
 	file.Close()
 
-	if _, err := SortFile(wrongDataFile, FilenameResult); err == nil {
-		t.Errorf("Expected an error: Wrong Data in file")
-	} else {
-		t.Log(err)
+	_, e := SortFile(wrongDataFile, FilenameResult)
+	if err := a.AssertException(&strconv.NumError{}, e); err != nil {
+		t.Error(err)
 	}
 
 	cleanWorkSpace(t, wrongDataFile)
@@ -120,6 +95,27 @@ func TestWrongDataInFile(t *testing.T) {
 
 func cleanWorkSpace(t *testing.T, path string) {
 	if err := os.Remove(path); err != nil {
-		t.Logf("Error deleting the file '%s'", path)
+		log.Fatal(err)
+	}
+}
+
+func assertValueAtIndex(t *testing.T, idx int, v string) {
+	switch idx {
+	case 0:
+		assertValue(t, "200", v)
+	case 99:
+		assertValue(t, "299", v)
+	case 100:
+		assertValue(t, "500", v)
+	case 300:
+		assertValue(t, "700", v)
+	case 799:
+		assertValue(t, "1199", v)
+	}
+}
+
+func assertValue(t *testing.T, value1, value2 string) {
+	if err := a.AssertDeepEqual(value1, strings.TrimSpace(value2)); err != nil {
+		t.Error(err)
 	}
 }
