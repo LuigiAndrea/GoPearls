@@ -32,6 +32,14 @@ func TestSparseVector(t *testing.T) {
 	if err := a.AssertDeepEqual(expectedInitializedElements, numberOfInitializedElements); err != nil {
 		t.Error(err)
 	}
+
+	//test change value in sparse vector
+	indexToChange, newValue := 3, 10
+	sparseVector.add(indexToChange, newValue)
+	num, _ := sparseVector.get(indexToChange)
+	if err := a.AssertDeepEqual(newValue, num); err != nil {
+		t.Error(err)
+	}
 }
 
 func TestSparseVectorNegativeOutRangeIndexGetAndSet(t *testing.T) {
