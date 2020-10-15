@@ -21,7 +21,10 @@ func TestSequentialSearch(t *testing.T) {
 		testData{v: 21, pos: 6},
 		testData{v: 2, pos: 3},
 		testData{v: 43, pos: 5},
+		testData{v: 8, pos: 2},
 		testData{v: 3, pos: -1},
+		testData{v: 5, pos: 1},
+		testData{v: 6, pos: 4},
 	}
 
 	for _, f := range funcToTest {
