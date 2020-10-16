@@ -1,8 +1,9 @@
 package segments
 
 import (
-	"github.com/LuigiAndrea/GoPearls/utilities"
 	"math"
+
+	"github.com/LuigiAndrea/GoPearls/utilities"
 )
 
 //Program that displays a 16-bit positive integer in five seven-segment digits
@@ -70,9 +71,9 @@ func allSegmentsON() byte {
 }
 
 func activeSegments(segmentNumber ...int) byte {
-	var activeSegment byte
+	var activeSegments byte
 	for _, v := range segmentNumber {
-		activeSegment |= segments[v]
+		activeSegments |= segments[v]
 	}
-	return activeSegment
+	return activeSegments
 }

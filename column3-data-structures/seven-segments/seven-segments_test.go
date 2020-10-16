@@ -5,7 +5,8 @@ package segments
 import (
 	"testing"
 
-	goth "github.com/LuigiAndrea/test-helper/assertions"
+	a "github.com/LuigiAndrea/test-helper/assertions"
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
 type testData struct {
@@ -13,13 +14,16 @@ type testData struct {
 	expectedValue []byte
 }
 
+var runPrintNumber = true
+
 func TestBuildSegmentsAndEncoding(t *testing.T) {
 	tests := []byte{125, 80, 55, 87, 90, 79, 111, 84, 127, 94}
 	buildSegments()
 	for i := 0; i <= 9; i++ {
 		value := encodeDigit(uint16(i))
-		if value != tests[i] {
-			t.Errorf("Expected '%d' - Actual '%d'", tests[i], value)
+		if err := a.AssertDeepEqual(tests[i], value); err != nil {
+			t.Error(err)
+			runPrintNumber = false
 		}
 	}
 }
@@ -31,15 +35,18 @@ func TestDispalyNumbers(t *testing.T) {
 		testData{number: 984, expectedValue: []byte{94, 127, 90}},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		result := displayNumber(test.number)
-		if err := goth.AssertSlicesEqual(goth.ByteSlicesMatch{Expected: test.expectedValue, Actual: result}); err != nil {
-			t.Error(err.Error())
+		if err := a.AssertSlicesEqual(a.ByteSlicesMatch{Expected: test.expectedValue, Actual: result}); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
+			runPrintNumber = false
 		}
 	}
 }
 
 func TestPrintNumber(t *testing.T) {
-	printDisplay(50948)
-	printDisplay(61723)
+	if runPrintNumber {
+		printDisplay(50948)
+		printDisplay(61723)
+	}
 }
