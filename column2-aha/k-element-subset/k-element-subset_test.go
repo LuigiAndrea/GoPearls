@@ -3,9 +3,11 @@
 package ksubset
 
 import (
+	"fmt"
 	"testing"
 
-	goth "github.com/LuigiAndrea/test-helper/messages"
+	a "github.com/LuigiAndrea/test-helper/assertions"
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
 type testData struct {
@@ -30,10 +32,10 @@ func TestExistKSubset(t *testing.T) {
 	funcToTest := []func([]int, int, int) bool{existKSubset, existKSubsetQuickSelect}
 
 	for _, f := range funcToTest {
-		for _, test := range tests {
-			if r := f(test.subset, test.t, test.k); r != test.expectedValue {
-				t.Errorf("\n%s: Expected value: '%t' - Actual value '%t' \nList: %#v \nt: %d, k: %d",
-					goth.GetFuncName(f), test.expectedValue, r, test.subset, test.t, test.k)
+		for i, test := range tests {
+			if err := a.AssertDeepEqual(test.expectedValue, f(test.subset, test.t, test.k)); err != nil {
+				t.Error(m.ErrorMessageTestCount(i+1, fmt.Sprintf("%s: %s\nList: %#v \nt: %d, k: %d",
+					m.GetFuncName(f), err, test.subset, test.t, test.k)))
 			}
 		}
 	}
@@ -49,10 +51,10 @@ func TestExistKSubsetEdgeCases(t *testing.T) {
 	funcToTest := []func([]int, int, int) bool{existKSubset, existKSubsetQuickSelect}
 
 	for _, f := range funcToTest {
-		for _, test := range tests {
-			if r := f(test.subset, test.t, test.k); r != test.expectedValue {
-				t.Errorf("\n%s: Expected value: '%t' - Actual value '%t' \nList: %#v \nt: %d, k: %d",
-					goth.GetFuncName(f), test.expectedValue, r, test.subset, test.t, test.k)
+		for i, test := range tests {
+			if err := a.AssertDeepEqual(test.expectedValue, f(test.subset, test.t, test.k)); err != nil {
+				t.Error(m.ErrorMessageTestCount(i+1, fmt.Sprintf("%s: %s\nList: %#v \nt: %d, k: %d",
+					m.GetFuncName(f), err, test.subset, test.t, test.k)))
 			}
 		}
 	}

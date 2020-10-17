@@ -1,6 +1,7 @@
 package rotate
 
 import (
+	"errors"
 	"fmt"
 	"sort"
 
@@ -121,16 +122,29 @@ func gcd(x, y int) int {
 	return x
 }
 
-//ShiftLeftOutOfRange fires when the user provide a wrong shifteft value as parameter for rotate functions
-type ShiftLeftOutOfRange int
-
-func (s ShiftLeftOutOfRange) Error() string {
-	return fmt.Sprintf("ShiftLength %d is Out of Range", s)
-}
-
 func validateShiftLeft(strSlice []string, value int) error {
 	if value < 0 || value > len(strSlice) {
-		return ShiftLeftOutOfRange(value)
+		return &ShiftLeftOutOfRange{shift: value}
 	}
 	return nil
+}
+
+//ShiftLeftOutOfRange fires when the user provide a wrong shifteft value as parameter for rotate functions
+type ShiftLeftOutOfRange struct {
+	shift int
+}
+
+func (s *ShiftLeftOutOfRange) Error() string {
+	return fmt.Sprintf("ShiftLength %d is Out of Range", s.shift)
+}
+
+// Is Compare the values of ShiftLeftOutOfRange
+func (s *ShiftLeftOutOfRange) Is(e error) bool {
+	var err *ShiftLeftOutOfRange
+	if errors.As(e, &err) {
+		return err.shift == s.shift &&
+			s.Error() == err.Error()
+	}
+
+	return false
 }

@@ -6,9 +6,6 @@ import (
 	"time"
 )
 
-//Given a set of n real numbers, a real number t, and an integer k,
-// how quickly can you determine whether there exists a k-element subset of the set that sums to at most t?
-
 // O(n*log(n)), true if the k-element subset exists
 func existKSubset(list []int, t, k int) bool {
 	if r := areInputsValid(list, t, k); r == false {

@@ -1,7 +1,5 @@
 package twice
 
-// Find in a signed sequential list (or file) an integer that appears at least twice.
-
 //Return the number in the sequential list that appear at least twice, return false if it doesn't exist
 //Assume the list is sequential
 func searchAtLeastTwiceValue(list []int) (bool, int) {

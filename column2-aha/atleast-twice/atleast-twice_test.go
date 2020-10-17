@@ -40,7 +40,7 @@ func TestAtLeastTwice(t *testing.T) {
 
 		if ok, v := searchAtLeastTwiceValue(list); ok {
 			if err := a.AssertDeepEqual(test.expectedValue, v); err != nil {
-				t.Error(err)
+				t.Error(m.ErrorMessageTestCount(i+1, err))
 			}
 		} else {
 			t.Error(m.ErrorMessageTestCount(i+1, fmt.Sprintf("Repeated element not detected \nList: %#v", list)))
@@ -63,7 +63,7 @@ func TestEdgeCases(t *testing.T) {
 		if ok, v := searchAtLeastTwiceValue(list); ok {
 			t.Error(m.ErrorMessageTestCount(i+1, fmt.Sprintf("No element appears at least twice in the list \nList: %#v", list)))
 		} else if err := a.AssertDeepEqual(test.expectedValue, v); err != nil {
-			t.Error(err)
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
@@ -86,7 +86,7 @@ func TestAtLeastTwiceGeneral(t *testing.T) {
 
 		if ok, v := searchAtLeastTwiceValue(test.list); ok {
 			if err := a.AssertDeepEqual(test.expectedValue, v); err != nil {
-				t.Error(err)
+				t.Error(m.ErrorMessageTestCount(i+1, err))
 			}
 		} else {
 			t.Error(m.ErrorMessageTestCount(i+1, fmt.Sprintf("Repeated elements not detected \nList: %#v", test.list)))

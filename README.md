@@ -28,4 +28,13 @@ Problem | Description
 [1.6.3; 1.6.7](https://github.com/LuigiAndrea/GoPearls/tree/master/column1-oyster/sort-file-with-bit-vectors) | Bitmap Sort
 [1.6.4](https://github.com/LuigiAndrea/GoPearls/tree/master/column1-oyster/generate-k-random-integer) | Generate k unique random integers
 [1.6.9](https://github.com/LuigiAndrea/GoPearls/tree/master/column1-oyster/sparse-vector) | Sparse Vector
+<br />
 
+### Column 2
+
+Problem | Description
+------------ | -------------
+[2.6.1](https://github.com/LuigiAndrea/GoPearls/tree/master/column2-aha/anagram)| Anagram
+[2.6.2](https://github.com/LuigiAndrea/GoPearls/tree/master/column2-aha/atleast-twice)| Find integer that appears at least twice in sequential file
+[2.6.3](https://github.com/LuigiAndrea/GoPearls/tree/master/column2-aha/rotate)| Rotation algorithms
+[2.6.8](https://github.com/LuigiAndrea/GoPearls/tree/master/column2-aha/k-element-subset)| k-element subset of the set that sums to at most t

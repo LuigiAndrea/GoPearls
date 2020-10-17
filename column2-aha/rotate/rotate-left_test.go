@@ -3,10 +3,11 @@
 package rotate
 
 import (
+	"fmt"
 	"testing"
 
-	assert "github.com/LuigiAndrea/test-helper/assertions"
-	msg "github.com/LuigiAndrea/test-helper/messages"
+	a "github.com/LuigiAndrea/test-helper/assertions"
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
 type testData struct {
@@ -30,13 +31,12 @@ func TestRotateLeft(t *testing.T) {
 	}
 
 	for _, rotate := range rotateLeftFunc {
-		t.Logf("%s", msg.GetFuncName(rotate))
-		for _, test := range tests {
+		for i, test := range tests {
 			actualStr := make([]string, len(test.str))
 			copy(actualStr, test.str)
 			rotate(actualStr, test.shift)
-			if err := assert.AssertSlicesEqual(assert.StringSlicesMatch{Expected: test.expectedValue, Actual: actualStr}); err != nil {
-				t.Errorf(err.Error())
+			if err := a.AssertSlicesEqual(a.StringSlicesMatch{Expected: test.expectedValue, Actual: actualStr}); err != nil {
+				t.Error(m.ErrorMessageTestCount(i+1, fmt.Sprintf("%s: %s", m.GetFuncName(rotate), err)))
 			}
 		}
 	}
@@ -50,24 +50,10 @@ func TestShiftLeftOutOfRange(t *testing.T) {
 	}
 
 	for _, rotate := range rotateLeftFunc {
-		for _, test := range tests {
-			shiftLeftOutOfRange(t, test.str, test.shift, rotate)
-		}
-	}
-}
-
-func shiftLeftOutOfRange(t *testing.T, str []string, shiftLength int, f func([]string, int) error) {
-	var err error
-	var ex ShiftLeftOutOfRange
-
-	if err = f(str, shiftLength); err == nil {
-		t.Errorf("%s - Expected an exception '%T' for value '%s' and shiftLeft '%d'", msg.GetFuncName(f), ex, str, shiftLength)
-	} else {
-		_, ok := err.(ShiftLeftOutOfRange)
-		if !ok {
-			t.Errorf("%s - Expected an exception '%T' for value '%s' and shiftLeft '%d'", msg.GetFuncName(f), ex, str, shiftLength)
-		} else {
-			t.Logf("%s - %v", msg.GetFuncName(f), err)
+		for i, test := range tests {
+			if err := a.AssertDeepException(&ShiftLeftOutOfRange{shift: test.shift}, rotate(test.str, test.shift)); err != nil {
+				t.Error(m.ErrorMessageTestCount(i+1, fmt.Sprintf("%s: %s", m.GetFuncName(rotate), err)))
+			}
 		}
 	}
 }

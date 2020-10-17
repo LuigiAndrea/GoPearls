@@ -80,7 +80,7 @@ func (idxOutRange IndexBitVectorOutOfRange) Error() string {
 func (idxOutRange *IndexBitVectorOutOfRange) Is(e error) bool {
 	var err *IndexBitVectorOutOfRange
 	if errors.As(e, &err) {
-		return err.size == idxOutRange.size
+		return err.size == idxOutRange.size && err.Error() == idxOutRange.Error()
 	}
 
 	return false
@@ -99,7 +99,7 @@ func (n *NegativeBitVectorSize) Error() string {
 func (n *NegativeBitVectorSize) Is(e error) bool {
 	var err *NegativeBitVectorSize
 	if errors.As(e, &err) {
-		return err.size == n.size
+		return err.size == n.size && err.Error() == n.Error()
 	}
 
 	return false
