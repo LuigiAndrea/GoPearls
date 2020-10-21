@@ -5,7 +5,8 @@ package hyphenations
 import (
 	"testing"
 
-	assert "github.com/LuigiAndrea/test-helper/assertions"
+	a "github.com/LuigiAndrea/test-helper/assertions"
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
 func TestHyphenations(t *testing.T) {
@@ -27,9 +28,9 @@ func TestHyphenations(t *testing.T) {
 		testData{in: "bicyclic", out: "-clic"},
 	}
 
-	for _, test := range tests {
-		if err := assert.AssertDeepEqual(hyphenation(test.in), test.out); err != nil {
-			t.Error(err)
+	for i, test := range tests {
+		if err := a.AssertDeepEqual(test.out, hyphenation(test.in)); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }

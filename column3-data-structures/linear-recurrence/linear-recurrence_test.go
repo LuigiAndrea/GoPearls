@@ -3,9 +3,11 @@
 package recurrence
 
 import (
+	"errors"
 	"testing"
 
-	goth "github.com/LuigiAndrea/test-helper/assertions"
+	a "github.com/LuigiAndrea/test-helper/assertions"
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
 type testData struct {
@@ -27,13 +29,11 @@ func TestLinearRecurence(t *testing.T) {
 		testData{a: nil, c: []int{12}, m: 1, expectedValues: []int{12}},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		if result, err := linearRecurrence(test.a, test.c, test.m); err != nil {
-			t.Error(err.Error())
-		} else if err = goth.AssertSlicesEqual(goth.IntSlicesMatch{
-			Expected: test.expectedValues,
-			Actual:   result}); err != nil {
-			t.Error(err.Error())
+			t.Error(m.ErrorMessageTestCount(i+1, err))
+		} else if err = a.AssertSlicesEqual(a.IntSlicesMatch{Expected: test.expectedValues, Actual: result}); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
@@ -48,9 +48,10 @@ func TestLinearRecurenceWrongInputs(t *testing.T) {
 		testData{a: []int{12}, c: nil, m: 1},
 	}
 
-	for _, test := range tests {
-		if _, err := linearRecurrence(test.a, test.c, test.m); err == nil {
-			t.Error("Expected inputs exception")
+	for i, test := range tests {
+		_, e := linearRecurrence(test.a, test.c, test.m)
+		if err := a.AssertException(errors.New(""), e); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }

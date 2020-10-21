@@ -10,7 +10,7 @@ import (
 func formLetterGenerator(filename string, placeholders ...string) (string, error) {
 	file, err := os.Open(filename)
 	if err != nil {
-		return "", fmt.Errorf("Unable to open file '%s': %s", filename, err)
+		return "", err
 	}
 
 	defer file.Close()

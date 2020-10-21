@@ -38,3 +38,15 @@ Problem | Description
 [2.6.2](https://github.com/LuigiAndrea/GoPearls/tree/master/column2-aha/atleast-twice)| Find integer that appears at least twice in sequential file
 [2.6.3](https://github.com/LuigiAndrea/GoPearls/tree/master/column2-aha/rotate)| Rotation algorithms
 [2.6.8](https://github.com/LuigiAndrea/GoPearls/tree/master/column2-aha/k-element-subset)| k-element subset of the set that sums to at most t
+<br />
+
+### Column 3
+
+Problem | Description
+------------ | -------------
+[3.7.2](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/linear-recurrence)| Linear recurrence
+[3.7.3](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/letters)| Banner
+[3.7.4](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/date-problems)| Date
+[3.7.5](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/hyphenations)| Hyphenations
+[3.7.6](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/form-letter-generator)| form-letter generator
+[3.7.8](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/seven-segments)| seven segments

@@ -5,7 +5,12 @@ package banner
 import (
 	"fmt"
 	"testing"
+
+	a "github.com/LuigiAndrea/test-helper/assertions"
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
+
+var printBanner = true
 
 func TestBanner(t *testing.T) {
 	type testData struct {
@@ -19,23 +24,28 @@ func TestBanner(t *testing.T) {
 		testData{in: "8*", out: "********"},
 	}
 
-	for _, test := range tests {
-		if res := decodeString(test.in); res != test.out {
-			t.Errorf("Expected value '%s' - Actual value '%s'", test.out, res)
+	for i, test := range tests {
+		if err := a.AssertDeepEqual(test.out, decodeString(test.in)); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
+			printBanner = false
 		}
 	}
 
-	decodedLetter := decodeLetter(letters['A'])
-	if bannerStr := Banner('A'); bannerStr != decodedLetter {
-		t.Errorf("Expected value '%s' - Actual value '%s'", decodedLetter, bannerStr)
-	} else {
-		fmt.Println(bannerStr)
+	if err := a.AssertDeepEqual(decodeLetter(letters['A']), Banner('A')); err != nil {
+		t.Error(err)
+		printBanner = false
 	}
-
 }
 
 func TestBannerNotSupportedCharacter(t *testing.T) {
-	if res := Banner('$'); len(res) > 0 {
-		t.Errorf("Expected an empty string - Actual value '%s'", res)
+	if err := a.AssertDeepEqual(0, len(Banner('$'))); err != nil {
+		t.Error(err)
+		printBanner = false
+	}
+}
+
+func TestPrintBanner(t *testing.T) {
+	if printBanner {
+		fmt.Println(Banner('E'))
 	}
 }

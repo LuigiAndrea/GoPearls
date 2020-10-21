@@ -5,6 +5,9 @@ package datepearls
 import (
 	"testing"
 	"time"
+
+	a "github.com/LuigiAndrea/test-helper/assertions"
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
 func TestNumberDaysBetweenTwoDay(t *testing.T) {
@@ -25,9 +28,9 @@ func TestNumberDaysBetweenTwoDay(t *testing.T) {
 			days:  366},
 	}
 
-	for _, test := range tests {
-		if d := NumberDaysBetweenTwoDates(test.date1, test.date2); d != test.days {
-			t.Errorf("Expected value '%d' - Actual value '%d'", test.days, d)
+	for i, test := range tests {
+		if err := a.AssertDeepEqual(test.days, NumberDaysBetweenTwoDates(test.date1, test.date2)); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
@@ -45,9 +48,9 @@ func TestGetDayOfWeek(t *testing.T) {
 			dayOfWeek: "Tuesday"},
 	}
 
-	for _, test := range tests {
-		if dayOfWeek := GetDayOfWeek(test.date).String(); dayOfWeek != test.dayOfWeek {
-			t.Errorf("Expected value '%s' - Actual value '%s'", test.dayOfWeek, dayOfWeek)
+	for i, test := range tests {
+		if err := a.AssertDeepEqual(test.dayOfWeek, GetDayOfWeek(test.date).String()); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
@@ -65,13 +68,14 @@ func TestComputeCalendar(t *testing.T) {
 		testData{year: 2016, month: time.Month(2), daysInMonth: 29, in_day: 28, out_day: "Monday"},
 	}
 
-	for _, test := range tests {
-		r := ComputeCalendar(test.year, test.month)
-		if days := len(r); days != test.daysInMonth {
-			t.Errorf("Expected value '%d' - Actual value '%d'", test.daysInMonth, days)
+	for i, test := range tests {
+		cal := ComputeCalendar(test.year, test.month)
+		if err := a.AssertDeepEqual(test.daysInMonth, len(cal)); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
-		if dayOfMonth := r[test.in_day].String(); dayOfMonth != test.out_day {
-			t.Errorf("Expected value '%s' - Actual value '%s'", test.out_day, dayOfMonth)
+
+		if err := a.AssertDeepEqual(test.out_day, cal[test.in_day].String()); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }

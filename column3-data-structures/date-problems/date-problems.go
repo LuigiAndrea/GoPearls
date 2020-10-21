@@ -24,11 +24,11 @@ func ComputeCalendar(Year int, Month time.Month) []time.Weekday {
 	dataToCompute := time.Date(Year, Month, 1, 0, 0, 0, 0, time.UTC)
 	days := NumberDaysBetweenTwoDates(dataToCompute, time.Date(Year, Month+1, 1, 0, 0, 0, 0, time.UTC))
 	weekDayValue := GetDayOfWeek(dataToCompute)
-	r := make([]time.Weekday, 0)
+	calendar := make([]time.Weekday, 0)
 
 	for i := 0; i < days; i++ {
-		r = append(r, time.Weekday((int(weekDayValue)+i)%7))
+		calendar = append(calendar, time.Weekday((int(weekDayValue)+i)%7))
 	}
 
-	return r
+	return calendar
 }

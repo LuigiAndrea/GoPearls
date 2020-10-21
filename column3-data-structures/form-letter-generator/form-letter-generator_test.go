@@ -3,11 +3,11 @@
 package formgenerator
 
 import (
-	"fmt"
+	"os"
 	"strings"
 	"testing"
 
-	assert "github.com/LuigiAndrea/test-helper/assertions"
+	a "github.com/LuigiAndrea/test-helper/assertions"
 	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
@@ -36,12 +36,10 @@ func TestFormLetterGenerator(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		if err := assert.AssertDeepEqual(test.out, strings.Count(result, test.in)); err != nil {
+		if err := a.AssertDeepEqual(test.out, strings.Count(result, test.in)); err != nil {
 			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
-
-	fmt.Println(result)
 }
 
 func TestFormLetterGeneratorLessParameters(t *testing.T) {
@@ -57,15 +55,16 @@ func TestFormLetterGeneratorLessParameters(t *testing.T) {
 		testData{in: "#1", out: 0},
 	}
 
-	for _, test := range tests {
-		if err := assert.AssertDeepEqual(test.out, strings.Count(result, test.in)); err != nil {
-			t.Error(err)
+	for i, test := range tests {
+		if err := a.AssertDeepEqual(test.out, strings.Count(result, test.in)); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
 
 func TestFormLetterGeneratorWrongFilename(t *testing.T) {
-	if _, err := formLetterGenerator("file?"); err == nil {
-		t.Error("Expected unable to open file error")
+	_, e := formLetterGenerator("file?")
+	if err := a.AssertException(&os.PathError{}, e); err != nil {
+		t.Error(err)
 	}
 }
