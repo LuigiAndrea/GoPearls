@@ -50,3 +50,12 @@ Problem | Description
 [3.7.5](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/hyphenations)| Hyphenations
 [3.7.6](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/form-letter-generator)| form-letter generator
 [3.7.8](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/seven-segments)| seven segments
+<br />
+
+### Column 4
+
+Problem | Description
+------------ | -------------
+[4.6.2; 4.6.8](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/fast-binary-search)| fast binary search
+[4.6.5](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/hailstone-number)| hailstone number
+[4.6.6](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/coffee-can-problem)| coffee can problem

@@ -3,7 +3,7 @@ package hailstone
 func hailstoneSequence(x int) []int {
 	var result []int
 
-	for i := 0; x != 1; i++ {
+	for x != 1 {
 		if even(x) {
 			x /= 2
 			result = append(result, x)

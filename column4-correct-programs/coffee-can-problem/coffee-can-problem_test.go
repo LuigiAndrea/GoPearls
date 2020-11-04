@@ -3,9 +3,11 @@
 package coffeebean
 
 import (
+	"errors"
 	"testing"
 
 	a "github.com/LuigiAndrea/test-helper/assertions"
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
 type testData struct {
@@ -24,10 +26,10 @@ func TestCoffeeBean(t *testing.T) {
 		testData{beans: []bean{bean{color: black}}, lastBeanColor: black},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		bean, _ := coffeeCanBeans(test.beans)
 		if err := a.AssertDeepEqual(test.lastBeanColor.String(), bean.color.String()); err != nil {
-			t.Error(err)
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
@@ -38,9 +40,10 @@ func TestCoffeeBeanWrongColor(t *testing.T) {
 		testData{beans: []bean{}},
 	}
 
-	for _, test := range tests {
-		if _, err := coffeeCanBeans(test.beans); err == nil {
-			t.Error("Expected an exception!")
+	for i, test := range tests {
+		_, e := coffeeCanBeans(test.beans)
+		if err := a.AssertException(errors.New(""), e); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
