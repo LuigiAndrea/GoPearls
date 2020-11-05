@@ -1,7 +1,3 @@
-//An array of n pairs of reals (ai,bi) defined the n lines yi=aix+b. The lines were ordered in the x-interval [0,1]
-//in the sense that yi<yi+1 for all values  i between 0 and n-2 and all values of x in [0,1].
-//Given a point (x,y) where 0=<x<=1 determine the two lines that bracket the point
-
 package linesbracketpoint
 
 import (

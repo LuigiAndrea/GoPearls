@@ -30,8 +30,7 @@ func TestLinesBracketPoint(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		r := power(test.n, test.e)
-		if err := a.AssertDeepEqual(test.result, r); err != nil {
+		if err := a.AssertDeepEqual(test.result, power(test.n, test.e)); err != nil {
 			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}

@@ -4,7 +4,6 @@ package linesbracketpoint
 
 import (
 	"fmt"
-	"reflect"
 	"testing"
 
 	a "github.com/LuigiAndrea/test-helper/assertions"
@@ -51,20 +50,20 @@ func TestLinesBracketPoint(t *testing.T) {
 
 	for i, test := range tests {
 		found, lines := getLinesBracketPoint(test.points, test.p)
-		if found == false {
-			t.Error(m.ErrorMessage(true, found))
-		} else if !reflect.DeepEqual(lines[0], test.result[0]) || !reflect.DeepEqual(lines[1], test.result[1]) {
+		if err := a.AssertDeepEqual(found, true); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
+		}
+		if err := a.AssertDeepEqual(lines, test.result); err != nil {
 			t.Error(m.ErrorMessageTestCount(i+1,
-				m.ErrorMessage(fmt.Sprintf("(%s,%s)", test.result[0], test.result[1]),
-					fmt.Sprintf("(%s,%s)", lines[0], lines[1]))))
+				m.ErrorMessage(
+					fmt.Sprintf("(%v,%v)", test.result[0], test.result[1]),
+					fmt.Sprintf("(%v,%v)", lines[0], lines[1]))))
 		}
 	}
 }
 
 func TestLineToString(t *testing.T) {
-	expected := "2.000x + 4.000"
-	actual := line(point{x: 2, y: 4}).String()
-	if err := a.AssertDeepEqual(expected, actual); err != nil {
+	if err := a.AssertDeepEqual("2.000x + 4.000", fmt.Sprint(line(point{x: 2, y: 4}))); err != nil {
 		t.Error(err)
 	}
 }
@@ -84,12 +83,15 @@ func TestPointOutOfRange(t *testing.T) {
 
 	for i, test := range tests {
 		found, lines := getLinesBracketPoint(test.points, test.p)
-		if found == true {
-			t.Error(m.ErrorMessage(false, found))
-		} else if !reflect.DeepEqual(lines[0], test.result[0]) || !reflect.DeepEqual(lines[1], test.result[1]) {
+
+		if err := a.AssertDeepEqual(found, false); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
+		}
+		if err := a.AssertDeepEqual(lines, test.result); err != nil {
 			t.Error(m.ErrorMessageTestCount(i+1,
-				m.ErrorMessage(fmt.Sprintf("(%s,%s)", test.result[0], test.result[1]),
-					fmt.Sprintf("(%s,%s)", lines[0], lines[1]))))
+				m.ErrorMessage(
+					fmt.Sprintf("(%v,%v)", test.result[0], test.result[1]),
+					fmt.Sprintf("(%v,%v)", lines[0], lines[1]))))
 		}
 	}
 }

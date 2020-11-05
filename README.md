@@ -37,7 +37,7 @@ Problem | Description
 [2.6.1](https://github.com/LuigiAndrea/GoPearls/tree/master/column2-aha/anagram)| Anagram
 [2.6.2](https://github.com/LuigiAndrea/GoPearls/tree/master/column2-aha/atleast-twice)| Find integer that appears at least twice in sequential file
 [2.6.3](https://github.com/LuigiAndrea/GoPearls/tree/master/column2-aha/rotate)| Rotation algorithms
-[2.6.8](https://github.com/LuigiAndrea/GoPearls/tree/master/column2-aha/k-element-subset)| k-element subset of the set that sums to at most t
+[2.6.8](https://github.com/LuigiAndrea/GoPearls/tree/master/column2-aha/k-element-subset)| K-element subset of the set that sums to at most t
 <br />
 
 ### Column 3
@@ -48,14 +48,17 @@ Problem | Description
 [3.7.3](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/letters)| Banner
 [3.7.4](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/date-problems)| Date
 [3.7.5](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/hyphenations)| Hyphenations
-[3.7.6](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/form-letter-generator)| form-letter generator
-[3.7.8](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/seven-segments)| seven segments
+[3.7.6](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/form-letter-generator)| Form-letter generator
+[3.7.8](https://github.com/LuigiAndrea/GoPearls/tree/master/column3-data-structures/seven-segments)| Seven Segments
 <br />
 
 ### Column 4
 
 Problem | Description
 ------------ | -------------
-[4.6.2; 4.6.8](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/fast-binary-search)| fast binary search
-[4.6.5](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/hailstone-number)| hailstone number
-[4.6.6](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/coffee-can-problem)| coffee can problem
+[4.6.2; 4.6.8; 4.6.10](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/fast-binary-search)| Fast Binary Search
+[4.6.5](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/hailstone-number)| Hailstone Number
+[4.6.6](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/coffee-can-problem)| Coffee Can Problem
+[4.6.7](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/lines-bracket-point)| Two lines that bracket the point
+[4.6.9](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/power)| Power Verification
+[4.6.11](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/binary-search-declaration)| Binary Search Specific Declaration
