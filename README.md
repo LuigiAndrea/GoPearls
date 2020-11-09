@@ -62,3 +62,11 @@ Problem | Description
 [4.6.7](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/lines-bracket-point)| Two lines that bracket the point
 [4.6.9](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/power)| Power Verification
 [4.6.11](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/binary-search-declaration)| Binary Search Specific Declaration
+<br />
+
+### Column 9
+
+Problem | Description
+------------ | -------------
+[9.5.1](https://github.com/LuigiAndrea/GoPearls/tree/master/column9-code-tuning/sequential-search)| Sequential Search
+[9.5.4](https://github.com/LuigiAndrea/GoPearls/tree/master/column9-code-tuning/maximum-value-array)| Recursive maximum value in the n-array
