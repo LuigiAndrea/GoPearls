@@ -1,4 +1,4 @@
-// +build column9_bench benchmark
+// +build column9_bench benchmark maxnarray_bench
 
 package maximumvalue
 

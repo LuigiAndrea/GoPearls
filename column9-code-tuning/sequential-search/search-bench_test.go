@@ -1,4 +1,4 @@
-// +build column9_bench benchmark
+// +build column9_bench benchmark search_bench
 
 package searchtuning
 
