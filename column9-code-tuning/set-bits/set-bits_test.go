@@ -10,14 +10,14 @@ import (
 	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
+var funcToTest = []func(uint64) int{countSetBits, countSetBitsKernighan, countSetBitsLookup, countSetBitsNibble}
+
 func TestCountSetBits(t *testing.T) {
 
 	type testData struct {
 		number uint64
 		count  int
 	}
-
-	funcToTest := []func(uint64) int{countSetBits, countSetBitsKernighan, countSetBitsLookup, countSetBitsNibble}
 
 	tests := []testData{
 		testData{number: 2000, count: 6},
@@ -30,6 +30,15 @@ func TestCountSetBits(t *testing.T) {
 			if err := a.AssertDeepEqual(test.count, f(test.number)); err != nil {
 				t.Error(m.GetFuncName(f), m.ErrorMessageTestCount(i+1, err))
 			}
+		}
+	}
+
+}
+
+func TestCountSetBitsSequence(t *testing.T) {
+	for i, f := range funcToTest {
+		if err := a.AssertDeepEqual(676, countSetBitsSequence(f)); err != nil {
+			t.Error(m.GetFuncName(f), m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }

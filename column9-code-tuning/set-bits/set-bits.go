@@ -1,11 +1,54 @@
-//Write an efficient program to count number of 1s in binary representation of an integer.
-
+//Package setbit count number of 1s in binary representation of an integer.
 package setbit
 
 import (
+	"bufio"
 	"index/suffixarray"
+	"os"
 	"strconv"
 )
+
+func countSetBitsSequence(countFunc func(uint64) int) int {
+
+	var count int
+	file, err := os.Open("./bitSequence.data")
+	if err != nil {
+		panic(err)
+	}
+
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	scanner.Split(splitAt64)
+	for scanner.Scan() {
+		u64, err := strconv.ParseUint(scanner.Text(), 2, 64)
+		if err != nil {
+			panic(err)
+		}
+		count += countFunc(u64)
+	}
+
+	return count
+}
+
+func splitAt64(data []byte, atEOF bool) (advance int, token []byte, err error) {
+
+	dataLen := len(data)
+
+	// If we're at EOF
+	if atEOF {
+		if dataLen == 0 { //no data passed
+			return 0, nil, nil
+		}
+		return dataLen, data, nil
+	}
+
+	if dataLen > 64 {
+		return 64, data[0:64], nil
+	}
+
+	return 0, nil, nil
+}
 
 func countSetBits(number uint64) int {
 	sa := suffixarray.New([]byte(strconv.FormatUint(number, 2)))
