@@ -30,9 +30,9 @@ func TestFormLetterGenerator(t *testing.T) {
 	result, _ := formLetterGenerator(filename, par.firstName, par.lastName, par.supervisorName, par.startDateAway, par.endDateAway, par.returningDate)
 
 	tests := []testData{
-		testData{in: par.firstName, out: 2},
-		testData{in: par.lastName, out: 1},
-		testData{in: par.supervisorName, out: 2},
+		{in: par.firstName, out: 2},
+		{in: par.lastName, out: 1},
+		{in: par.supervisorName, out: 2},
 	}
 
 	for i, test := range tests {
@@ -48,11 +48,11 @@ func TestFormLetterGeneratorLessParameters(t *testing.T) {
 	result, _ := formLetterGenerator(filename, par.firstName, par.lastName, par.supervisorName)
 
 	tests := []testData{
-		testData{in: par.firstName, out: 2},
-		testData{in: par.lastName, out: 1},
-		testData{in: "#4", out: 1},
-		testData{in: par.returningDate, out: len(result) + 1},
-		testData{in: "#1", out: 0},
+		{in: par.firstName, out: 2},
+		{in: par.lastName, out: 1},
+		{in: "#4", out: 1},
+		{in: par.returningDate, out: len(result) + 1},
+		{in: "#1", out: 0},
 	}
 
 	for i, test := range tests {

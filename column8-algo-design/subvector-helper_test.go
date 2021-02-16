@@ -20,10 +20,10 @@ func TestSubvector(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{vector: []float64{-2.4, 5.7, -3.31, 5, 3, -2, 2}, size: 7},
-		testData{vector: []float64{-2.4}, size: 1},
-		testData{vector: nil, size: 0},
-		testData{vector: []float64{}, size: 0},
+		{vector: []float64{-2.4, 5.7, -3.31, 5, 3, -2, 2}, size: 7},
+		{vector: []float64{-2.4}, size: 1},
+		{vector: nil, size: 0},
+		{vector: []float64{}, size: 0},
 	}
 
 	for i, test := range tests {

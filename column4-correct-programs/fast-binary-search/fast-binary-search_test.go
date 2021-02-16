@@ -24,17 +24,17 @@ var array = [10]int{1, 5, 7, 8, 9, 12, 14, 22, 390, 434}
 
 func TestFastSearchVersion1(t *testing.T) {
 	tests := []testData{
-		testData{input: slice, v: 8, pos: 3},
-		testData{input: slice, v: 434, pos: 9},
-		testData{input: slice, v: 390, pos: 8},
-		testData{input: slice, v: 22, pos: 7},
-		testData{input: slice, v: 7, pos: 2},
-		testData{input: slice, v: 200, pos: -1},
-		testData{input: slice, v: 1, pos: 0},
-		testData{input: []int{}, v: 0, pos: -1},
-		testData{input: []int{-5, -3, 0, 5}, v: -3, pos: 1},
-		testData{input: nil, v: 0, pos: -1},
-		testData{input: []int(nil), v: 0, pos: -1},
+		{input: slice, v: 8, pos: 3},
+		{input: slice, v: 434, pos: 9},
+		{input: slice, v: 390, pos: 8},
+		{input: slice, v: 22, pos: 7},
+		{input: slice, v: 7, pos: 2},
+		{input: slice, v: 200, pos: -1},
+		{input: slice, v: 1, pos: 0},
+		{input: []int{}, v: 0, pos: -1},
+		{input: []int{-5, -3, 0, 5}, v: -3, pos: 1},
+		{input: nil, v: 0, pos: -1},
+		{input: []int(nil), v: 0, pos: -1},
 	}
 
 	for i, test := range tests {
@@ -48,15 +48,15 @@ func TestFastSearch(t *testing.T) {
 	funcToTest := []func([10]int, int) int{fastSearch, fastSearch2}
 
 	tests := []testDataV2{
-		testDataV2{input: array, v: 8, pos: 3},
-		testDataV2{input: array, v: 434, pos: 9},
-		testDataV2{input: array, v: 390, pos: 8},
-		testDataV2{input: array, v: 22, pos: 7},
-		testDataV2{input: array, v: 7, pos: 2},
-		testDataV2{input: array, v: 200, pos: -1},
-		testDataV2{input: array, v: 1, pos: 0},
-		testDataV2{input: [10]int{}, v: 10, pos: -1},
-		testDataV2{input: [10]int{-5, -3}, v: -3, pos: 1},
+		{input: array, v: 8, pos: 3},
+		{input: array, v: 434, pos: 9},
+		{input: array, v: 390, pos: 8},
+		{input: array, v: 22, pos: 7},
+		{input: array, v: 7, pos: 2},
+		{input: array, v: 200, pos: -1},
+		{input: array, v: 1, pos: 0},
+		{input: [10]int{}, v: 10, pos: -1},
+		{input: [10]int{-5, -3}, v: -3, pos: 1},
 	}
 
 	for _, f := range funcToTest {

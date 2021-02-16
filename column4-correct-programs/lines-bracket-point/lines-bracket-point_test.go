@@ -17,33 +17,33 @@ type testData struct {
 }
 
 var points = []point{
-	point{x: 0.09},
-	point{x: 0.08, y: 1},
-	point{x: -0.05, y: 2},
-	point{x: 0.05, y: 2.5},
-	point{x: 0.3, y: 2.95},
-	point{x: 0.005, y: 4},
+	{x: 0.09},
+	{x: 0.08, y: 1},
+	{x: -0.05, y: 2},
+	{x: 0.05, y: 2.5},
+	{x: 0.3, y: 2.95},
+	{x: 0.005, y: 4},
 }
 
 func TestLinesBracketPoint(t *testing.T) {
 
 	tests := []testData{
-		testData{points: points,
+		{points: points,
 			p:      point{x: 0.03, y: 2},
 			result: [2]line{line(point{x: -0.05, y: 2}), line(point{x: 0.05, y: 2.5})}},
-		testData{points: points,
+		{points: points,
 			p:      point{x: 0.9, y: 3.5},
 			result: [2]line{line(point{x: 0.3, y: 2.95}), line(point{x: 0.005, y: 4})}},
-		testData{points: points,
+		{points: points,
 			p:      point{x: 0.9, y: 0.5},
 			result: [2]line{line(point{x: 0.09, y: 0}), line(point{x: 0.08, y: 1})}},
-		testData{points: points,
+		{points: points,
 			p:      point{x: 0.9, y: 3.2},
 			result: [2]line{line(point{x: 0.05, y: 2.5}), line(point{x: 0.3, y: 2.95})}},
-		testData{points: points,
+		{points: points,
 			p:      point{x: 0.6, y: 3.2},
 			result: [2]line{line(point{x: 0.3, y: 2.95}), line(point{x: 0.005, y: 4})}},
-		testData{points: []point{point{x: 0.86, y: 2}, point{x: 0.86, y: 5}},
+		{points: []point{{x: 0.86, y: 2}, {x: 0.86, y: 5}},
 			p:      point{x: 0.3, y: 2.5},
 			result: [2]line{line(point{x: 0.86, y: 2}), line(point{x: 0.86, y: 5})}},
 	}
@@ -70,13 +70,13 @@ func TestLineToString(t *testing.T) {
 
 func TestPointOutOfRange(t *testing.T) {
 	tests := []testData{
-		testData{points: points,
+		{points: points,
 			p:      point{x: 1.5, y: 2},
 			result: [2]line{}},
-		testData{points: points,
+		{points: points,
 			p:      point{x: 0.9, y: 5},
 			result: [2]line{}},
-		testData{points: []point{point{x: 0.86}},
+		{points: []point{{x: 0.86}},
 			p:      point{x: 0.9, y: 2},
 			result: [2]line{}},
 	}

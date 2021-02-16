@@ -16,7 +16,7 @@ import (
 const Filename = "./kIntegers.data"
 
 func TestCreateFileWithKIntegers(t *testing.T) {
-	valuesTest := []MinMaxInterval{MinMaxInterval{Min: 1000000, Max: 1000010}, MinMaxInterval{Min: 1000050, Max: 1000054}, MinMaxInterval{Min: 1000500, Max: 2000000}}
+	valuesTest := []MinMaxInterval{{Min: 1000000, Max: 1000010}, {Min: 1000050, Max: 1000054}, {Min: 1000500, Max: 2000000}}
 
 	if err := a.AssertException(nil, CreateFileWithRandomIntegers(Filename, valuesTest...)); err != nil {
 		t.Error(err)

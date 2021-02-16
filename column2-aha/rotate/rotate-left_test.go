@@ -21,13 +21,13 @@ var rotateLeftFunc = []func([]string, int) error{rotateLeftSlice, rotateLeftReve
 func TestRotateLeft(t *testing.T) {
 
 	tests := []testData{
-		testData{str: []string{"a", "b", "c", "d", "e"}, shift: 2, expectedValue: []string{"c", "d", "e", "a", "b"}},
-		testData{str: []string{"c"}, shift: 1, expectedValue: []string{"c"}},
-		testData{str: []string{""}, shift: 0, expectedValue: []string{""}},
-		testData{str: []string{}, shift: 0, expectedValue: []string{}},
-		testData{str: []string{"d", "e", "a"}, shift: 3, expectedValue: []string{"d", "e", "a"}},
-		testData{str: []string{"T", "R", "E"}, shift: 0, expectedValue: []string{"T", "R", "E"}},
-		testData{str: []string{"CC", "AA", "BB"}, shift: 2, expectedValue: []string{"BB", "CC", "AA"}},
+		{str: []string{"a", "b", "c", "d", "e"}, shift: 2, expectedValue: []string{"c", "d", "e", "a", "b"}},
+		{str: []string{"c"}, shift: 1, expectedValue: []string{"c"}},
+		{str: []string{""}, shift: 0, expectedValue: []string{""}},
+		{str: []string{}, shift: 0, expectedValue: []string{}},
+		{str: []string{"d", "e", "a"}, shift: 3, expectedValue: []string{"d", "e", "a"}},
+		{str: []string{"T", "R", "E"}, shift: 0, expectedValue: []string{"T", "R", "E"}},
+		{str: []string{"CC", "AA", "BB"}, shift: 2, expectedValue: []string{"BB", "CC", "AA"}},
 	}
 
 	for _, rotate := range rotateLeftFunc {
@@ -44,9 +44,9 @@ func TestRotateLeft(t *testing.T) {
 
 func TestShiftLeftOutOfRange(t *testing.T) {
 	tests := []testData{
-		testData{str: []string{}, shift: 2},
-		testData{str: []string{}, shift: -8},
-		testData{str: []string{"a", "b"}, shift: 3},
+		{str: []string{}, shift: 2},
+		{str: []string{}, shift: -8},
+		{str: []string{"a", "b"}, shift: 3},
 	}
 
 	for _, rotate := range rotateLeftFunc {

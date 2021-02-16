@@ -18,13 +18,13 @@ func TestPreAppend(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{testValues: []interface{}{1, 2, -6, 111},
+		{testValues: []interface{}{1, 2, -6, 111},
 			expectedValues: []interface{}{12, 3, 1, 2, -6, 111},
 			newElements:    []interface{}{3, 12}},
-		testData{testValues: []interface{}{"Ciao", "Hello", "Car"},
+		{testValues: []interface{}{"Ciao", "Hello", "Car"},
 			expectedValues: []interface{}{"NewCiao", "Ciao", "Hello", "Car"},
 			newElements:    []interface{}{"NewCiao"}},
-		testData{testValues: []interface{}{"Ciao", "Hello", "Car"},
+		{testValues: []interface{}{"Ciao", "Hello", "Car"},
 			expectedValues: []interface{}{123, "Ciao", "Hello", "Car"},
 			newElements:    []interface{}{123}},
 	}
@@ -44,9 +44,9 @@ func TestReverse(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{in: []byte{125, 55, 90, 127}, out: []byte{127, 90, 55, 125}},
-		testData{in: []byte{}, out: []byte{}},
-		testData{in: nil, out: nil},
+		{in: []byte{125, 55, 90, 127}, out: []byte{127, 90, 55, 125}},
+		{in: []byte{}, out: []byte{}},
+		{in: nil, out: nil},
 	}
 
 	for i, test := range tests {
@@ -70,8 +70,8 @@ func TestByteSliceType(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{in: []byte{125, 55, 90, 112}, lengthOut: 4, lessOut: false, swapLessIndexes: swapLessIndex{i: 0, j: 3}},
-		testData{in: []byte{125, 55, 90}, lengthOut: 3, lessOut: true, swapLessIndexes: swapLessIndex{i: 1, j: 2}},
+		{in: []byte{125, 55, 90, 112}, lengthOut: 4, lessOut: false, swapLessIndexes: swapLessIndex{i: 0, j: 3}},
+		{in: []byte{125, 55, 90}, lengthOut: 3, lessOut: true, swapLessIndexes: swapLessIndex{i: 1, j: 2}},
 	}
 
 	for i, test := range tests {
@@ -100,15 +100,15 @@ func TestMax(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{in: []float64{18.2, 12.4, 3.5}, out: 18.2},
-		testData{in: []float64{}, out: math.Inf(-1)},
-		testData{in: nil, out: math.Inf(-1)},
-		testData{in: []float64{1.2, -12.4, 3.5}, out: 3.5},
-		testData{in: []float64{3.75}, out: 3.75},
-		testData{in: []float64{3.75, math.Inf(-1)}, out: 3.75},
-		testData{in: []float64{3.75, math.Inf(1)}, out: math.Inf(5)},
-		testData{in: []float64{-3.75, math.Inf(-1)}, out: -3.75},
-		testData{in: []float64{math.Inf(1), math.Inf(-1)}, out: math.Inf(0)},
+		{in: []float64{18.2, 12.4, 3.5}, out: 18.2},
+		{in: []float64{}, out: math.Inf(-1)},
+		{in: nil, out: math.Inf(-1)},
+		{in: []float64{1.2, -12.4, 3.5}, out: 3.5},
+		{in: []float64{3.75}, out: 3.75},
+		{in: []float64{3.75, math.Inf(-1)}, out: 3.75},
+		{in: []float64{3.75, math.Inf(1)}, out: math.Inf(5)},
+		{in: []float64{-3.75, math.Inf(-1)}, out: -3.75},
+		{in: []float64{math.Inf(1), math.Inf(-1)}, out: math.Inf(0)},
 	}
 
 	for i, test := range tests {
@@ -126,11 +126,11 @@ func TestRound(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{in: 183.467, in2: 2, out: 183.47},
-		testData{in: 183.467, in2: 5, out: 183.46700},
-		testData{in: 146.7032, in2: 0, out: 147},
-		testData{in: -12.455787, in2: 2, out: -12.46},
-		testData{in: 1.79, in2: 308, out: 1.79},
+		{in: 183.467, in2: 2, out: 183.47},
+		{in: 183.467, in2: 5, out: 183.46700},
+		{in: 146.7032, in2: 0, out: 147},
+		{in: -12.455787, in2: 2, out: -12.46},
+		{in: 1.79, in2: 308, out: 1.79},
 	}
 
 	for i, test := range tests {
@@ -151,9 +151,9 @@ func TestRoundEdgeCases(t *testing.T) {
 	errorString := "parameters too big"
 
 	tests := []testException{
-		testException{number: 1.80, decimalPlaces: 308, expected: &RoundError{Err: errorString}},
-		testException{number: 180.43, decimalPlaces: 3108, expected: &RoundError{Err: errorString}},
-		testException{number: 1.80, decimalPlaces: -3, expected: &RoundError{Err: "utilities.Round: decimalPlace parameter must be a positive number"}},
+		{number: 1.80, decimalPlaces: 308, expected: &RoundError{Err: errorString}},
+		{number: 180.43, decimalPlaces: 3108, expected: &RoundError{Err: errorString}},
+		{number: 1.80, decimalPlaces: -3, expected: &RoundError{Err: "utilities.Round: decimalPlace parameter must be a positive number"}},
 	}
 
 	for i, test := range tests {
@@ -172,7 +172,7 @@ func TestRoundWrongException(t *testing.T) {
 	}
 	errorString := "utilities.Round: decimalPlace parameter must be a positive number"
 	tests := []testException{
-		testException{number: 1.80, decimalPlaces: -3, expected: errors.New(errorString)},
+		{number: 1.80, decimalPlaces: -3, expected: errors.New(errorString)},
 	}
 
 	for _, test := range tests {
@@ -210,11 +210,11 @@ func TestGetDistance(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{value1: 12, value2: -1, result: 13},
-		testData{value1: 0, value2: -1, result: 1},
-		testData{value1: 12, value2: 12, result: 0},
-		testData{value1: 12, value2: math.Inf(0), result: math.Inf(0)},
-		testData{value1: math.Inf(-1), value2: 12, result: math.Inf(0)},
+		{value1: 12, value2: -1, result: 13},
+		{value1: 0, value2: -1, result: 1},
+		{value1: 12, value2: 12, result: 0},
+		{value1: 12, value2: math.Inf(0), result: math.Inf(0)},
+		{value1: math.Inf(-1), value2: 12, result: math.Inf(0)},
 	}
 
 	for i, test := range tests {

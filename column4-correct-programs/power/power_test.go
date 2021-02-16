@@ -16,17 +16,17 @@ type testData struct {
 func TestLinesBracketPoint(t *testing.T) {
 
 	tests := []testData{
-		testData{n: 2, e: 3, result: 8},
-		testData{n: 2, e: 5, result: 32},
-		testData{n: 2, e: 31, result: 2147483648},
-		testData{n: 3, e: 3, result: 27},
-		testData{n: 3, e: 2, result: 9},
-		testData{n: 3, e: 0, result: 1},
-		testData{n: 3, e: -2, result: -1},
-		testData{n: -3, e: 2, result: 9},
-		testData{n: -3, e: 3, result: -27},
-		testData{n: -3, e: 1, result: -3},
-		testData{n: 0, e: 5, result: 0},
+		{n: 2, e: 3, result: 8},
+		{n: 2, e: 5, result: 32},
+		{n: 2, e: 31, result: 2147483648},
+		{n: 3, e: 3, result: 27},
+		{n: 3, e: 2, result: 9},
+		{n: 3, e: 0, result: 1},
+		{n: 3, e: -2, result: -1},
+		{n: -3, e: 2, result: 9},
+		{n: -3, e: 3, result: -27},
+		{n: -3, e: 1, result: -3},
+		{n: 0, e: 5, result: 0},
 	}
 
 	for i, test := range tests {

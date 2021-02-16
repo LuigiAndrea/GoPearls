@@ -19,14 +19,14 @@ type testData struct {
 func TestExistKSubset(t *testing.T) {
 
 	tests := []testData{
-		testData{subset: []int{11, 5, 12, 2, 18, 3, 7}, t: 11, k: 3, expectedValue: true},
-		testData{subset: []int{11, 5, 12, 2, 18, 3, 7}, t: 9, k: 3, expectedValue: false},
-		testData{subset: []int{11, 5, 12, 2, 18, 3, 7}, t: 11, k: 4, expectedValue: false},
-		testData{subset: []int{11, 4, 7}, t: 15, k: 2, expectedValue: true},
-		testData{subset: []int{11, 3, 7, 0, -14}, t: 8, k: 4, expectedValue: true},
-		testData{subset: []int{11, 3, -7, 0, -14}, t: -10, k: 4, expectedValue: true},
-		testData{subset: []int{11, 3, -7, 0, -14}, t: -10, k: 5, expectedValue: false},
-		testData{subset: []int{11, 0, -7, 0, -14}, t: -10, k: 5, expectedValue: true},
+		{subset: []int{11, 5, 12, 2, 18, 3, 7}, t: 11, k: 3, expectedValue: true},
+		{subset: []int{11, 5, 12, 2, 18, 3, 7}, t: 9, k: 3, expectedValue: false},
+		{subset: []int{11, 5, 12, 2, 18, 3, 7}, t: 11, k: 4, expectedValue: false},
+		{subset: []int{11, 4, 7}, t: 15, k: 2, expectedValue: true},
+		{subset: []int{11, 3, 7, 0, -14}, t: 8, k: 4, expectedValue: true},
+		{subset: []int{11, 3, -7, 0, -14}, t: -10, k: 4, expectedValue: true},
+		{subset: []int{11, 3, -7, 0, -14}, t: -10, k: 5, expectedValue: false},
+		{subset: []int{11, 0, -7, 0, -14}, t: -10, k: 5, expectedValue: true},
 	}
 
 	funcToTest := []func([]int, int, int) bool{existKSubset, existKSubsetQuickSelect}
@@ -43,9 +43,9 @@ func TestExistKSubset(t *testing.T) {
 
 func TestExistKSubsetEdgeCases(t *testing.T) {
 	tests := []testData{
-		testData{subset: []int{}, t: -10, k: -2, expectedValue: false},
-		testData{subset: nil, t: -10, k: 5, expectedValue: false},
-		testData{subset: []int{2, 3}, t: 5, k: 3, expectedValue: false},
+		{subset: []int{}, t: -10, k: -2, expectedValue: false},
+		{subset: nil, t: -10, k: 5, expectedValue: false},
+		{subset: []int{2, 3}, t: 5, k: 3, expectedValue: false},
 	}
 
 	funcToTest := []func([]int, int, int) bool{existKSubset, existKSubsetQuickSelect}

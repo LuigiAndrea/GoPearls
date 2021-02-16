@@ -19,13 +19,13 @@ var array = []int{1, 5, 7, 8, 9, 12, 14, 22, 390, 434}
 func TestBSDeclaration(t *testing.T) {
 	var bsd bsdeclaration
 	tests := []testData{
-		testData{array: array, v: 8, pos: 3},
-		testData{array: array, v: 434, pos: 9},
-		testData{array: array, v: 200, pos: -1},
-		testData{array: array, v: 1, pos: 0},
-		testData{array: []int{}, v: 0, pos: -1},
-		testData{array: []int{-5, -3, 0, 5}, v: -3, pos: 1},
-		testData{array: nil, v: 0, pos: -1},
+		{array: array, v: 8, pos: 3},
+		{array: array, v: 434, pos: 9},
+		{array: array, v: 200, pos: -1},
+		{array: array, v: 1, pos: 0},
+		{array: []int{}, v: 0, pos: -1},
+		{array: []int{-5, -3, 0, 5}, v: -3, pos: 1},
+		{array: nil, v: 0, pos: -1},
 	}
 
 	for i, test := range tests {

@@ -16,16 +16,16 @@ func TestHyphenations(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{in: "ethnic", out: "h-nic"},
-		testData{in: "realistic", out: "al-is-tic"},
-		testData{in: "5*2b", out: ""},
-		testData{in: "clinic", out: "n-ic"},
-		testData{in: "alcoholic", out: "l-ic"},
-		testData{in: "terrific", out: "f-ic"},
-		testData{in: "public", out: "b-lic"},
-		testData{in: "analytic", out: "-lyt-ic"},
-		testData{in: "metallic", out: "l-lic"},
-		testData{in: "bicyclic", out: "-clic"},
+		{in: "ethnic", out: "h-nic"},
+		{in: "realistic", out: "al-is-tic"},
+		{in: "5*2b", out: ""},
+		{in: "clinic", out: "n-ic"},
+		{in: "alcoholic", out: "l-ic"},
+		{in: "terrific", out: "f-ic"},
+		{in: "public", out: "b-lic"},
+		{in: "analytic", out: "-lyt-ic"},
+		{in: "metallic", out: "l-lic"},
+		{in: "bicyclic", out: "-clic"},
 	}
 
 	for i, test := range tests {

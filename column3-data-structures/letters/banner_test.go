@@ -19,9 +19,9 @@ func TestBanner(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{in: "2b5*3b1*", out: "  *****   *"},
-		testData{in: "5*2b", out: "*****  "},
-		testData{in: "8*", out: "********"},
+		{in: "2b5*3b1*", out: "  *****   *"},
+		{in: "5*2b", out: "*****  "},
+		{in: "8*", out: "********"},
 	}
 
 	for i, test := range tests {

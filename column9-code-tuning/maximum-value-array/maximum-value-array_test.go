@@ -18,10 +18,10 @@ type testData struct {
 
 func TestMaximumValueNArray(t *testing.T) {
 	tests := []testData{
-		testData{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 11.5},
-		testData{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 4.54, n: 2},
-		testData{array: []float64{5.1}, maxValue: 5.1},
-		testData{array: []float64{-3.5, -2.00, -11.5, 9.8, 5.1}, maxValue: -2.00, n: 3},
+		{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 11.5},
+		{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 4.54, n: 2},
+		{array: []float64{5.1}, maxValue: 5.1},
+		{array: []float64{-3.5, -2.00, -11.5, 9.8, 5.1}, maxValue: -2.00, n: 3},
 	}
 
 	for i, test := range tests {
@@ -38,11 +38,11 @@ func TestMaximumValueNArray(t *testing.T) {
 func TestMaximumValueNArrayExceptions(t *testing.T) {
 
 	tests := []testData{
-		testData{array: nil, maxValue: 0},
-		testData{array: []float64{}, maxValue: 2},
-		testData{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 4.54},
-		testData{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 4.54, n: -4},
-		testData{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 4.54, n: 6},
+		{array: nil, maxValue: 0},
+		{array: []float64{}, maxValue: 2},
+		{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 4.54},
+		{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 4.54, n: -4},
+		{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 4.54, n: 6},
 	}
 
 	for i, test := range tests {

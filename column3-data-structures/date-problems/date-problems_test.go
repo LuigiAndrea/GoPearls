@@ -17,13 +17,13 @@ func TestNumberDaysBetweenTwoDay(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{date1: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
+		{date1: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
 			date2: time.Date(2000, 2, 1, 0, 0, 0, 0, time.UTC),
 			days:  31},
-		testData{date1: time.Date(2000, 3, 1, 0, 0, 0, 0, time.UTC),
+		{date1: time.Date(2000, 3, 1, 0, 0, 0, 0, time.UTC),
 			date2: time.Date(2000, 2, 1, 0, 0, 0, 0, time.UTC),
 			days:  29},
-		testData{date1: time.Date(1996, 2, 1, 0, 0, 0, 0, time.UTC),
+		{date1: time.Date(1996, 2, 1, 0, 0, 0, 0, time.UTC),
 			date2: time.Date(1997, 2, 1, 0, 0, 0, 0, time.UTC),
 			days:  366},
 	}
@@ -42,9 +42,9 @@ func TestGetDayOfWeek(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{date: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
+		{date: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
 			dayOfWeek: "Saturday"},
-		testData{date: time.Date(2022, 7, 12, 0, 0, 0, 0, time.UTC),
+		{date: time.Date(2022, 7, 12, 0, 0, 0, 0, time.UTC),
 			dayOfWeek: "Tuesday"},
 	}
 
@@ -63,9 +63,9 @@ func TestComputeCalendar(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{year: 2019, month: time.Month(3), daysInMonth: 31, in_day: 4, out_day: "Tuesday"},
-		testData{year: 2019, month: time.Month(6), daysInMonth: 30, in_day: 29, out_day: "Sunday"},
-		testData{year: 2016, month: time.Month(2), daysInMonth: 29, in_day: 28, out_day: "Monday"},
+		{year: 2019, month: time.Month(3), daysInMonth: 31, in_day: 4, out_day: "Tuesday"},
+		{year: 2019, month: time.Month(6), daysInMonth: 30, in_day: 29, out_day: "Sunday"},
+		{year: 2016, month: time.Month(2), daysInMonth: 29, in_day: 28, out_day: "Monday"},
 	}
 
 	for i, test := range tests {

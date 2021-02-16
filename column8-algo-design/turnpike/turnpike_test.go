@@ -18,19 +18,19 @@ func TestTurnpike(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{from: 0, to: 1, costBetweenStation: 2.5},
-		testData{from: 1, to: 0, costBetweenStation: 2.5},
-		testData{from: 4, to: 0, costBetweenStation: 14},
-		testData{from: 0, to: 4, costBetweenStation: 14},
-		testData{from: 0, to: 4, costBetweenStation: 14},
-		testData{from: 1, to: 4, costBetweenStation: 11.5},
-		testData{from: 2, to: 1, costBetweenStation: 1},
-		testData{from: 1, to: 3, costBetweenStation: 11},
-		testData{from: 1, to: 1, costBetweenStation: -1},
-		testData{from: -1, to: 1, costBetweenStation: -1},
-		testData{from: 1, to: -1, costBetweenStation: -1},
-		testData{from: 1, to: 5, costBetweenStation: -1},
-		testData{from: 5, to: 0, costBetweenStation: -1},
+		{from: 0, to: 1, costBetweenStation: 2.5},
+		{from: 1, to: 0, costBetweenStation: 2.5},
+		{from: 4, to: 0, costBetweenStation: 14},
+		{from: 0, to: 4, costBetweenStation: 14},
+		{from: 0, to: 4, costBetweenStation: 14},
+		{from: 1, to: 4, costBetweenStation: 11.5},
+		{from: 2, to: 1, costBetweenStation: 1},
+		{from: 1, to: 3, costBetweenStation: 11},
+		{from: 1, to: 1, costBetweenStation: -1},
+		{from: -1, to: 1, costBetweenStation: -1},
+		{from: 1, to: -1, costBetweenStation: -1},
+		{from: 1, to: 5, costBetweenStation: -1},
+		{from: 5, to: 0, costBetweenStation: -1},
 	}
 
 	for i, test := range tests {
@@ -48,9 +48,9 @@ func TestTurnpikeLength(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{costs: newTurnpike([]float64{2.5}), costBetweenStation: -1},
-		testData{costs: newTurnpike([]float64{}), costBetweenStation: -1},
-		testData{costs: newTurnpike(nil), costBetweenStation: -1},
+		{costs: newTurnpike([]float64{2.5}), costBetweenStation: -1},
+		{costs: newTurnpike([]float64{}), costBetweenStation: -1},
+		{costs: newTurnpike(nil), costBetweenStation: -1},
 	}
 
 	for i, test := range tests {

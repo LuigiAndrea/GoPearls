@@ -20,10 +20,10 @@ func TestCountSetBits(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{number: 2000, count: 6},
-		testData{number: 20001234, count: 11},
-		testData{number: math.MaxUint64, count: 64},
-		testData{number: 0, count: 0},
+		{number: 2000, count: 6},
+		{number: 20001234, count: 11},
+		{number: math.MaxUint64, count: 64},
+		{number: 0, count: 0},
 	}
 	for _, f := range funcToTest {
 		for i, test := range tests {

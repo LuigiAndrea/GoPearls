@@ -17,13 +17,13 @@ type testData struct {
 
 func TestCoffeeBean(t *testing.T) {
 	tests := []testData{
-		testData{beans: []bean{bean{color: white}, bean{color: white}, bean{color: white}}, lastBeanColor: white},
-		testData{beans: []bean{bean{color: white}, bean{color: white}, bean{color: black}}, lastBeanColor: black},
-		testData{beans: []bean{bean{color: white}, bean{color: black}, bean{color: black}}, lastBeanColor: white},
-		testData{beans: []bean{bean{color: white}, bean{color: black}, bean{color: black}, bean{color: black}}, lastBeanColor: white},
-		testData{beans: []bean{bean{color: black}, bean{color: white}, bean{color: black}, bean{color: black}, bean{color: black}}, lastBeanColor: white},
-		testData{beans: []bean{bean{color: black}, bean{color: black}}, lastBeanColor: black},
-		testData{beans: []bean{bean{color: black}}, lastBeanColor: black},
+		{beans: []bean{{color: white}, {color: white}, {color: white}}, lastBeanColor: white},
+		{beans: []bean{{color: white}, {color: white}, {color: black}}, lastBeanColor: black},
+		{beans: []bean{{color: white}, {color: black}, {color: black}}, lastBeanColor: white},
+		{beans: []bean{{color: white}, {color: black}, {color: black}, {color: black}}, lastBeanColor: white},
+		{beans: []bean{{color: black}, {color: white}, {color: black}, {color: black}, {color: black}}, lastBeanColor: white},
+		{beans: []bean{{color: black}, {color: black}}, lastBeanColor: black},
+		{beans: []bean{{color: black}}, lastBeanColor: black},
 	}
 
 	for i, test := range tests {
@@ -36,8 +36,8 @@ func TestCoffeeBean(t *testing.T) {
 
 func TestCoffeeBeanWrongColor(t *testing.T) {
 	tests := []testData{
-		testData{beans: []bean{bean{color: 3}, bean{color: white}, bean{color: white}}},
-		testData{beans: []bean{}},
+		{beans: []bean{{color: 3}, {color: white}, {color: white}}},
+		{beans: []bean{}},
 	}
 
 	for i, test := range tests {

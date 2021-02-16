@@ -27,11 +27,11 @@ func TestBitVectorOperations(t *testing.T) {
 	}
 
 	tests := []testOperationData{
-		testOperationData{in: 500000, out: 1},
-		testOperationData{in: 500001, out: 1},
-		testOperationData{in: 500005, out: 1},
-		testOperationData{in: 500002, out: 0},
-		testOperationData{in: 0, out: 0}}
+		{in: 500000, out: 1},
+		{in: 500001, out: 1},
+		{in: 500005, out: 1},
+		{in: 500002, out: 0},
+		{in: 0, out: 0}}
 
 	for i, test := range tests {
 		if value, e := bitVectors.Get(test.in); e != nil {
@@ -90,12 +90,12 @@ func TestBitVectorLength(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{in: 500000, out: 15626},
-		testData{in: 31, out: 1},
-		testData{in: 0, out: 1},
-		testData{in: 32, out: 2},
-		testData{in: 2000000, out: 62501},
-		testData{in: 2000031, out: 62501}}
+		{in: 500000, out: 15626},
+		{in: 31, out: 1},
+		{in: 0, out: 1},
+		{in: 32, out: 2},
+		{in: 2000000, out: 62501},
+		{in: 2000031, out: 62501}}
 
 	for i, test := range tests {
 		bitVector, _ := NewBitVector(test.in)

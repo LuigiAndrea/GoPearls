@@ -17,15 +17,15 @@ type testData struct {
 var funcToRun = []func(rune) bool{isUpper, isLower, isAlpha, isAlphaNum, isAlphaNum2, isPunct, isDigit, isDigit2, isBlank}
 
 var tests = []testData{
-	testData{char: 'B', upperValue: true, lowerValue: false, alphaValue: true, alphaNumValue: true, punctValue: false, digitValue: false, blankValue: false},
-	testData{char: '%', upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: false, punctValue: true, digitValue: false, blankValue: false},
-	testData{char: 'z', upperValue: false, lowerValue: true, alphaValue: true, alphaNumValue: true, punctValue: false, digitValue: false, blankValue: false},
-	testData{char: '1', upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: true, punctValue: false, digitValue: true, blankValue: false},
-	testData{char: ' ', upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: false, punctValue: false, digitValue: false, blankValue: true},
-	testData{char: '\n', upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: false, punctValue: false, digitValue: false, blankValue: false},
-	testData{char: '\t', upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: false, punctValue: false, digitValue: false, blankValue: true},
-	testData{char: '}', upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: false, punctValue: true, digitValue: false, blankValue: false},
-	testData{char: 48 /*char 0*/, upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: true, punctValue: false, digitValue: true, blankValue: false},
+	{char: 'B', upperValue: true, lowerValue: false, alphaValue: true, alphaNumValue: true, punctValue: false, digitValue: false, blankValue: false},
+	{char: '%', upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: false, punctValue: true, digitValue: false, blankValue: false},
+	{char: 'z', upperValue: false, lowerValue: true, alphaValue: true, alphaNumValue: true, punctValue: false, digitValue: false, blankValue: false},
+	{char: '1', upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: true, punctValue: false, digitValue: true, blankValue: false},
+	{char: ' ', upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: false, punctValue: false, digitValue: false, blankValue: true},
+	{char: '\n', upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: false, punctValue: false, digitValue: false, blankValue: false},
+	{char: '\t', upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: false, punctValue: false, digitValue: false, blankValue: true},
+	{char: '}', upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: false, punctValue: true, digitValue: false, blankValue: false},
+	{char: 48 /*char 0*/, upperValue: false, lowerValue: false, alphaValue: false, alphaNumValue: true, punctValue: false, digitValue: true, blankValue: false},
 }
 
 func TestCharClassification(t *testing.T) {

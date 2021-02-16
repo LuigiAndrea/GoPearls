@@ -28,9 +28,9 @@ func (s skipIndexes) contains(index int) bool {
 func TestAtLeastTwice(t *testing.T) {
 
 	tests := []testData{
-		testData{lengthList: 20, indexesToSkip: indexesToSkip(2, 3, 7, 13), expectedValue: -9},
-		testData{lengthList: 10, indexesToSkip: indexesToSkip(7), expectedValue: 1},
-		testData{lengthList: 2, indexesToSkip: indexesToSkip(1), expectedValue: -1},
+		{lengthList: 20, indexesToSkip: indexesToSkip(2, 3, 7, 13), expectedValue: -9},
+		{lengthList: 10, indexesToSkip: indexesToSkip(7), expectedValue: 1},
+		{lengthList: 2, indexesToSkip: indexesToSkip(1), expectedValue: -1},
 	}
 
 	for i, test := range tests {
@@ -51,8 +51,8 @@ func TestAtLeastTwice(t *testing.T) {
 func TestEdgeCases(t *testing.T) {
 
 	tests := []testData{
-		testData{lengthList: 5, indexesToSkip: nil, expectedValue: 5},
-		testData{lengthList: 0, indexesToSkip: nil, expectedValue: 0},
+		{lengthList: 5, indexesToSkip: nil, expectedValue: 5},
+		{lengthList: 0, indexesToSkip: nil, expectedValue: 0},
 	}
 
 	for i, test := range tests {
@@ -76,10 +76,10 @@ func TestAtLeastTwiceGeneral(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{list: []int{0, 0, 1, 2, 3, 4, 5}, expectedValue: 0},
-		testData{list: []int{-1, 0, 1, 1, 1, 2, 2, 2, 3, 4, 5, 5}, expectedValue: 1},
-		testData{list: []int{2, 2, 2}, expectedValue: 2},
-		testData{list: []int{10, 11, 12, 13, 13}, expectedValue: 13},
+		{list: []int{0, 0, 1, 2, 3, 4, 5}, expectedValue: 0},
+		{list: []int{-1, 0, 1, 1, 1, 2, 2, 2, 3, 4, 5, 5}, expectedValue: 1},
+		{list: []int{2, 2, 2}, expectedValue: 2},
+		{list: []int{10, 11, 12, 13, 13}, expectedValue: 13},
 	}
 
 	for i, test := range tests {

@@ -30,9 +30,9 @@ func TestBuildSegmentsAndEncoding(t *testing.T) {
 
 func TestDispalyNumbers(t *testing.T) {
 	tests := []testData{
-		testData{number: 65535, expectedValue: []byte{111, 79, 79, 87, 79}},
-		testData{number: 0, expectedValue: []byte{125}},
-		testData{number: 984, expectedValue: []byte{94, 127, 90}},
+		{number: 65535, expectedValue: []byte{111, 79, 79, 87, 79}},
+		{number: 0, expectedValue: []byte{125}},
+		{number: 984, expectedValue: []byte{94, 127, 90}},
 	}
 
 	for i, test := range tests {

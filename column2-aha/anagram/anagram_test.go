@@ -22,10 +22,10 @@ func TestAnagram(t *testing.T) {
 	})
 
 	tests := []testData{
-		testData{keySignature: "now", lengthSignature: 3, expectedSignatures: []string{"now", "won", "own"}},
-		testData{keySignature: "aest", lengthSignature: 5, expectedSignatures: []string{"east", "eats", "sate", "seat", "teas"}},
-		testData{keySignature: "boh", lengthSignature: 0, expectedSignatures: []string{}},
-		testData{keySignature: "boh", lengthSignature: 0, expectedSignatures: nil},
+		{keySignature: "now", lengthSignature: 3, expectedSignatures: []string{"now", "won", "own"}},
+		{keySignature: "aest", lengthSignature: 5, expectedSignatures: []string{"east", "eats", "sate", "seat", "teas"}},
+		{keySignature: "boh", lengthSignature: 0, expectedSignatures: []string{}},
+		{keySignature: "boh", lengthSignature: 0, expectedSignatures: nil},
 	}
 
 	for _, test := range tests {

@@ -35,9 +35,9 @@ func TestOperationResetValues(t *testing.T) {
 func TestOperations(t *testing.T) {
 
 	tests := []testData{
-		testData{value: 50, from: 0, to: 3},
-		testData{value: 5, from: 2, to: 3},
-		testData{value: -15, from: 1, to: 4},
+		{value: 50, from: 0, to: 3},
+		{value: 5, from: 2, to: 3},
+		{value: -15, from: 1, to: 4},
 	}
 
 	for _, test := range tests {
@@ -75,9 +75,9 @@ func TestOperations(t *testing.T) {
 func TestOperationsWrongIntervals(t *testing.T) {
 
 	tests := []testData{
-		testData{value: 5, from: -1, to: 3},
-		testData{value: 5, from: 2, to: 1},
-		testData{value: 5, from: 1, to: 5},
+		{value: 5, from: -1, to: 3},
+		{value: 5, from: 2, to: 1},
+		{value: 5, from: 1, to: 5},
 	}
 
 	for i, test := range tests {

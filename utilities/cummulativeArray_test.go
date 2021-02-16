@@ -19,15 +19,15 @@ func TestCummulativeArray(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{vector: []float64{12, 0, -23, 2, -1}, expected: []float64{12, 12, -11, -9, -10}},
-		testData{vector: []float64{-1, -4, 5}, expected: []float64{-1, -5, 0}},
-		testData{vector: []float64{6}, expected: []float64{6}},
-		testData{vector: []float64{}, expected: []float64{}},
-		testData{vector: nil, expected: nil},
-		testData{vector: []float64{6, math.Inf(1), 2}, expected: []float64{6, math.Inf(0), math.Inf(1)}},
-		testData{vector: []float64{5, -1, math.Inf(-1), 2}, expected: []float64{5, 4, math.Inf(-1), math.Inf(-1)}},
-		testData{vector: []float64{math.Inf(-1), math.Inf(-1)}, expected: []float64{math.Inf(-1), math.Inf(-1)}},
-		testData{vector: []float64{math.Inf(1), math.Inf(-1)}, expected: []float64{math.Inf(1), math.NaN()}},
+		{vector: []float64{12, 0, -23, 2, -1}, expected: []float64{12, 12, -11, -9, -10}},
+		{vector: []float64{-1, -4, 5}, expected: []float64{-1, -5, 0}},
+		{vector: []float64{6}, expected: []float64{6}},
+		{vector: []float64{}, expected: []float64{}},
+		{vector: nil, expected: nil},
+		{vector: []float64{6, math.Inf(1), 2}, expected: []float64{6, math.Inf(0), math.Inf(1)}},
+		{vector: []float64{5, -1, math.Inf(-1), 2}, expected: []float64{5, 4, math.Inf(-1), math.Inf(-1)}},
+		{vector: []float64{math.Inf(-1), math.Inf(-1)}, expected: []float64{math.Inf(-1), math.Inf(-1)}},
+		{vector: []float64{math.Inf(1), math.Inf(-1)}, expected: []float64{math.Inf(1), math.NaN()}},
 	}
 
 	for i, test := range tests {
@@ -48,15 +48,15 @@ func TestCummulativeArraySort(t *testing.T) {
 	}
 
 	tests := []testData{
-		testData{
+		{
 			cummulativeArray: []CummulativeValue{
 				{Value: 100}, {Value: -2}, {Value: -1}, {Value: 0}},
 			expected: []float64{-2, -1, 0, 100}},
-		testData{
+		{
 			cummulativeArray: []CummulativeValue{
 				{Value: -4}, {Value: 2.55}, {Value: 2.51}, {Value: -4.1}},
 			expected: []float64{-4.1, -4, 2.51, 2.55}},
-		testData{
+		{
 			cummulativeArray: []CummulativeValue{},
 			expected:         []float64{}},
 	}
@@ -81,11 +81,11 @@ func TestCummulativeArrayDistance(t *testing.T) {
 	cArray := CummulativeArray([]CummulativeValue{{Value: 100}, {Value: -2}, {Value: -1}, {Value: 0}})
 
 	tests := []testData{
-		testData{from: 0, to: 1, distance: 102},
-		testData{from: 1, to: 0, distance: 102},
-		testData{from: 1, to: 3, distance: 2},
-		testData{from: 1, to: 4, distance: -1},
-		testData{from: 1, to: -2, distance: -1},
+		{from: 0, to: 1, distance: 102},
+		{from: 1, to: 0, distance: 102},
+		{from: 1, to: 3, distance: 2},
+		{from: 1, to: 4, distance: -1},
+		{from: 1, to: -2, distance: -1},
 	}
 
 	for i, test := range tests {
