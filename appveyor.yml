@@ -1,0 +1,15 @@
+version: "{build}"
+platform: x64
+clone_folder: c:\gopath\src\github.com\lad\gopearls
+
+environment:
+  GOPATH: c:\gopath
+
+install:
+  - echo %PATH%
+  - echo %GOPATH%
+  - set PATH=%GOPATH%\bin;c:\go\bin;%PATH%
+  - go version
+  - go env
+
+build_script: go build  ./... && go test -tags all ./...

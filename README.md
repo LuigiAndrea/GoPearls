@@ -1,3 +1,7 @@
+[![Build Status](https://api.travis-ci.org/LuigiAndrea/GoPearls.png?branch=master)](https://travis-ci.org/LuigiAndrea/GoPearls)
+[![Build status](https://ci.appveyor.com/api/projects/status/2q7xp7hbr9mmq1gi/branch/master?svg=true)](https://ci.appveyor.com/project/LuigiAndrea/GoPearls)
+[![Go Report Card](https://goreportcard.com/badge/github.com/LuigiAndrea/GoPearls)](https://goreportcard.com/report/github.com/LuigiAndrea/GoPearls)
+
 # GoPearls
 Programming Pearls in Golang
 <br />
