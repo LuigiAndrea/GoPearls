@@ -30,6 +30,7 @@ func TestSortFile(t *testing.T) {
 		t.Error(e)
 	}
 
+	defer cleanWorkSpace(t, Filename, FilenameResult)
 	defer file.Close()
 
 	var expectedEOFIndex = 800
@@ -46,8 +47,6 @@ func TestSortFile(t *testing.T) {
 			assertValueAtIndex(t, i, v)
 		}
 	}
-	cleanWorkSpace(t, Filename)
-	cleanWorkSpace(t, FilenameResult)
 }
 
 func TestNotFoundFile(t *testing.T) {
@@ -93,9 +92,11 @@ func TestWrongDataInFile(t *testing.T) {
 	cleanWorkSpace(t, wrongDataFile)
 }
 
-func cleanWorkSpace(t *testing.T, path string) {
-	if err := os.Remove(path); err != nil {
-		log.Fatal(err)
+func cleanWorkSpace(t *testing.T, path ...string) {
+	for _, p := range path {
+		if err := os.Remove(p); err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
