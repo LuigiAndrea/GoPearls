@@ -28,7 +28,7 @@ func TestCreateFileWithKIntegers(t *testing.T) {
 		return
 	}
 
-	defer file.Close()
+	defer cleaResources(t, file)
 
 	reader := bufio.NewReader(file)
 	var numbersInFile = 0
@@ -46,7 +46,10 @@ func TestCreateFileWithKIntegers(t *testing.T) {
 	if err := a.AssertDeepEqual(expectedValue, numbersInFile); err != nil {
 		t.Error(err)
 	}
+}
 
+func cleaResources(t *testing.T, file *os.File) {
+	file.Close()
 	if err := a.AssertException(nil, os.Remove(Filename)); err != nil {
 		t.Error(err)
 	}
