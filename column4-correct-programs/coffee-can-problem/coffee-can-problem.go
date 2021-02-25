@@ -12,31 +12,36 @@ type bean struct {
 
 type colorBean int
 
-const unknown = "Unknown"
+var size int // size of the coffee can
+
 const (
-	black = iota + 1
+	unknown = iota
+	black
 	white
 )
 
 //ToString for colorBean type
 func (color colorBean) String() string {
 	names := [...]string{
-		unknown,
+		"Unknown",
 		"Black",
 		"White"}
 
 	if color < black || color > white {
-		return unknown
+		return names[unknown]
 	}
 
 	return names[color]
 }
 
+//Prove that the process ends
 func coffeeCanBeans(coffeeCan []bean) (bean, error) {
+	size = len(coffeeCan)
+
 	if err := validateCanBean(coffeeCan); err != nil {
 		return bean{}, err
 	}
-	size := len(coffeeCan)
+
 	if size == 1 {
 		return coffeeCan[0], nil
 	}
@@ -79,13 +84,13 @@ func delete(coffeeCan *[]bean, pos int) {
 }
 
 func validateCanBean(beans []bean) error {
-	if len(beans) < 1 {
+	if size < 1 {
 		return fmt.Errorf("Coffee Can must have at least one bean")
 	}
 
 	for _, v := range beans {
-		if v.color.String() == unknown {
-			return fmt.Errorf("Bean color %s", unknown)
+		if v.color >= black+white || v.color <= unknown {
+			return fmt.Errorf("Bean color %s", v.color.String())
 		}
 	}
 	return nil
