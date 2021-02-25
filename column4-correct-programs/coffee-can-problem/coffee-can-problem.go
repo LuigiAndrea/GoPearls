@@ -53,10 +53,10 @@ func coffeeCanBeans(coffeeCan []bean) (bean, error) {
 		if posB == posA {
 			posB++
 		}
-		removeBeans(&coffeeCan, posA, posB)
+		coffeeCan = removeBeans(coffeeCan, posA, posB)
 	}
 
-	removeBeans(&coffeeCan, 0, 1)
+	coffeeCan = removeBeans(coffeeCan, 0, 1)
 	return coffeeCan[0], nil
 }
 
@@ -64,23 +64,27 @@ func haveSameColor(A, B bean) bool {
 	return A == B
 }
 
-func removeBeans(coffeeCan *[]bean, posA, posB int) {
-	beanA, beanB := (*coffeeCan)[posA], (*coffeeCan)[posB]
+func removeBeans(coffeeCan []bean, posA, posB int) []bean {
+	beanA, beanB := coffeeCan[posA], coffeeCan[posB]
 	if haveSameColor(beanA, beanB) {
-		*coffeeCan = append(*coffeeCan, bean{color: black})
-		delete(coffeeCan, posA)
-		delete(coffeeCan, posB)
+		coffeeCan = append(coffeeCan, bean{color: black})
+		coffeeCan = delete(coffeeCan, posA, posB)
 	} else if beanA.color == black {
-		delete(coffeeCan, posA)
+		coffeeCan = delete(coffeeCan, posA)
 	} else {
-		delete(coffeeCan, posB)
+		coffeeCan = delete(coffeeCan, posB)
 	}
+
+	return coffeeCan
 }
 
-func delete(coffeeCan *[]bean, pos int) {
-	size := len(*coffeeCan) - 1
-	(*coffeeCan)[pos] = (*coffeeCan)[size]
-	*coffeeCan = (*coffeeCan)[:size]
+func delete(coffeeCan []bean, pos ...int) []bean {
+	size := len(coffeeCan) - 1
+	for i, p := range pos {
+		coffeeCan[p] = coffeeCan[size-i]
+		coffeeCan = coffeeCan[:size-i]
+	}
+	return coffeeCan
 }
 
 func validateCanBean(beans []bean) error {
