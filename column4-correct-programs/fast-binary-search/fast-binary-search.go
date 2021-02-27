@@ -1,10 +1,10 @@
 package fastbinary
 
 // 4.6.8
-//fastSearch with fix size array with 10 elements
-func fastSearch(a [10]int, v int) (p int) {
+//fastSearch with fix size array with 100 elements
+func fastSearch(a []int, v int) (p int) {
 	n := len(a)
-	i := 8 //largest power of two less than 10, tune depending on the size of the array
+	i := 64 //largest power of two less than 100 (tuned with the length of the array), tune depending on the size of the array
 	l := -1
 
 	if a[i-1] < v {
@@ -27,13 +27,28 @@ func fastSearch(a [10]int, v int) (p int) {
 }
 
 //fastSearch2 with fix size array with 10 elements, removes overhead of loop and division
-func fastSearch2(a [10]int, v int) (p int) {
+func fastSearch2(a []int, v int) (p int) {
 	n := len(a)
 	l := -1
-	p = 8
+	p = 64
 
 	if a[p-1] < v {
 		l = n - p
+	}
+
+	p = 32
+	if a[l+p] < v {
+		l += p
+	}
+
+	p = 16
+	if a[l+p] < v {
+		l += p
+	}
+
+	p = 8
+	if a[l+p] < v {
+		l += p
 	}
 
 	p = 4
