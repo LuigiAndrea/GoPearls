@@ -12,7 +12,7 @@ import (
 var bench_data = []int{12, 68, 434, 500}
 
 func BenchmarkFastSearch(b *testing.B) {
-	funcToTest := []func([]int, int) int{fastSearch, fastSearch2}
+	funcToTest := []func([]int, int) int{fastSearch, fastSearch2, searchFirstOccurrence}
 
 	for _, f := range funcToTest {
 		for _, v := range bench_data {
@@ -25,12 +25,16 @@ func BenchmarkFastSearch(b *testing.B) {
 	}
 }
 
-func BenchmarkFastSearchFirstOccurence(b *testing.B) {
-	for _, v := range bench_data {
-		b.Run(fmt.Sprintf("%v: ", v), func(b *testing.B) {
-			for i := 0; i < b.N; i++ {
-				searchFirstOccurrence(data, v)
-			}
-		})
+func BenchmarkFastSearchArray(b *testing.B) {
+	funcToTest := []func([100]int, int) int{fastSearchArray, fastSearch2Array, searchFirstOccurrenceArray}
+
+	for _, f := range funcToTest {
+		for _, v := range bench_data {
+			b.Run(fmt.Sprintf("%s-%v: ", m.GetFuncName(f), v), func(b *testing.B) {
+				for i := 0; i < b.N; i++ {
+					f(dataArray, v)
+				}
+			})
+		}
 	}
 }
