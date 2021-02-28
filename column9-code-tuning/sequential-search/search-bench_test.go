@@ -4,22 +4,17 @@ package searchtuning
 
 import (
 	"testing"
+
+	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
-func BenchmarkSequentialSearchOriginal(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		seqSearchOriginal(i)
-	}
-}
-
-func BenchmarkSequentialSearch2(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		seqSearch2(i)
-	}
-}
-
-func BenchmarkSequentialSearch3(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		seqSearch3(i)
+func BenchmarkSequentialSearch(b *testing.B) {
+	funcToTest := []func(int) int{seqSearchOriginal, seqSearch2, seqSearch3}
+	for _, f := range funcToTest {
+		b.Run(m.GetFuncName(f), func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				f(i)
+			}
+		})
 	}
 }

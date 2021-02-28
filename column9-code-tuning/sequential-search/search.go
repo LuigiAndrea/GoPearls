@@ -33,6 +33,7 @@ func seqSearch2(value int) int {
 
 }
 
+//With fix size array with 7 elements
 func seqSearch3(value int) int {
 	i, size := 0, len(x)
 	x[size-1] = value //sentinel
