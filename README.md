@@ -73,6 +73,6 @@ Problem | Description
 Problem | Description
 ------------ | -------------
 [9.5.1](https://github.com/LuigiAndrea/GoPearls/tree/master/column9-code-tuning/sequential-search)| Sequential Search
-[9.5.4](https://github.com/LuigiAndrea/GoPearls/tree/master/column9-code-tuning/maximum-value-array)| Recursive maximum value in the n-array
+[9.5.4; 9.5.8](https://github.com/LuigiAndrea/GoPearls/tree/master/column9-code-tuning/maximum-value-array)| Maximum value in array (Recursive and Sentinel version)
 [9.5.6](https://github.com/LuigiAndrea/GoPearls/tree/master/column9-code-tuning/character-classification)| Character Classification using masks
 [9.5.7](https://github.com/LuigiAndrea/GoPearls/tree/master/column9-code-tuning/set-bits)| Count Set Bits

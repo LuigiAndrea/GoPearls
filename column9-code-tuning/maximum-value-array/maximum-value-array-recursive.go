@@ -2,7 +2,7 @@ package maximumvalue
 
 import "fmt"
 
-//X object that contains a slice and its length
+//X object that contains a slice, its length, n elements to scan, default to size
 type X struct {
 	array []float64
 	n     int
@@ -29,11 +29,11 @@ func (x *X) SetN(n int) error {
 }
 
 //Max calculate the maximum value in the slice x[0...n-1]
-func (x X) Max() float64 {
+func (x *X) Max() float64 {
 	return x.arraymax(x.n)
 }
 
-func (x X) arraymax(n int) float64 {
+func (x *X) arraymax(n int) float64 {
 	if n == 1 {
 		return x.array[0]
 	}

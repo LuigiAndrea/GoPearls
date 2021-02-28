@@ -26,7 +26,7 @@ func TestMaximumValueNArray(t *testing.T) {
 
 	for i, test := range tests {
 		x, _ := NewX(test.array)
-		if test.n > 0 {
+		if test.n != 0 {
 			x.SetN(test.n)
 		}
 		if err := a.AssertDeepEqual(test.maxValue, x.Max()); err != nil {
