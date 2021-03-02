@@ -1,4 +1,4 @@
-// +build all column9 maximumvalue maxarray maxsentinel
+// +build all column9 maximumvalue maxarray maxdefault
 
 package maximumvalue
 
@@ -10,20 +10,18 @@ import (
 	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
-func TestMaximumValueSentinelArray(t *testing.T) {
-
+func TestMaximumValueArray(t *testing.T) {
 	for i, test := range tests {
-		x, _ := NewXWithSentinel(test.array)
-
-		if err := a.AssertDeepEqual(test.maxValue, x.Max()); err != nil {
+		max, _ := MaxInArray(test.array)
+		if err := a.AssertDeepEqual(test.maxValue, max); err != nil {
 			t.Error(m.ErrorMessageTestCount(i+1, err))
 		}
 	}
 }
 
-func TestMaximumValueSentinelArrayExceptions(t *testing.T) {
+func TestMaximumValueArrayExceptions(t *testing.T) {
 	for i, test := range testsEx {
-		_, e := NewXWithSentinel(test.array)
+		_, e := MaxInArray(test.array)
 
 		if err := a.AssertException(errors.New(""), e); err != nil {
 			t.Error(m.ErrorMessageTestCount(i+1, err))

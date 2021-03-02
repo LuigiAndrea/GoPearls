@@ -1,4 +1,4 @@
-// +build all column9 maximumvalue maxnarray
+// +build all column9 maximumvalue maxnarray maxarray
 
 package maximumvalue
 
@@ -10,21 +10,9 @@ import (
 	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
-type testData struct {
-	array    []float64
-	maxValue float64
-	n        int
-}
-
 func TestMaximumValueNArray(t *testing.T) {
-	tests := []testData{
-		{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 11.5},
-		{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 4.54, n: 2},
-		{array: []float64{5.1}, maxValue: 5.1},
-		{array: []float64{-3.5, -2.00, -11.5, 9.8, 5.1}, maxValue: -2.00, n: 3},
-	}
 
-	for i, test := range tests {
+	for i, test := range testsnarray {
 		x, _ := NewX(test.array)
 		if test.n != 0 {
 			x.SetN(test.n)
@@ -37,15 +25,7 @@ func TestMaximumValueNArray(t *testing.T) {
 
 func TestMaximumValueNArrayExceptions(t *testing.T) {
 
-	tests := []testData{
-		{array: nil, maxValue: 0},
-		{array: []float64{}, maxValue: 2},
-		{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 4.54},
-		{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 4.54, n: -4},
-		{array: []float64{3.5, 4.54, 11.5, 9.8, 5.1}, maxValue: 4.54, n: 6},
-	}
-
-	for i, test := range tests {
+	for i, test := range testsnarrayEx {
 		x, e := NewX(test.array)
 		if e == nil {
 			e = x.SetN(test.n)
