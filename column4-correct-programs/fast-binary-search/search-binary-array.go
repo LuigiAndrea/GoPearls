@@ -1,4 +1,4 @@
-package fastbinary
+package fastsearch
 
 // 4.6.2
 func searchFirstOccurrenceArray(a [100]int, v int) (p int) {

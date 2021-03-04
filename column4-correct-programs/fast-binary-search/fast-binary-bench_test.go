@@ -1,6 +1,6 @@
-// +build column4_bench benchmark fastsearch_bench
+// +build column4_bench benchmark fastsearch_bench fbs_bench
 
-package fastbinary
+package fastsearch
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 
 var bench_data = []int{12, 68, 434, 500}
 
-func BenchmarkFastSearch(b *testing.B) {
+func BenchmarkFastBinarySearch(b *testing.B) {
 	funcToTest := []func([]int, int) int{fastSearch, fastSearch2, searchFirstOccurrence}
 
 	for _, f := range funcToTest {
@@ -25,7 +25,17 @@ func BenchmarkFastSearch(b *testing.B) {
 	}
 }
 
-func BenchmarkFastSearchArray(b *testing.B) {
+func BenchmarkFastHashingSearch(b *testing.B) {
+	for _, v := range bench_data {
+		b.Run(fmt.Sprintf("%v: ", v), func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				fastHashingSearch(v)
+			}
+		})
+	}
+}
+
+func BenchmarkFastBinarySearchArray(b *testing.B) {
 	funcToTest := []func([100]int, int) int{fastSearchArray, fastSearch2Array, searchFirstOccurrenceArray}
 
 	for _, f := range funcToTest {

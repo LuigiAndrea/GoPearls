@@ -1,4 +1,4 @@
-package fastbinary
+package fastsearch
 
 // 4.6.8
 //fastSearch with fix size array with 100 elements

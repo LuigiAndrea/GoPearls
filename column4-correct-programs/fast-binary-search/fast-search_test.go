@@ -1,6 +1,6 @@
-// +build all column4 fastsearch binarysearch fastbinary
+// +build all column4 fastsearch binarysearch fastbinary fbs
 
-package fastbinary
+package fastsearch
 
 import (
 	"testing"
@@ -68,5 +68,26 @@ func TestFastSearchArray(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestFastHashingSearch(t *testing.T) {
+
+	tests := []testData{
+		{v: 8, pos: 3},
+		{v: 434, pos: 99},
+		{v: 390, pos: 98},
+		{v: 22, pos: 7},
+		{v: 7, pos: 2},
+		{v: 52, pos: 37},
+		{v: 200, pos: -1},
+		{v: 65, pos: 50},
+		{v: -1, pos: 0},
+	}
+
+	for i, test := range tests {
+		if err := a.AssertDeepEqual(test.pos, fastHashingSearch(test.v)); err != nil {
+			t.Error(m.ErrorMessageTestCount(i+1, err))
+		}
 	}
 }
