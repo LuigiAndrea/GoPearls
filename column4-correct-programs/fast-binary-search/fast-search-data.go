@@ -16,7 +16,7 @@ var tests = []testData{
 	{input: data, v: 3900, pos: 998},
 	{input: data, v: 914, pos: 498},
 	{input: data, v: 7, pos: 2},
-	{input: data, v: 1242, pos: 770},
+	{input: data, v: 1242, pos: 775},
 	{input: data, v: 200, pos: -1},
 	{input: data, v: 316, pos: 199},
 	{input: data, v: -1, pos: 0}}
