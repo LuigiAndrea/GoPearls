@@ -1,10 +1,10 @@
 package fastsearch
 
 // 4.6.8
-//fastSearch with fix size array with 100 elements
+//fastSearch with fix size array with 1000 elements
 func fastSearch(a []int, v int) (p int) {
 	n := len(a)
-	i := 64 //largest power of two less than 100 (tuned with the length of the array), tune depending on the size of the array
+	i := 512 //largest power of two less than 1000 (tuned with the length of the array), tune depending on the size of the array
 	l := -1
 
 	if a[i-1] < v {
@@ -26,14 +26,29 @@ func fastSearch(a []int, v int) (p int) {
 	return
 }
 
-//fastSearch2 with fix size array with 10 elements, removes overhead of loop and division
+//fastSearch2 with fix size array with 1000 elements, removes overhead of loop and division
 func fastSearch2(a []int, v int) (p int) {
 	n := len(a)
 	l := -1
-	p = 64
+	p = 512
 
 	if a[p-1] < v {
 		l = n - p
+	}
+
+	p = 256
+	if a[l+p] < v {
+		l += p
+	}
+
+	p = 128
+	if a[l+p] < v {
+		l += p
+	}
+
+	p = 64
+	if a[l+p] < v {
+		l += p
 	}
 
 	p = 32

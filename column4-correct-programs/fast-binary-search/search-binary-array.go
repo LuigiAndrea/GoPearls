@@ -48,7 +48,7 @@ func fastSearchArray(a [100]int, v int) (p int) {
 	return
 }
 
-//fastSearch2 with fix size array with 10 elements, removes overhead of loop and division
+//fastSearch2 with fix size array with 100 elements, removes overhead of loop and division
 func fastSearch2Array(a [100]int, v int) (p int) {
 	n := len(a)
 	l := -1

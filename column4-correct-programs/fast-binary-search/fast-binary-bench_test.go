@@ -9,7 +9,7 @@ import (
 	m "github.com/LuigiAndrea/test-helper/messages"
 )
 
-var bench_data = []int{12, 68, 434, 500}
+var bench_data = []int{29, 914, 1396, 911}
 
 func BenchmarkFastBinarySearch(b *testing.B) {
 	funcToTest := []func([]int, int) int{fastSearch, fastSearch2, searchFirstOccurrence}
