@@ -2,4 +2,4 @@ module github.com/LuigiAndrea/GoPearls
 
 go 1.13
 
-require github.com/LuigiAndrea/test-helper v1.3.0
+require github.com/LuigiAndrea/test-helper v1.3.1
