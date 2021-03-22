@@ -3,7 +3,10 @@ package fastpoly
 func EvalPolynomial(a []int, x int) int {
 	s := len(a)
 	xi := 1
-	y := a[0]
+	y := 0
+	if s > 0 {
+		y = a[0]
+	}
 	for i := 1; i < s; i++ {
 		xi = x * xi
 		y += xi * a[i]

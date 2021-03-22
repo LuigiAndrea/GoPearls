@@ -25,6 +25,8 @@ func TestEvalPoly(t *testing.T) {
 		{a: a, x: 0, result: 7},
 		{a: a, x: -3, result: -320},
 		{a: a, x: 1, result: 40},
+		{a: []int{}, x: 10, result: 0},
+		{a: []int{2}, x: 10, result: 2},
 	}
 
 	for _, f := range funcToTest {
