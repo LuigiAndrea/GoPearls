@@ -18,7 +18,7 @@ type testData struct {
 func TestEvalPoly(t *testing.T) {
 
 	funcToTest := []func([]int, int) int{EvalPolynomial, EvalPolynomialFast}
-	a := []int{3, 8, 10, 5, 7, 7}
+	a := []int{7, 7, 5, 10, 8, 3}
 	tests := []testData{
 		{a: a, x: 3, result: 1720},
 		{a: a, x: 21, result: 13903120},
