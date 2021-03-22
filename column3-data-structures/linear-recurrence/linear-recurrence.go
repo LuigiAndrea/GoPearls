@@ -2,7 +2,7 @@ package recurrence
 
 import "fmt"
 
-//an = a[n-1]*c[0] + a[n-2]*c[1] + ... + a[0]*c[k] + c[k+1]
+//an = a[n-1]*c[0] + a[n-2]*c[1] + ... + a[0]*c[k-1] + c[k]
 //Return a[0] through a[m-1]
 func linearRecurrence(a, c []int, m int) ([]int, error) {
 	if err := validateRecurrenceInput(a, c, m); err != nil {
