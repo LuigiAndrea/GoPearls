@@ -9,4 +9,3 @@ xi = 1</br>
 for i = [1, n]</br>
     xi = x * xi</br>
     y = y + a[i]*xi
-
