@@ -77,3 +77,4 @@ Problem | Description
 [9.5.6](https://github.com/LuigiAndrea/GoPearls/tree/master/column9-code-tuning/character-classification)| Character Classification using masks
 [9.5.7](https://github.com/LuigiAndrea/GoPearls/tree/master/column9-code-tuning/set-bits)| Count Set Bits
 [9.5.10](https://github.com/LuigiAndrea/GoPearls/tree/master/column4-correct-programs/fast-binary-search)| Fast hashing search problem
+[9.5.12](https://github.com/LuigiAndrea/GoPearls/tree/master/column9-code-tuning/fast-polynomial)| Faster Polynomial
