@@ -10,9 +10,8 @@ import (
 
 //Reverse a slice
 func Reverse(data sort.Interface, i, j int) {
-	for ; j > i; i++ {
+	for ; j > i; i, j = i+1, j-1 {
 		data.Swap(i, j)
-		j--
 	}
 }
 
